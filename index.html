@@ -109,6 +109,19 @@
     .tag { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: #1d2230; color: var(--muted); }
     .work-link { margin-top: auto; color: var(--accent-2); font-weight: 700; }
 
+    /* Широкая карточка: картинка слева, текст справа (на телефоне — друг под другом) */
+    .work-wide { display: grid; grid-template-columns: 1.1fr 1fr; }
+    .work-wide .work-preview { aspect-ratio: 4 / 3; height: 100%; }
+    .work-wide .work-preview img { object-position: top; }
+    .work-wide .work-body { padding: 32px; justify-content: center; gap: 14px; }
+    .work-wide h3 { font-size: 24px; }
+    .result {
+      display: flex; gap: 10px; align-items: baseline; padding: 14px 16px; border-radius: 12px;
+      background: rgba(34, 211, 238, .08); border: 1px solid rgba(34, 211, 238, .25); color: var(--text);
+    }
+    .result b { color: var(--accent-2); white-space: nowrap; }
+    @media (max-width: 820px) { .work-wide { grid-template-columns: 1fr; } .work-wide .work-body { padding: 24px; } }
+
     .price-card h3 { font-size: 20px; margin-bottom: 6px; }
     .price { font-size: 30px; font-weight: 800; margin: 14px 0; }
     .price-card ul { list-style: none; color: var(--muted); display: grid; gap: 8px; }
@@ -151,6 +164,7 @@
     <div class="container nav">
       <a href="#" class="logo">smirnov<span class="gradient-text">.web</span></a>
       <nav class="nav-links">
+        <a href="#works">Работы</a>
         <a href="#services">Услуги</a>
         <a href="#about">Обо мне</a>
         <a href="#contact">Контакты</a>
@@ -167,13 +181,30 @@
         <p>Современный сайт за 5–7 дней. Красиво выглядит на телефоне, быстро грузится и помогает получать заявки.</p>
         <div class="hero-buttons">
           <a href="#contact" class="btn btn-primary">Обсудить проект</a>
-          <a href="#services" class="btn btn-ghost">Услуги и цены</a>
+          <a href="#works" class="btn btn-ghost">Посмотреть работы</a>
         </div>
         <div class="stats">
           <div class="stat"><b>5–7 дней</b><span>от идеи до готового сайта</span></div>
           <div class="stat"><b>100%</b><span>адаптивно под телефоны</span></div>
           <div class="stat"><b>6:00–23:00</b><span>на связи в Telegram</span></div>
         </div>
+      </div>
+    </section>
+
+    <!-- Работы. Чтобы добавить новую — скопируй блок <article> и поменяй текст и картинку -->
+    <section id="works">
+      <div class="container">
+        <h2 class="reveal">Мои работы</h2>
+        <p class="section-sub reveal">Реальные проекты для реальных бизнесов.</p>
+        <article class="card work work-wide reveal">
+          <div class="work-preview"><img src="bazhovsky.jpg" alt="Сайт шиномонтажа «Бажовский»: первый экран" loading="lazy"></div>
+          <div class="work-body">
+            <h3>Шиномонтаж «Бажовский», Екатеринбург</h3>
+            <p>Сайт для шиномонтажа в подземном паркинге: услуги, удобный прайс с поиском по 50 позициям, сезонное хранение шин и запись в один клик.</p>
+            <div class="result"><b>Результат</b><span>После запуска стало больше звонков и записей.</span></div>
+            <div class="tags"><span class="tag">Сайт компании</span><span class="tag">Прайс с поиском</span><span class="tag">Анимации</span><span class="tag">Адаптив</span></div>
+          </div>
+        </article>
       </div>
     </section>
 
