@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Шиномонтажная станция — ул. Фрунзе, 98А, Екатеринбург</title>
+  <meta name="description" content="Шиномонтажная мастерская всех видов транспорта на ул. Фрунзе, 98А, Екатеринбург. Услуги по ремонту и хранению. Работаем с 10:00 до 20:00.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Цвета сайта — взяты с их вывески. Поменяй --yellow, и жёлтый сменится везде ===== */
+    :root {
+      --yellow: #ffd60a;      /* фирменный жёлтый, как баннер над боксом */
+      --yellow-soft: #fff6c7; /* светлый жёлтый для фона плашек */
+      --black: #111111;       /* чёрный, как буквы на вывеске */
+      --white: #ffffff;
+      --bg: #fffdf6;          /* чуть тёплый белый фон страницы */
+      --muted: #5b5b5b;       /* серый для второстепенного текста */
+      --line: #ece6cf;        /* цвет тонких рамок */
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--black);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+    section[id] { scroll-margin-top: 80px; }
+
+    /* Заголовки разделов */
+    .section { padding: 80px 0; }
+    .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    h2 { font-family: "Montserrat", sans-serif; font-weight: 900; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; margin-bottom: 32px; }
+    h2 mark { background: linear-gradient(transparent 55%, var(--yellow) 55%); color: inherit; padding: 0 4px; }
+
+    /* ===== Шапка ===== */
+    header { background: var(--white); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { width: 44px; height: 44px; border-radius: 50%; }
+    .brand b { font-family: "Montserrat", sans-serif; font-weight: 900; font-size: 17px; line-height: 1.1; text-transform: uppercase; }
+    .brand span { display: block; font-size: 12px; color: var(--muted); font-weight: 500; text-transform: none; }
+    .menu { display: flex; gap: 22px; font-weight: 600; font-size: 15px; }
+    .menu a:hover { text-decoration: underline; text-decoration-color: var(--yellow); text-decoration-thickness: 3px; text-underline-offset: 6px; }
+    .nav-right { display: flex; align-items: center; gap: 18px; }
+    .hours { font-size: 13px; color: var(--muted); text-align: right; line-height: 1.3; }
+    .tel { font-weight: 700; font-size: 17px; white-space: nowrap; }
+    .tel-icon { display: none; }
+    @media (max-width: 1060px) { .menu { display: none; } }
+    /* На телефоне вместо длинного номера — круглая жёлтая кнопка «позвонить» */
+    @media (max-width: 760px) {
+      .nav-right .btn, .nav-right .hours, .tel-text { display: none; }
+      .tel-icon {
+        display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+        background: var(--yellow); border: 2px solid var(--black); font-size: 18px;
+      }
+      .brand b { font-size: 14px; }
+    }
+
+    /* ===== Кнопки ===== */
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; padding: 16px 26px;
+      border-radius: 14px; font-weight: 700; font-size: 16px; border: 2px solid var(--black);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 4px 4px 0 var(--black); }
+    .btn-yellow { background: var(--yellow); }
+    .btn-white { background: var(--white); }
+    .btn-small { padding: 10px 16px; font-size: 14px; border-radius: 10px; }
+
+    /* ===== Первый экран ===== */
+    .hero { padding: 56px 0 72px; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+    .chip {
+      font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      padding: 6px 12px; border-radius: 999px; background: var(--black); color: var(--yellow);
+    }
+    h1 {
+      font-family: "Montserrat", sans-serif; font-weight: 900;
+      font-size: clamp(34px, 5.2vw, 60px); line-height: 1.05; letter-spacing: -.01em;
+    }
+    h1 mark { background: linear-gradient(transparent 55%, var(--yellow) 55%); color: inherit; padding: 0 4px; }
+    .lead { font-size: 18px; color: var(--muted); max-width: 32em; margin: 20px 0 30px; }
+    .lead strong { color: var(--black); }
+    .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 36px; }
+    .fact { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+    .fact b { display: block; font-family: "Montserrat", sans-serif; font-size: 18px; font-weight: 800; }
+    .fact span { font-size: 13px; color: var(--muted); }
+
+    .photo-wrap { position: relative; }
+    .photo {
+      border: 3px solid var(--black); border-radius: var(--radius); overflow: hidden;
+      box-shadow: 10px 10px 0 var(--yellow); aspect-ratio: 16 / 11; background: #ddd;
+    }
+    .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .rating {
+      position: absolute; top: -18px; right: -10px; background: var(--white); border: 2px solid var(--black);
+      border-radius: 14px; padding: 10px 14px; text-align: center; transform: rotate(3deg);
+    }
+    .rating b { font-family: "Montserrat", sans-serif; font-size: 26px; font-weight: 900; display: block; line-height: 1; }
+    .rating span { font-size: 12px; color: var(--muted); }
+    .find-mini {
+      position: relative; margin: -40px 20px 0; background: var(--black); color: var(--white);
+      border-radius: 16px; padding: 18px 20px; display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start;
+    }
+    .pin {
+      width: 40px; height: 40px; border-radius: 10px; background: var(--yellow); color: var(--black);
+      display: grid; place-items: center; font-weight: 900; font-family: "Montserrat", sans-serif;
+    }
+    .find-mini h3 { font-size: 16px; margin-bottom: 4px; color: var(--yellow); }
+    .find-mini p { font-size: 14px; opacity: .9; }
+    .find-mini a { text-decoration: underline; text-underline-offset: 3px; }
+    @media (max-width: 900px) {
+      .hero { padding: 32px 0 56px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+      .rating { right: 8px; }
+    }
+
+    /* ===== Услуги ===== */
+    .services { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .grid { display: grid; gap: 16px; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .service {
+      border: 2px solid var(--black); border-radius: var(--radius); padding: 24px; background: var(--bg);
+      display: flex; flex-direction: column; gap: 10px; transition: transform .2s, box-shadow .2s;
+    }
+    .service:hover { transform: translateY(-3px); box-shadow: 6px 6px 0 var(--yellow); }
+    .service .icon { font-size: 30px; }
+    .service h3 { font-family: "Montserrat", sans-serif; font-size: 20px; font-weight: 800; }
+    .service .price { margin-top: auto; font-weight: 700; }
+    .service .price span { background: var(--yellow); padding: 2px 8px; border-radius: 6px; }
+    .service.accent { background: var(--yellow); }
+    .service.accent .price span { background: var(--white); }
+    @media (max-width: 900px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .grid-3 { grid-template-columns: 1fr; } }
+
+    /* ===== Оценки клиентов ===== */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat { background: var(--black); color: var(--white); border-radius: var(--radius); padding: 24px; }
+    .stat b { font-family: "Montserrat", sans-serif; font-size: 44px; font-weight: 900; color: var(--yellow); display: block; line-height: 1; }
+    .stat span { display: block; margin-top: 10px; font-weight: 600; }
+    .stat small { display: block; margin-top: 4px; opacity: .7; font-size: 13px; }
+    .comfort { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .comfort span { background: var(--white); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 14px; }
+    @media (max-width: 900px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ===== Отзывы ===== */
+    .reviews { background: var(--yellow); border-top: 3px solid var(--black); border-bottom: 3px solid var(--black); }
+    .review { background: var(--white); border: 2px solid var(--black); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+    .review .stars { letter-spacing: 2px; }
+    .review p { font-size: 15px; }
+    .review .who { margin-top: auto; font-size: 14px; font-weight: 700; }
+    .review .who small { display: block; font-weight: 500; color: var(--muted); }
+    .reviews-more { margin-top: 28px; text-align: center; }
+
+    /* ===== Как нас найти ===== */
+    .find { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .find-list { display: grid; gap: 14px; margin-bottom: 28px; }
+    .find-item { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; }
+    .find-item .pin { width: 44px; height: 44px; font-size: 18px; }
+    .find-item b { display: block; font-size: 17px; }
+    .find-item span { color: var(--muted); font-size: 15px; }
+    @media (max-width: 900px) { .find { grid-template-columns: 1fr; } }
+
+    /* ===== Подвал ===== */
+    footer { background: var(--black); color: var(--white); padding: 40px 0 28px; }
+    .foot { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center; }
+    .foot b { font-family: "Montserrat", sans-serif; font-weight: 900; text-transform: uppercase; }
+    .foot p { opacity: .8; font-size: 14px; }
+    .foot .tel { color: var(--yellow); font-size: 22px; }
+    .credit { margin-top: 28px; padding-top: 18px; border-top: 1px solid #2a2a2a; font-size: 12px; opacity: .5; }
+
+    /* Лёгкая анимация появления первого экрана */
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-text > * { animation: up .6s both; }
+      .hero-text > *:nth-child(2) { animation-delay: .08s; }
+      .hero-text > *:nth-child(3) { animation-delay: .16s; }
+      .hero-text > *:nth-child(4) { animation-delay: .24s; }
+      .hero-text > *:nth-child(5) { animation-delay: .32s; }
+      .photo-wrap { animation: up .7s .2s both; }
+      @keyframes up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <a href="#" class="brand">
+        <img src="logo.jpg" alt="Логотип Шиномонтажной станции">
+        <b>Шиномонтажная станция<span>ул. Фрунзе, 98А · Екатеринбург</span></b>
+      </a>
+      <nav class="menu">
+        <a href="#services">Услуги</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#find">Как найти</a>
+      </nav>
+      <div class="nav-right">
+        <div class="hours">Работаем<br>10:00–20:00</div>
+        <a class="tel" href="tel:+79931103992" aria-label="Позвонить: +7 993 110-39-92"><span class="tel-text">+7 993 110-39-92</span><span class="tel-icon">📞</span></a>
+        <a class="btn btn-yellow btn-small" href="https://wa.me/79931103992" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== ПЕРВЫЙ ЭКРАН ===== -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <!-- Надпись с их вывески -->
+          <div class="chips"><span class="chip">Авто</span><span class="chip">Мото</span><span class="chip">Вело</span><span class="chip">СИМ</span></div>
+
+          <!-- ЗАГОЛОВОК: их описание с Яндекс Бизнеса. Чтобы поменять, правь текст между <h1> и </h1> -->
+          <h1>Шиномонтажная мастерская <mark>всех видов транспорта</mark></h1>
+
+          <p class="lead">Шиномонтаж, шины и диски на ул. Фрунзе, 98А.
+            <strong>Услуги по ремонту и хранению.</strong> Работаем по предварительной записи с 10:00 до 20:00.</p>
+
+          <div class="cta">
+            <a class="btn btn-yellow" href="tel:+79931103992">📞&nbsp; Записаться по телефону</a>
+            <a class="btn btn-white" href="https://wa.me/79931103992" target="_blank" rel="noopener">Написать в WhatsApp</a>
+          </div>
+
+          <div class="facts">
+            <div class="fact"><b>10:00–20:00</b><span>часы работы</span></div>
+            <div class="fact"><b>2 990 ₽</b><span>хранение шин и дисков</span></div>
+            <div class="fact"><b>Бокс №11</b><span>цокольный этаж</span></div>
+            <div class="fact"><b>По записи</b><span>по телефону или в WhatsApp</span></div>
+          </div>
+        </div>
+
+        <div class="photo-wrap">
+          <div class="photo"><img src="vyveska.jpg" alt="Вход в Шиномонтажную станцию: жёлтая вывеска над боксом на ул. Фрунзе, 98А"></div>
+          <div class="rating"><b>4,9 ★</b><span>62 оценки<br>на Яндекс Картах</span></div>
+          <div class="find-mini">
+            <div class="pin">📍</div>
+            <div>
+              <h3>ул. Фрунзе, 98А · бокс №11</h3>
+              <p>Цокольный этаж. <a href="#find">Как нас найти →</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== УСЛУГИ (из карточки на Яндекс Картах) ===== -->
+    <section class="section services" id="services">
+      <div class="container">
+        <div class="eyebrow">Что делаем</div>
+        <h2>Услуги <mark>мастерской</mark></h2>
+        <div class="grid grid-3">
+          <div class="service"><div class="icon">🛞</div><h3>Сезонный шиномонтаж</h3><p>Переобувка на зиму и на лето по предварительной записи.</p></div>
+          <div class="service"><div class="icon">⚖️</div><h3>Балансировка</h3><p>Балансировка колёс.</p></div>
+          <div class="service"><div class="icon">🔧</div><h3>Ремонт</h3><p>Ремонт шин и колёс.</p></div>
+          <div class="service accent"><div class="icon">📦</div><h3>Хранение шин и дисков</h3><p>Оставьте комплект у нас до следующего сезона.</p><div class="price"><span>2 990 ₽</span></div></div>
+          <div class="service"><div class="icon">🔥</div><h3>Сварка аргоном</h3><p>Дополнительная услуга шиномонтажа.</p></div>
+          <div class="service"><div class="icon">🏍️</div><h3>Мотошиномонтаж</h3><p>Шиномонтаж для мото, вело и СИМ.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ОЦЕНКИ КЛИЕНТОВ (статистика отзывов на Яндекс Картах) ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="eyebrow">По отзывам на Яндекс Картах</div>
+        <h2>Что ценят <mark>клиенты</mark></h2>
+        <div class="stats">
+          <div class="stat"><b>100%</b><span>Время ожидания</span><small>положительных отзывов</small></div>
+          <div class="stat"><b>96%</b><span>Шиномонтаж</span><small>положительных отзывов</small></div>
+          <div class="stat"><b>92%</b><span>Ремонт</span><small>положительных отзывов</small></div>
+          <div class="stat"><b>88%</b><span>Персонал</span><small>положительных отзывов</small></div>
+        </div>
+        <div class="comfort">
+          <span>📶 Wi-Fi</span><span>🐶 Можно с собакой</span><span>🛡️ Гарантия</span>
+          <span>💵 Наличными</span><span>🏦 Банковским переводом</span><span>🗓️ Предварительная запись</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ОТЗЫВЫ (дословно с Яндекс Карт) ===== -->
+    <section class="section reviews" id="reviews">
+      <div class="container">
+        <div class="eyebrow" style="color: var(--black)">4,9 ★ · 62 оценки</div>
+        <h2>Отзывы клиентов</h2>
+        <div class="grid grid-3">
+          <div class="review"><div class="stars">★★★★★</div><p>«Отличные мастера, переобулся как на питстопе за 20 минут! Отбалансировали при мне колеса, дали рекомендации, буду ездить только к ним!»</p><div class="who">рома д.<small>Яндекс Карты</small></div></div>
+          <div class="review"><div class="stars">★★★★★</div><p>«Мастер спас мое колесо! Все подробно объяснил, перед работами и даже показал промежуточный результат! Пишу отзыв спустя месяц, колесо не спускает, спасибо вам ребята!»</p><div class="who">Руслан Ф.<small>Яндекс Карты</small></div></div>
+          <div class="review"><div class="stars">★★★★★</div><p>«Приехал сюда впервые. Записали в день обращения. Всё вежливо и грамотно. Был приятно удивлён скоростью и качеством обслуживания. Буду приезжать только сюда. Ребята молодцы!»</p><div class="who">Алексей Щ.<small>Яндекс Карты</small></div></div>
+          <div class="review"><div class="stars">★★★★★</div><p>«Хорошая шиномонтажка, быстро качественно, цены приятные, все понравилось. Есть зона ожидания, вай фай. Сделали комплекс за 25 минут»</p><div class="who">Михаил марков<small>Яндекс Карты</small></div></div>
+          <div class="review"><div class="stars">★★★★★</div><p>«Спасибо ребятам за профессионализм, задержались после времени закрытия чтобы доделать работу»</p><div class="who">mim575<small>Яндекс Карты</small></div></div>
+          <div class="review"><div class="stars">★★★★★</div><p>«Переобувался на зиму записался заранее по телефону, ребята красавцы приятно с такими общаться, работу сделали оперативно и качественно. Также предложили хранение шин, не всегда такое есть!»</p><div class="who">Андрей Симагин<small>Яндекс Карты</small></div></div>
+        </div>
+        <div class="reviews-more"><a class="btn btn-white" href="https://yandex.ru/maps/org/shinomontazhnaya_stantsiya/227891273166/reviews/" target="_blank" rel="noopener">Все отзывы на Яндекс Картах →</a></div>
+      </div>
+    </section>
+
+    <!-- ===== КАК НАС НАЙТИ ===== -->
+    <section class="section" id="find">
+      <div class="container find">
+        <div>
+          <div class="eyebrow">Адрес и часы работы</div>
+          <h2>Как нас <mark>найти</mark></h2>
+          <div class="find-list">
+            <div class="find-item"><div class="pin">📍</div><div><b>ул. Фрунзе, 98А, бокс №11</b><span>Цокольный этаж, Екатеринбург</span></div></div>
+            <div class="find-item"><div class="pin">🕙</div><div><b>10:00–20:00</b><span>По предварительной записи</span></div></div>
+            <div class="find-item"><div class="pin">🚌</div><div><b>Остановка «Московская улица» — 320 м</b><span>Метро «Чкаловская» — 1,4 км</span></div></div>
+            <div class="find-item"><div class="pin">📞</div><div><b><a href="tel:+79931103992">+7 993 110-39-92</a></b><span>Звоните или пишите в WhatsApp</span></div></div>
+          </div>
+          <div class="cta">
+            <a class="btn btn-yellow" href="https://yandex.ru/maps/org/shinomontazhnaya_stantsiya/227891273166/" target="_blank" rel="noopener">Маршрут на Яндекс Картах</a>
+            <a class="btn btn-white" href="https://wa.me/79931103992" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+        <div class="photo"><img src="vyveska.jpg" alt="Вход в бокс: жёлтая вывеска «Шиномонтажная станция»" loading="lazy"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="foot">
+        <div><b>Шиномонтажная станция</b><p>ул. Фрунзе, 98А, бокс №11 · Екатеринбург · 10:00–20:00</p></div>
+        <a class="tel" href="tel:+79931103992">+7 993 110-39-92</a>
+      </div>
+      <div class="credit">Набросок сайта — smirnov.web</div>
+    </div>
+  </footer>
+
+</body>
+</html>

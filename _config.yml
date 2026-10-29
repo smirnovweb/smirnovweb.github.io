@@ -1,0 +1,3 @@
+# Настройки GitHub Pages: README.md — это мои заметки, на сайте его не показываем
+exclude:
+  - README.md
