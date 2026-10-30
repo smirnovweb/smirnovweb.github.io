@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auto Room — автосервис на Эльмаше, Екатеринбург</title>
+<meta name="description" content="Автосервис Auto Room на Совхозной, 16н: ремонт двигателя и ходовой, ТО, диагностика, шиномонтаж, развал-схождение. Каждый день 9:00–20:00.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Цвета из логотипа Auto Room: чёрный, белый, красный */
+  :root {
+    --bg: #0d0d0f;        /* фон страницы — почти чёрный */
+    --panel: #17171a;     /* фон карточек — чуть светлее */
+    --line: #2a2a2f;      /* тонкие рамки */
+    --ink: #ffffff;       /* основной текст — белый */
+    --muted: #a3a3ab;     /* второстепенный текст — серый */
+    --red: #e3262f;       /* красный, как «AUTO» на логотипе */
+    --red-dark: #b81d25;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; line-height: 1.55; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- Шапка ---------- */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(13,13,15,.92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .head { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 20px; letter-spacing: .5px; }
+  .brand img { width: 40px; height: 40px; }
+  .brand b { color: var(--red); }
+  nav { display: flex; gap: 24px; font-size: 15px; color: var(--muted); }
+  nav a:hover { color: var(--ink); }
+  .head-phone { font-weight: 600; white-space: nowrap; }
+  .head-phone:hover { color: var(--red); }
+  .call-round { display: none; }
+
+  /* ---------- Кнопки ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 15px 26px; border-radius: 10px; font-weight: 600; font-size: 16px;
+    transition: transform .15s, background .15s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-red { background: var(--red); color: #fff; }
+  .btn-red:hover { background: var(--red-dark); }
+  .btn-outline { border: 1.5px solid var(--line); color: var(--ink); }
+  .btn-outline:hover { border-color: var(--ink); }
+
+  /* ---------- Первый экран ---------- */
+  .hero { padding: 72px 0 80px; text-align: center; position: relative; overflow: hidden; }
+  /* мягкое красное свечение за логотипом */
+  .hero::before {
+    content: ""; position: absolute; left: 50%; top: 40px; transform: translateX(-50%);
+    width: 520px; height: 520px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(227,38,47,.22), transparent 65%);
+    pointer-events: none;
+  }
+  .hero > .wrap { position: relative; }
+  .hero-logo { width: 220px; height: 220px; margin: 0 auto 28px; animation: up .7s ease both; }
+  .hero h1 {
+    font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase;
+    font-size: clamp(30px, 5vw, 54px); line-height: 1.1; letter-spacing: .5px;
+    animation: up .7s .1s ease both;
+  }
+  .hero h1 span { color: var(--red); }
+  .hero p.lead { max-width: 640px; margin: 18px auto 0; font-size: 18px; color: var(--muted); animation: up .7s .2s ease both; }
+  .hero .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; animation: up .7s .3s ease both; }
+  .facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 36px; animation: up .7s .4s ease both; }
+  .fact { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; color: var(--muted); background: var(--panel); }
+  .fact b { color: var(--ink); }
+  .fact .star { color: #ffc93c; }
+
+  /* ---------- Общие для блоков ---------- */
+  section.block { padding: 80px 0; border-top: 1px solid var(--line); }
+  .block h2 {
+    font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase;
+    font-size: clamp(26px, 3.6vw, 38px); line-height: 1.15;
+  }
+  .block h2 span { color: var(--red); }
+  .block .sub { color: var(--muted); margin-top: 10px; max-width: 620px; }
+
+  /* ---------- Услуги ---------- */
+  .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; }
+  .svc { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px; transition: border-color .2s; }
+  .svc:hover { border-color: var(--red); }
+  .svc h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 18px; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .svc h3 i { font-style: normal; width: 36px; height: 36px; border-radius: 10px; background: rgba(227,38,47,.14); display: grid; place-items: center; font-size: 18px; }
+  .svc ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .svc li { color: var(--muted); padding-left: 16px; position: relative; }
+  .svc li::before { content: ""; position: absolute; left: 0; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+  .svc-cta { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; color: var(--muted); }
+
+  /* ---------- Почему мы + марки ---------- */
+  .why { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 36px; }
+  .why-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+  .why-card .num { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 36px; line-height: 1; color: var(--red); }
+  .why-card .num small { font-size: 18px; color: var(--ink); }
+  .why-card h3 { font-size: 16px; font-weight: 600; margin-top: 10px; }
+  .why-card p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  .brands-title { font-family: 'Montserrat', sans-serif; font-weight: 800; text-transform: uppercase; font-size: 18px; margin-top: 48px; }
+  .brands { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .brand-chip { padding: 10px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); font-weight: 600; font-size: 15px; }
+  .brand-chip.kind { color: var(--muted); font-weight: 500; border-style: dashed; }
+
+  /* ---------- Фото ---------- */
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 36px; }
+  .gallery img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); display: block; }
+
+  /* ---------- Отзывы ---------- */
+  .reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; align-items: start; }
+  .review { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+  .review .stars { color: #ffc93c; letter-spacing: 2px; }
+  .review p { margin-top: 12px; font-size: 15px; }
+  .review .who { margin-top: 16px; display: flex; justify-content: space-between; gap: 10px; font-size: 14px; color: var(--muted); }
+  .review .who b { color: var(--ink); font-weight: 600; }
+  .more-reviews { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+  /* ---------- Как нас найти ---------- */
+  .find { display: grid; grid-template-columns: 1fr 1.3fr; gap: 24px; margin-top: 36px; }
+  .info { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+  .row small { display: block; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 4px; }
+  .row .big { font-size: 20px; font-weight: 600; }
+  .row a.big:hover { color: var(--red); }
+  .row .note { color: var(--muted); font-size: 14px; margin-top: 2px; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .links a { padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; font-size: 14px; }
+  .links a:hover { border-color: var(--red); color: var(--red); }
+  .map { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); min-height: 420px; position: relative; }
+  .map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .map-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  /* ---------- Подвал ---------- */
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+
+  @keyframes up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+  /* ---------- Телефон ---------- */
+  @media (max-width: 760px) {
+    nav, .head-phone { display: none; }
+    .call-round {
+      display: flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 50%; background: var(--red); font-size: 20px;
+    }
+    .hero { padding: 48px 0 56px; }
+    .hero-logo { width: 160px; height: 160px; }
+    .hero p.lead { font-size: 16px; }
+    .hero .actions .btn { width: 100%; }
+    section.block { padding: 56px 0; }
+    .services { grid-template-columns: 1fr; }
+    .svc-cta .btn { width: 100%; }
+    .why { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .why-card { padding: 18px; }
+    .why-card .num { font-size: 28px; }
+    .gallery { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .reviews { grid-template-columns: 1fr; }
+    .more-reviews .btn { width: 100%; }
+    .find { grid-template-columns: 1fr; }
+    .info { padding: 22px; }
+    .map { min-height: 320px; }
+    .map-btns .btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap head">
+    <a href="#top" class="brand"><img src="logo.png" alt="Логотип Auto Room"><span><b>AUTO</b> ROOM</span></a>
+    <nav>
+      <a href="#services">Услуги</a>
+      <a href="#why">Почему мы</a>
+      <a href="#photos">Фото</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a href="tel:+79826091705" class="head-phone">+7 982 609-17-05</a>
+    <a href="tel:+79826091705" class="call-round" aria-label="Позвонить">📞</a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <img src="logo.png" alt="Auto Room" class="hero-logo">
+    <h1><span>Автосервис</span> Auto Room<br>на Эльмаше</h1>
+    <p class="lead">Ремонт двигателя и ходовой, ТО и замена масла, компьютерная диагностика, шиномонтаж и развал-схождение. Совхозная, 16н.</p>
+    <div class="actions">
+      <a href="tel:+79826091705" class="btn btn-red">📞 Позвонить и записаться</a>
+      <a href="https://wa.me/79826091705" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://t.me/+79826091705" class="btn btn-outline" target="_blank" rel="noopener">Telegram</a>
+    </div>
+    <div class="facts">
+      <div class="fact"><span class="star">★</span> <b>5.0</b> в 2ГИС</div>
+      <div class="fact"><span class="star">★</span> <b>4,9</b> в Яндексе · 103 оценки</div>
+      <div class="fact">Каждый день <b>9:00–20:00</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="services">
+  <div class="wrap">
+    <h2>Наши <span>услуги</span></h2>
+    <p class="sub">Запись по телефону. Запчасти и комплектующие — под заказ.</p>
+
+    <div class="services">
+      <div class="svc">
+        <h3><i>⚙️</i>Двигатель</h3>
+        <ul>
+          <li>Ремонт бензиновых и дизельных двигателей</li>
+          <li>Ремонт ГБЦ</li>
+          <li>Замена ГРМ</li>
+          <li>Гильзовка</li>
+          <li>Раскоксовка</li>
+          <li>Эндоскопия двигателя</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <h3><i>🔧</i>Ходовая и тормоза</h3>
+        <ul>
+          <li>Ремонт ходовой части</li>
+          <li>Ремонт пневмоподвески</li>
+          <li>Ремонт тормозной системы</li>
+          <li>Замена колодок</li>
+          <li>Ремонт сцепления</li>
+          <li>Ремонт карданных валов</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <h3><i>🛢️</i>ТО и диагностика</h3>
+        <ul>
+          <li>Полное сервисное обслуживание</li>
+          <li>Замена масла</li>
+          <li>Компьютерная диагностика</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <h3><i>⛽</i>Топливная система</h3>
+        <ul>
+          <li>Ремонт топливной системы</li>
+          <li>Ремонт дизельной топливной системы</li>
+          <li>Чистка форсунок</li>
+          <li>Промывка инжектора</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <h3><i>🛞</i>Колёса</h3>
+        <ul>
+          <li>Шиномонтаж</li>
+          <li>Развал-схождение</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <h3><i>⚡</i>Другие работы</h3>
+        <ul>
+          <li>Ремонт стартеров и генераторов</li>
+          <li>Обслуживание кондиционеров</li>
+          <li>Ремонт выхлопной системы</li>
+          <li>Удаление катализаторов</li>
+          <li>Сварочные работы</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="svc-cta">
+      <a href="tel:+79826091705" class="btn btn-red">📞 Записаться: +7 982 609-17-05</a>
+      <span>или напишите в <a href="https://wa.me/79826091705" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:underline">WhatsApp</a></span>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="why">
+  <div class="wrap">
+    <h2>Почему <span>мы</span></h2>
+
+    <div class="why">
+      <div class="why-card">
+        <div class="num">5.0<small> ★</small></div>
+        <h3>Рейтинг в 2ГИС</h3>
+        <p>51 отзыв</p>
+      </div>
+      <div class="why-card">
+        <div class="num">4,9<small> ★</small></div>
+        <h3>Рейтинг в Яндексе</h3>
+        <p>103 оценки</p>
+      </div>
+      <div class="why-card">
+        <div class="num">100%</div>
+        <h3>Отзывы о персонале</h3>
+        <p>положительные — по данным Яндекса (22 отзыва)</p>
+      </div>
+      <div class="why-card">
+        <div class="num">100%</div>
+        <h3>Отзывы о ремонте</h3>
+        <p>положительные — по данным Яндекса (12 отзывов)</p>
+      </div>
+      <div class="why-card">
+        <div class="num">7<small> дней</small></div>
+        <h3>Работаем каждый день</h3>
+        <p>с 9:00 до 20:00, без выходных</p>
+      </div>
+      <div class="why-card">
+        <div class="num">📶</div>
+        <h3>Wi-Fi для клиентов</h3>
+      </div>
+      <div class="why-card">
+        <div class="num">☕</div>
+        <h3>Кафе</h3>
+      </div>
+      <div class="why-card">
+        <div class="num">💳</div>
+        <h3>Способы оплаты</h3>
+        <p>карта, наличные, перевод, QR-код, через банк</p>
+      </div>
+    </div>
+
+    <div class="brands-title">Обслуживаем марки</div>
+    <div class="brands">
+      <span class="brand-chip">Toyota</span>
+      <span class="brand-chip">Hyundai</span>
+      <span class="brand-chip">Kia</span>
+      <span class="brand-chip">Mazda</span>
+      <span class="brand-chip">Mitsubishi</span>
+      <span class="brand-chip">Nissan</span>
+      <span class="brand-chip">Honda</span>
+      <span class="brand-chip">Suzuki</span>
+      <span class="brand-chip">Volkswagen</span>
+      <span class="brand-chip">Škoda</span>
+      <span class="brand-chip">Audi</span>
+      <span class="brand-chip">Opel</span>
+      <span class="brand-chip">Renault</span>
+      <span class="brand-chip">Chevrolet</span>
+      <span class="brand-chip">Daewoo</span>
+      <span class="brand-chip">SsangYong</span>
+      <span class="brand-chip">Lifan</span>
+      <span class="brand-chip">Lancia</span>
+      <span class="brand-chip">ВАЗ</span>
+      <span class="brand-chip">УАЗ</span>
+      <span class="brand-chip">ТагАЗ</span>
+      <span class="brand-chip kind">японские</span>
+      <span class="brand-chip kind">корейские</span>
+      <span class="brand-chip kind">европейские</span>
+      <span class="brand-chip kind">отечественные</span>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="photos">
+  <div class="wrap">
+    <h2>Как у нас <span>внутри</span></h2>
+    <div class="gallery">
+      <img src="foto/1.jpg" alt="Стенд развал-схождения в Auto Room" loading="lazy">
+      <img src="foto/2.jpg" alt="Автомобиль на подъёмнике в Auto Room" loading="lazy">
+      <img src="foto/3.jpg" alt="Шиномонтажное оборудование в Auto Room" loading="lazy">
+      <img src="foto/4.jpg" alt="Ремонт двигателя в Auto Room" loading="lazy">
+      <img src="foto/5.jpg" alt="Двигатель на ремонте в Auto Room" loading="lazy">
+      <img src="foto/6.jpg" alt="Защитные чехлы на сиденье и руле в Auto Room" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="block" id="reviews">
+  <div class="wrap">
+    <h2>Отзывы <span>клиентов</span></h2>
+    <p class="sub">Отзывы с Яндекс Карт — без изменений.</p>
+
+    <div class="reviews">
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>С 2023 года пользуюсь услугами автосервиса. Сотрудники внимательные, знающие, вежливые, профессионалы своего дела!!! Спектр работ широкий, ребята справляются с любой задачей на отлично! Все разъясняют, рассказывают, оценивают перед проведением работ!</p>
+        <div class="who"><b>Екатерина</b><span>20 июня 2025</span></div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>Лучший автосервис, который я встречал. Хотя знаю половину Еката.<br>Андрей и Роман ни раз выручали с ремонтом и деталями для авто, доходило до того, что сами ездили за ними.<br>Цены на ремонт вполне реальные.<br>Мастера не навязывают не нужные услуги «на мамонта» и не меняют зимний воздух в шинах на летний))<br>Качество работы на высоте. Без проверки и гарантийного листа вас не выпустят))<br>Радует человеческое отношение и профессионализм работы.<br>В продаже имеются технические жидкости, что очень удобно.<br>Так же сделали удобную зону ожидания.<br>Рекомендую сервис всем друзьям и все довольны! Рекомендую и Вам 😉</p>
+        <div class="who"><b>Артур Загидуллин</b><span>24 апреля 2024</span></div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>Отличный сервис с человеческим подоходном. Обратился в моменте, что бы поменять защиту картера. Приняли практически сразу. После установки обнаружил вибрацию при работе на холостых. Мастер Константин быстро вывил, что защита задевает ролик кондея и тут же всё поправил, за что огромная благодарность! Сервис качественный, рекомендую.</p>
+        <div class="who"><b>EASY</b><span>18 марта 2024</span></div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>Плюс данного сервиса, что можно записаться на ремонт по звонку и заказать деталь для замены у них. Менял передний подшипник ступицы на Honda freed работа заняла всего 1,5 часа. До этого менял здесь масло в двигателе и вариаторе. Есть шиномонтаж</p>
+        <div class="who"><b>Евгений К.</b><span>9 июня 2024</span></div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>Один из немногих сервисов, который работает в выходные дни. При моей внезапной проблеме отнеслись с пониманием, оперативно помогли. Ценовая политика тоже порадовала. Спасибо огромное.</p>
+        <div class="who"><b>Юлия Казора</b><span>25 августа 2024</span></div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>Отличный автосервис, адекватные цены на запчасти и работу. Все делают на «совесть».</p>
+        <div class="who"><b>Андрей Камнев</b><span>30 сентября 2025</span></div>
+      </div>
+    </div>
+
+    <div class="more-reviews">
+      <a href="https://yandex.ru/maps/org/auto_room/209901292267/reviews/" class="btn btn-outline" target="_blank" rel="noopener">Все отзывы в Яндекс Картах</a>
+      <a href="https://2gis.ru/ekaterinburg/firm/70000001066739588/tab/reviews" class="btn btn-outline" target="_blank" rel="noopener">Все отзывы в 2ГИС</a>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="contacts">
+  <div class="wrap">
+    <h2>Как нас <span>найти</span></h2>
+    <p class="sub">Эльмаш, Совхозная, 16н. Нажмите на карту или на кнопку ниже, чтобы построить маршрут.</p>
+
+    <div class="find">
+      <div class="info">
+        <div class="row">
+          <small>Адрес</small>
+          <div class="big">Екатеринбург, Совхозная, 16н</div>
+          <div class="note">Жилой район Эльмаш</div>
+        </div>
+        <div class="row">
+          <small>Время работы</small>
+          <div class="big">Каждый день 9:00–20:00</div>
+        </div>
+        <div class="row">
+          <small>Телефон</small>
+          <a href="tel:+79826091705" class="big">+7 982 609-17-05</a>
+        </div>
+        <div class="row">
+          <small>Написать</small>
+          <div class="links">
+            <a href="https://wa.me/79826091705" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="https://t.me/+79826091705" target="_blank" rel="noopener">Telegram</a>
+            <a href="mailto:auto_room96@mail.ru">auto_room96@mail.ru</a>
+          </div>
+        </div>
+        <div class="map-btns">
+          <a href="https://2gis.ru/ekaterinburg/firm/70000001066739588" class="btn btn-red" target="_blank" rel="noopener">Открыть в 2ГИС</a>
+          <a href="https://yandex.ru/maps/?pt=60.632487,56.909026&amp;z=17&amp;l=map" class="btn btn-outline" target="_blank" rel="noopener">Открыть в Яндекс Картах</a>
+        </div>
+      </div>
+
+      <div class="map">
+        <iframe src="https://yandex.ru/map-widget/v1/?ll=60.632487%2C56.909026&amp;z=16&amp;pt=60.632487%2C56.909026%2Cpm2rdl" title="Auto Room на Яндекс Картах" loading="lazy" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© Auto Room — автосервис, Екатеринбург, Совхозная, 16н</span>
+    <a href="tel:+79826091705">+7 982 609-17-05</a>
+  </div>
+</footer>
+
+</body>
+</html>
