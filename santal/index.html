@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сантал — ресторан, кальян, караоке · Екатеринбург, Ткачей 17</title>
+<meta name="description" content="Сантал — кухня, хука, караоке на Ткачей, 17. Мясо на углях, кальяны, коктейли, летняя веранда. Заказ столиков: +7 982 632-33-00.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Цвета логотипа: чёрный, белый и немного красного (точки и огонёк на дереве) */
+  :root {
+    --bg: #0e0e0f;        /* фон — чёрный, как панель вывески */
+    --panel: #18181a;     /* карточки */
+    --line: #2a2a2d;
+    --gold: #d1342f;      /* главный акцент — красный, как точки на вывеске */
+    --gold-2: #ffffff;    /* второй акцент — чистый белый, как буквы логотипа */
+    --red: #d1342f;
+    --ink: #f4f4f4;       /* текст — белый */
+    --muted: #a9a9ad;     /* серый */
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Manrope', sans-serif; font-weight: 500; line-height: 1.6; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Шапка ---------- */
+  header { position: sticky; top: 0; z-index: 20; background: rgba(18,18,21,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .head { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 20px; }
+  /* название как на вывеске: округлые буквы, «т» красная (на вывеске на её месте дерево с красным огоньком) */
+  .brand { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 27px; letter-spacing: .02em; line-height: 1; }
+  .brand b { color: var(--red); font-weight: 700; }
+  nav { display: flex; gap: 26px; font-size: 15px; color: var(--muted); }
+  nav a:hover { color: var(--gold-2); }
+  .head-tel { font-weight: 600; white-space: nowrap; }
+  .head-tel:hover { color: var(--gold-2); }
+
+  /* ---------- Кнопки ---------- */
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 15px 28px; border-radius: 3px; font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; transition: background .2s, color .2s, border-color .2s; }
+  .btn-gold { background: var(--red); color: #fff; }
+  .btn-gold:hover { background: #b12a26; }
+  .btn-line { border: 1px solid rgba(255,255,255,.45); color: #fff; }
+  .btn-line:hover { border-color: #fff; background: rgba(255,255,255,.08); }
+
+  /* ---------- Первый экран: логотип ---------- */
+  .hero { position: relative; text-align: center; padding: 88px 0 96px; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; inset: 0; background: url(img/y17.jpg) center/cover; opacity: .2; filter: grayscale(1); }
+  /* затемнение: по краям и плавный уход в чёрный внизу, чтобы не было резкой границы со следующим блоком */
+  .hero::after { content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(to bottom, transparent 55%, var(--bg) 100%),
+      radial-gradient(ellipse at center, transparent 0%, var(--bg) 78%); }
+  .hero + section.block { border-top: 0; }
+  .hero > .wrap { position: relative; z-index: 2; }
+  /* дым: холст поверх фото, но под логотипом и кнопками */
+  .smoke { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;
+    /* маска: дым плавно растворяется сверху и снизу, без резкой линии */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 70%, transparent 100%); }
+  /* логотип вырезан с вывески, фон сделан прозрачным */
+  .hero-logo { width: 100%; max-width: 520px; margin: 0 auto; }
+  .hero p.lead { margin: 26px auto 0; max-width: 560px; font-size: 18px; color: var(--muted); }
+  .hero .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
+  .hero .facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin-top: 28px; font-size: 15px; color: var(--muted); }
+  .hero .facts { gap: 0; }
+  .hero .facts span { padding: 0 16px; }
+  .hero .facts span + span { border-left: 1px solid #3a3a3d; }
+
+  /* ---------- Блоки ---------- */
+  section.block { padding: 88px 0; border-top: 1px solid var(--line); }
+  .block h2 { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: clamp(30px, 4.4vw, 44px); line-height: 1.15; }
+  .block h2 b { font-weight: 700; }
+  /* маленькая красная подпись над заголовком — как красные точки на вывеске */
+  .block h2::before { content: attr(data-k); display: block; margin-bottom: 14px; font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--red); }
+  .block .sub { margin-top: 10px; color: var(--muted); max-width: 620px; }
+
+  /* ---------- Меню ---------- */
+  /* вкладки меню — просто слова с красной чертой под активным, без «таблеток» */
+  .tabs { display: flex; flex-wrap: wrap; gap: 4px 26px; margin-top: 36px; border-bottom: 1px solid var(--line); }
+  .tab { padding: 10px 0; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; color: var(--muted); font: inherit; font-size: 15px; cursor: pointer; }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--ink); border-bottom-color: var(--red); }
+  .menu-cat { display: none; margin-top: 28px; }
+  /* карточки блюд: фото сверху, под ним название, цена, вес и описание */
+  .menu-cat.active { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px 24px; }
+  .dish { display: flex; flex-direction: column; }
+  .dish img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px; background: var(--panel); }
+  .dish-body { padding-top: 14px; }
+  /* плавная смена раздела меню: блюда мягко проявляются и чуть поднимаются, по очереди */
+  .menu-cat.active .dish { animation: dishIn .45s ease both; animation-delay: calc(var(--i, 0) * 35ms); }
+  @keyframes dishIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .tab { transition: color .25s, border-color .25s; }
+  @media (prefers-reduced-motion: reduce) { .menu-cat.active .dish { animation: none; } }
+  .dish-head { display: flex; align-items: baseline; gap: 14px; }
+  .dish h3 { font-size: 17px; font-weight: 600; }
+  .dish .w { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; }
+  .dish .p { margin-left: auto; color: var(--gold-2); font-weight: 600; white-space: nowrap; }
+  .dish p { margin-top: 4px; font-size: 14px; color: var(--muted); }
+  .menu-note { margin-top: 24px; font-size: 13px; color: var(--muted); }
+
+  /* ---------- Что у нас есть ---------- */
+  /* особенности — список с тонкими линиями, как в бумажном меню, без одинаковых карточек */
+  .feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 40px; margin-top: 36px; }
+  .feat { border-top: 1px solid var(--line); padding: 18px 0 20px; }
+  .feat h3 { font-size: 17px; font-weight: 600; color: var(--ink); }
+  .feat p { margin-top: 4px; font-size: 14px; color: var(--muted); }
+  .interior { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 220px 220px; gap: 8px; margin-top: 36px; }
+  .interior img { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; }
+  .interior img:first-child { grid-row: span 2; }
+
+  /* ---------- Отзывы ---------- */
+  .rating { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+  .rating { gap: 0; }
+  .rating div { padding: 4px 22px 4px 0; margin-right: 22px; font-size: 15px; color: var(--muted); }
+  .rating div + div { border-left: 1px solid var(--line); padding-left: 22px; }
+  .rating b { font-size: 26px; color: var(--ink); font-family: 'Comfortaa', sans-serif; }
+  .reviews { columns: 3 300px; column-gap: 40px; margin-top: 36px; }
+  /* отзывы — как цитаты: красная черта слева вместо карточек */
+  .review { break-inside: avoid; border-left: 2px solid var(--red); padding: 2px 0 2px 20px; margin-bottom: 36px; }
+  .review .stars { color: var(--red); letter-spacing: 2px; }
+  .interior img { filter: grayscale(.35); }
+  .review p { margin-top: 10px; font-size: 15px; }
+  .review .who { margin-top: 12px; font-size: 14px; color: var(--muted); }
+  .review .who b { color: var(--ink); }
+  .more { margin-top: 12px; }
+
+  /* ---------- Контакты ---------- */
+  .contacts { display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; margin-top: 36px; }
+  .c-info { display: flex; flex-direction: column; gap: 22px; }
+  .c-info small { display: block; font-size: 13px; color: var(--muted); letter-spacing: .6px; text-transform: uppercase; }
+  .c-info .big { font-size: 20px; font-weight: 600; }
+  .hours { display: grid; grid-template-columns: auto 1fr; gap: 4px 18px; font-size: 15px; }
+  .hours span:nth-child(odd) { color: var(--muted); }
+  .c-info .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .map { position: relative; min-height: 420px; border-radius: 3px; overflow: hidden; border: 1px solid var(--line); filter: grayscale(1) contrast(1.05); }
+  .map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  footer { border-top: 1px solid var(--line); padding: 26px 0; font-size: 14px; color: var(--muted); }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+
+  /* ---------- Телефон ---------- */
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .hero { padding: 56px 0 64px; }
+    .hero .actions .btn, .c-info .btns .btn { flex: 1 1 100%; }
+    .hero .facts { flex-direction: column; gap: 4px; }
+    .hero .facts span + span { border-left: 0; }
+    .rating div, .rating div + div { border-left: 0; padding-left: 0; }
+    section.block { padding: 60px 0; }
+    .menu-cat.active { grid-template-columns: 1fr 1fr; gap: 28px 14px; }
+    .dish h3 { font-size: 15px; }
+    .dish-head { flex-direction: column; gap: 2px; }
+    .dish .p { margin-left: 0; order: 3; }
+    .dish p { font-size: 13px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .feats { grid-template-columns: 1fr 1fr; }
+    .interior { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 140px 140px; }
+    .interior img:first-child { grid-row: auto; grid-column: span 2; }
+    .contacts { grid-template-columns: 1fr; }
+    .map { min-height: 320px; }
+  }
+  @media (max-width: 520px) {
+    .wrap { padding: 0 18px; }
+    .feats { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap head">
+    <a href="#top" class="brand">сан<b>т</b>ал</a>
+    <nav>
+      <a href="#menu">Меню</a>
+      <a href="#place">О месте</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a href="tel:+79826323300" class="head-tel">+7 982 632-33-00</a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <canvas class="smoke" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <img src="img/logo.png" alt="Сантал — кухня, хука, караоке" class="hero-logo">
+    <p class="lead">Ресторан, лаунж-бар и караоке на Ткачей, 17. Мясо на углях, кальяны, коктейли и летняя веранда.</p>
+    <div class="actions">
+      <a href="tel:+79826323300" class="btn btn-gold">Заказать столик</a>
+      <a href="#menu" class="btn btn-line">Смотреть меню</a>
+    </div>
+    <div class="facts">
+      <span>5,0 в Яндексе · 67 оценок</span>
+      <span>Караоке</span>
+      <span>Пт и сб — до 04:00</span>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="menu">
+  <div class="wrap">
+    <h2 data-k="Меню">Кухня, гриль и бар</h2>
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-cat="cat0">Закуски</button>
+      <button class="tab" data-cat="cat1">Шашлык &amp; Гриль</button>
+      <button class="tab" data-cat="cat2">Горячие блюда</button>
+      <button class="tab" data-cat="cat3">Морепродукты</button>
+      <button class="tab" data-cat="cat4">Бургеры</button>
+      <button class="tab" data-cat="cat5">Салаты</button>
+      <button class="tab" data-cat="cat6">Супы</button>
+      <button class="tab" data-cat="cat7">Гарниры</button>
+      <button class="tab" data-cat="cat8">Соусы</button>
+      <button class="tab" data-cat="cat9">Хлеб</button>
+      <button class="tab" data-cat="cat10">Десерты</button>
+      <button class="tab" data-cat="cat11">Напитки</button>
+    </div>
+    <div class="menu-cat active" id="cat0">
+      <div class="dish"><img src="img/menu/m2.jpg" alt="Батат фри с трюфельным соусом" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Батат фри с трюфельным соусом</h3><span class="p">380 ₽</span></div><span class="w">180 г · 367 ккал</span><p>Хрустящие ломтики батата, обжаренные до золотистой корочки, дополнены нежным трюфельным соусом. Сверху блюдо посыпано пармезаном, который придаёт ему насыщенный вкус</p></div></div>
+      <div class="dish"><img src="img/menu/m13.jpg" alt="Ломтики вяленой говядины в пряных специях" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Ломтики вяленой говядины в пряных специях</h3><span class="p">650 ₽</span></div><span class="w">80 г</span></div></div>
+      <div class="dish"><img src="img/menu/m26.jpg" alt="Пивная тарелка" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Пивная тарелка</h3><span class="p">890 ₽</span></div><span class="w">710 г</span><p>Пивная тарелка из куриных крыльев, обжаренных в соусе сладкий чили, с хрустящим картофелем фри и ароматными чесночными гренками</p></div></div>
+      <div class="dish"><img src="img/menu/m27.jpg" alt="Пита с креветками" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Пита с креветками</h3><span class="p">520 ₽</span></div><span class="w">260 г</span><p>Хрустящая тортилья с начинкой из томатного соуса в сочетании с хрустящими солеными огурцами, ароматными креветками и нежным сыром моцарелла. Подается с острым соусом спайси</p></div></div>
+      <div class="dish"><img src="img/menu/m28.jpg" alt="Пита с куриным бедром" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Пита с куриным бедром</h3><span class="p">420 ₽</span></div><span class="w">260 г</span><p>Хрустящая тортилья с начинкой из томатного соуса в сочетании с хрустящими солеными огурцами, ароматным куриным бедром и нежным сыром моцарелла. Подается с острым соусом спайси</p></div></div>
+      <div class="dish"><img src="img/menu/m29.jpg" alt="Пита с овощами" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Пита с овощами</h3><span class="p">360 ₽</span></div><span class="w">260 г</span><p>Хрустящая тортилья с начинкой из томатного соуса в сочетании с хрустящими солеными огурцами и нежным сыром моцарелла. Подается с острым соусом спайси</p></div></div>
+      <div class="dish"><img src="img/menu/m32.jpg" alt="Сельдь слабосолёная с картофелем" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Сельдь слабосолёная с картофелем</h3><span class="p">350 ₽</span></div><span class="w">260 г</span><p>Ароматная слабосолёная сельдь с теплым картофелем, красным луком и укропом</p></div></div>
+      <div class="dish"><img src="img/menu/m34.jpg" alt="Стручки Эдамаме с солью" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Стручки Эдамаме с солью</h3><span class="p">350 ₽</span></div><span class="w">150 г</span><p>Нежные стручки эдамаме с растительным маслом и чесноком, создают гармоничное сочетание вкусов. Блюдо обладает лёгким сливочным оттенком и пикантной ноткой</p></div></div>
+      <div class="dish"><img src="img/menu/m35.jpg" alt="Сыр сулугуни в панировке" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Сыр сулугуни в панировке</h3><span class="p">350 ₽</span></div><span class="w">150 г</span><p>Сырные палочки в панировке, обжаренные до хруста, с тянущимся сулугуни внутри</p></div></div>
+      <div class="dish"><img src="img/menu/m36.jpg" alt="Сыр чечил жареный" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Сыр чечил жареный</h3><span class="p">250 ₽</span></div><span class="w">40 г</span><p>Хрустящий сыр чечил в пикантной паприке</p></div></div>
+      <div class="dish"><img src="img/menu/m37.jpg" alt="Сырная тарелка" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Сырная тарелка</h3><span class="p">650 ₽</span></div><span class="w">180 г</span><p>Сырная тарелка — это изысканное сочетание различных видов сыра: чечил, камамбер, пармезан и брынза. Подаётся с медом и грецкими орехами, что добавляет сладкий вкус</p></div></div>
+      <div class="dish"><img src="img/menu/m39.jpg" alt="Тарелка свежих овощей" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Тарелка свежих овощей</h3><span class="p">360 ₽</span></div><span class="w">210 г</span><p>Свежие, хрустящие и полезные овощи. В составе данной закуски: болгарский сладкий перец, свежий огурец, ароматные помидоры, укроп, петрушка, кинза</p></div></div>
+      <div class="dish"><img src="img/menu/m43.jpg" alt="Фисташки" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Фисташки</h3><span class="p">600 ₽</span></div><span class="w">150 г</span></div></div>
+    </div>
+    <div class="menu-cat" id="cat1">
+      <div class="dish"><img src="img/menu/m10.jpg" alt="Крылья куриные" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Крылья куриные</h3><span class="p">550 ₽</span></div><span class="w">240 г</span><p>Шашлык из куриных крыльев — это вкусное и сочное блюдо, приготовленное из маринованных куриных крылышек, обжаренных до золотистой корочки на углях. Подаётся с красным крымским луком, а также с томатным соусом</p></div></div>
+      <div class="dish"><img src="img/menu/m14.jpg" alt="Люля из свиной шеи в лаваше" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Люля из свиной шеи в лаваше</h3><span class="p">590 ₽</span></div><span class="w">360 г</span><p>Сочно обжаренный кебаб из свиной шеи на мангале, завернутый в лаваш со свежими помидорами и соусом. Подаётся с красным луком.</p></div></div>
+      <div class="dish"><img src="img/menu/m15.jpg" alt="Люля из свиной шейки" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Люля из свиной шейки</h3><span class="p">490 ₽</span></div><span class="w">340 г</span><p>Люля из свиной шейки — это сочный и ароматный кебаб, приготовленный из фарша из свиной шейки. Мясо обладает нежной текстурой и насыщенным вкусом. Подаётся с красным крымским луком, а также с томатным соусом</p></div></div>
+      <div class="dish"><img src="img/menu/m16.jpg" alt="Люля из цыплёнка в армянском лаваше" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Люля из цыплёнка в армянском лаваше</h3><span class="p">550 ₽</span></div><span class="w">360 г</span><p>Сочно обжаренный кебаб из цыплёнка на мангале, завернутый в лаваш со свежими помидорами и соусом. Подаётся с красным луком.</p></div></div>
+      <div class="dish"><img src="img/menu/m52.jpg" alt="Шашлык из куриного филе" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Шашлык из куриного филе</h3><span class="p">690 ₽</span></div><span class="w">270 г</span><p>Куриное филе, маринованное в специях и травах, обжаривается на углях до золотистой корочки, сохраняя внутри все соки и нежность. Подаётся шашлык с ярким красным крымским луком, а также с насыщенным томатным соусом</p></div></div>
+      <div class="dish"><img src="img/menu/m53.jpg" alt="Шашлык из свиной шейки" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Шашлык из свиной шейки</h3><span class="p">690 ₽</span></div><span class="w">240 г</span><p>Свинина, маринованная в специях и травах, обжаривается на углях до золотистой корочки, сохраняя внутри все соки и нежность. Подаётся шашлык с ярким красным крымским луком, а также с насыщенным томатным соусом</p></div></div>
+    </div>
+    <div class="menu-cat" id="cat2">
+      <div class="dish"><img src="img/menu/m4.jpg" alt="Говяжьи щёчки с пюре" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Говяжьи щёчки с пюре</h3><span class="p">690 ₽</span></div><span class="w">250 г</span><p>Говяжьи щёчки очень мягкие и ароматные благодаря длительному тушению. Подаём с нежным картофельным пюре</p></div></div>
+      <div class="dish"><img src="img/menu/m24.jpg" alt="Паста с креветками" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Паста с креветками</h3><span class="p">690 ₽</span></div><span class="w">230 г</span><p>Нежная паста фетучини с ароматными креветками в сливочном соусе с пармезаном</p></div></div>
+    </div>
+    <div class="menu-cat" id="cat3">
+      <div class="dish"><img src="img/menu/m9.jpg" alt="Креветки в сливочном соусе" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Креветки в сливочном соусе</h3><span class="p">790 ₽</span></div><span class="w">240 г</span><p>Ароматные креветки в нежном сливочном соусе под пармезаном с хрустящей чиабаттой, обжаренной на гриле</p></div></div>
+      <div class="dish"><img src="img/menu/m17.jpg" alt="Мидии с сыром горгонзола" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Мидии с сыром горгонзола</h3><span class="p">1 080 ₽</span></div><span class="w">300 г</span><p>Мидии, томленные в сливочном соусе с пряным сыром горгонзола и соусом песто. Подается с хрустящей чиабаттой</p></div></div>
+      <div class="dish"><img src="img/menu/m21.jpg" alt="Нежный стейк лосося на гриле" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Нежный стейк лосося на гриле</h3><span class="p">1 350 ₽</span></div><span class="w">350 г</span><p>Нежный стейк из лосося на гриле с ароматными овощами на гарнир под нежным сливочным соусом</p></div></div>
+    </div>
+    <div class="menu-cat" id="cat4">
+      <div class="dish"><img src="img/menu/m42.jpg" alt="Фирменный бургер с нежными говяжьими щёчками" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Фирменный бургер с нежными говяжьими щёчками</h3><span class="p">890 ₽</span></div><span class="w">380 г</span><p>Бургер с говяжьими щёчками — нежные говяжьи щёчки, микс салата, солёные огурцы, сыр чеддр и перечный соус на мягкой булочке. Попробуйте и оцените сочетание ингредиентов!</p></div></div>
+      <div class="dish"><img src="img/menu/m49.jpg" alt="Чизбургер с цыпленком и картофелем фри" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Чизбургер с цыпленком и картофелем фри</h3><span class="p">590 ₽</span></div><span class="w">370 г</span><p>Чизбургер с цыплёнком и картофелем фри — сочная котлета из цыплёнка, микс салата, томаты, солёные огурцы и сырный соус на мягкой булочке, а в дополнение — хрустящий картофель фри. Попробуйте и оцените сочетание ингредиентов!</p></div></div>
+    </div>
+    <div class="menu-cat" id="cat5">
+      <div class="dish"><img src="img/menu/m5.jpg" alt="Греческий салат" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Греческий салат</h3><span class="p">580 ₽</span></div><span class="w">200 г · 266 ккал</span><p>Лёгкий и сытный салат из нарезанных свежих помидоров, огурцов, сладкого болгарского перца, красного крымского лука, оливок и маслин, а также сыра. Салат заправляем соусом песто собственного приготовления</p></div></div>
+      <div class="dish"><img src="img/menu/m30.jpg" alt="Салат из хрустящих баклажанов" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Салат из хрустящих баклажанов</h3><span class="p">450 ₽</span></div><span class="w">250 г · 332 ккал</span><p>Салат, в котором свежие спелые томаты сочетаются с обжаренными до золотистой корочки баклажанами. Баклажаны придают салату хрустящую текстуру и насыщенный вкус, а свежие томаты добавляют сочность и легкость. Украшаем рубленой зеленью и дробленым грец…</p></div></div>
+      <div class="dish"><img src="img/menu/m31.jpg" alt="Салат с тунцом в ореховом соусе" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Салат с тунцом в ореховом соусе</h3><span class="p">750 ₽</span></div><span class="w">270 г</span><p>Легкий салат с нежным обжаренным тунцом, в сочетании с хрустящим картофелем, миксом салата, отварным яйцом под ореховым соусом и водорослями чука</p></div></div>
+      <div class="dish"><img src="img/menu/m45.jpg" alt="Цезарь с креветками" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Цезарь с креветками</h3><span class="p">680 ₽</span></div><span class="w">200 г · 266 ккал</span><p>Классический салат, который сочетает в себе ароматные креветки, обжаренные на гриле, хрустящие листья салата Романо и ароматные гренки. Подаём с черри и пармезаном. Заправляем фирменным соусом</p></div></div>
+      <div class="dish"><img src="img/menu/m46.jpg" alt="Цезарь с курицей" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Цезарь с курицей</h3><span class="p">540 ₽</span></div><span class="w">200 г · 266 ккал</span><p>Классический салат, который сочетает в себе нежные кусочки куриного филе, хрустящие листья салата романо и айсберг, а также ароматные гренки. Подаём с черри и пармезаном. Заправляем фирменным соусом</p></div></div>
+    </div>
+    <div class="menu-cat" id="cat6">
+      <div class="dish"><img src="img/menu/m3.jpg" alt="Борщ с говяжьими щёчками" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Борщ с говяжьими щёчками</h3><span class="p">550 ₽</span></div><span class="w">500 г · 588 ккал</span><p>Наваристый и ароматный суп, приготовленный по традиционному домашнему рецепту. Основу блюда составляют нежные говяжьи щечки, которые долго тушатся до мягкости, придавая борщу насыщенный вкус. Борщ подаём со сметаной, зелёным луком, бородинским хлебом</p></div></div>
+      <div class="dish"><img src="img/menu/m12.jpg" alt="Куриный суп" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Куриный суп</h3><span class="p">400 ₽</span></div><span class="w">380 г</span><p>Насладитесь классическим вкусом нашего супа — нежное куриное филе, ароматная морковь и яичная лапша в насыщенном курином бульоне создают гармоничное сочетание. Петрушка и чёрный перец добавляют блюду пикантности и яркости</p></div></div>
+      <div class="dish"><img src="img/menu/m20.jpg" alt="Наваристая уха" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Наваристая уха</h3><span class="p">470 ₽</span></div><span class="w">320 г</span><p>Насыщенный рыбный суп, приготовленный из свежего лосося и фермерских овощей. Украшаем рубленой ароматной зеленью</p></div></div>
+      <div class="dish"><img src="img/menu/m41.jpg" alt="Тыквенный крем-суп с креветкой" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Тыквенный крем-суп с креветкой</h3><span class="p">480 ₽</span></div><span class="w">260 г</span><p>Изысканное блюдо, объединяющее в себе нежный вкус тыквы и морепродуктов. Суп обладает бархатистой текстурой благодаря сливкам и мускатному ореху. Украшаем суп бальзамическим соусом</p></div></div>
+    </div>
+    <div class="menu-cat" id="cat7">
+      <div class="dish"><img src="img/menu/m1.jpg" alt="Баклажаны на гриле" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Баклажаны на гриле</h3><span class="p">240 ₽</span></div><span class="w">150 г</span><p>Нежный баклажан в золотистой корочке с ароматом дымка. Подаётся с рубленой петрушкой</p></div></div>
+      <div class="dish"><img src="img/menu/m6.jpg" alt="Кабачки на гриле" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Кабачки на гриле</h3><span class="p">250 ₽</span></div><span class="w">130 г</span><p>Сочный и нежный кабачок в золотистой корочке с ароматом дымка. Сверху украшен рубленой петрушкой</p></div></div>
+      <div class="dish"><img src="img/menu/m7.jpg" alt="Картофель на гриле" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Картофель на гриле</h3><span class="p">250 ₽</span></div><span class="w">150 г</span><p>Ароматный картофель обжаренный на гриле</p></div></div>
+      <div class="dish"><img src="img/menu/m8.jpg" alt="Картофель фри" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Картофель фри</h3><span class="p">250 ₽</span></div><span class="w">100 г</span><p>Картофель фри с золотистой хрустящей корочкой. Советуем заказать соус к картофелю</p></div></div>
+      <div class="dish"><img src="img/menu/m11.jpg" alt="Кукуруза, обожжённая на гриле" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Кукуруза, обожжённая на гриле</h3><span class="p">250 ₽</span></div><span class="w">240 г</span><p>Кукуруза, приготовленная на открытом огне, идеально подходит как гарнир к мясным блюдам, а также может быть самостоятельным угощением</p></div></div>
+      <div class="dish"><img src="img/menu/m23.jpg" alt="Овощи на гриле" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Овощи на гриле</h3><span class="p">350 ₽</span></div><span class="w">200 г</span><p>Сочные и хрустящие овощи, приготовленные на берёзовых углях. Подаём на тонком лаваше</p></div></div>
+      <div class="dish"><img src="img/menu/m51.jpg" alt="Шампиньоны на гриле" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Шампиньоны на гриле</h3><span class="p">290 ₽</span></div><span class="w">135 г</span><p>Свежие шампиньоны обжариваем на гриле до готовности. Подаём с тонким кусочком лаваша</p></div></div>
+    </div>
+    <div class="menu-cat" id="cat8">
+      <div class="dish"><img src="img/menu/m25.jpg" alt="Перечный соус" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Перечный соус</h3><span class="p">100 ₽</span></div><span class="w">40 г</span><p>Перечный соус - это абсолютная классика, он гармонично дополняет мясной вкус и придает блюду особенный аромат. Готовится на основе перца</p></div></div>
+      <div class="dish"><img src="img/menu/m33.jpg" alt="Спайси соус" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Спайси соус</h3><span class="p">100 ₽</span></div><span class="w">40 г</span><p>Этот соус — идеальное сочетание пряностей и пикантности, которое добавит яркий акцент к любому блюду</p></div></div>
+      <div class="dish"><img src="img/menu/m38.jpg" alt="Сырный соус" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Сырный соус</h3><span class="p">100 ₽</span></div><span class="w">40 г</span><p>Кремовый и насыщенный сырный соус идеально подойдёт для множества закусок и блюд</p></div></div>
+      <div class="dish"><img src="img/menu/m40.jpg" alt="Томатный соус" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Томатный соус</h3><span class="p">100 ₽</span></div><span class="w">40 г</span><p>Классический и популярный томатный соус. Готовим на основе томатной пасты, добавляем яркие приправы и соль. Отлично дополнит и преобразит блюдо на вашем столе</p></div></div>
+      <div class="dish"><img src="img/menu/m47.jpg" alt="Чесночный соус" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Чесночный соус</h3><span class="p">100 ₽</span></div><span class="w">40 г</span><p>Яркий и ароматный соус на основе домашнего майонеза с добавлением чеснока, свежей зелени и пряных приправ</p></div></div>
+    </div>
+    <div class="menu-cat" id="cat9">
+      <div class="dish"><img src="img/menu/m44.jpg" alt="Хлеб бородинский" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Хлеб бородинский</h3><span class="p">40 ₽</span></div><span class="w">60 г</span><p>Бородинский хлеб — классика русской выпечки. Насыщенный вкус и аромат этого хлеба покорят вас с первого кусочка.</p></div></div>
+      <div class="dish"><img src="img/menu/m48.jpg" alt="Чиабатта" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Чиабатта</h3><span class="p">80 ₽</span></div><span class="w">60 г · 167 ккал</span><p>Наш хрустящий хлеб — идеальное дополнение к любому блюду</p></div></div>
+    </div>
+    <div class="menu-cat" id="cat10">
+      <div class="dish"><img src="img/menu/m22.jpg" alt="Нежный торт медовик" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Нежный торт медовик</h3><span class="p">390 ₽</span></div><span class="w">110 г</span><p>Приготовлен из нежных коржей, пропитанных натуральным домашним медом, что придает ему невероятный аромат</p></div></div>
+      <div class="dish"><img src="img/menu/m50.jpg" alt="Чуррос с шоколадным соусом" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Чуррос с шоколадным соусом</h3><span class="p">280 ₽</span></div><span class="w">140 г</span><p>Хрустящие палочки из заварного теста в сочетании с шоколадным соусом</p></div></div>
+    </div>
+    <div class="menu-cat" id="cat11">
+      <div class="dish"><img src="img/menu/m18.jpg" alt="Морс из клюквы" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Морс из клюквы</h3><span class="p">460 ₽</span></div><span class="w">500 мл</span><p>Освежающий напиток, который идеально утоляет жажду и радует своим ягодным вкусом. Для его приготовления используем спелые ягоды клюквы, которые придают морсу яркий цвет и насыщенный аромат</p></div></div>
+      <div class="dish"><img src="img/menu/m19.jpg" alt="Морс из смородины" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Морс из смородины</h3><span class="p">460 ₽</span></div><span class="w">500 мл</span><p>Освежающий напиток, который идеально утоляет жажду и радует своим ягодным вкусом. Для его приготовления используем спелые ягоды смородины, которые придают морсу яркий цвет и насыщенный аромат</p></div></div>
+    </div>
+    <p class="menu-note">Меню доставки (Яндекс Еда). На месте блюда и цены могут отличаться от указанных.</p>
+  </div>
+</section>
+
+<section class="block" id="place">
+  <div class="wrap">
+    <h2 data-k="О месте">Что у нас есть</h2>
+    <div class="feats">
+      <div class="feat"><h3>Караоке</h3><p>Танцпол, проектор</p></div>
+      <div class="feat"><h3>Кальян</h3><p>Кальян-бар</p></div>
+      <div class="feat"><h3>Летняя веранда</h3><p>Столики на улице</p></div>
+      <div class="feat"><h3>Гриль</h3><p>Шашлык, люля-кебаб, стейки на углях</p></div>
+      <div class="feat"><h3>Спортивные трансляции</h3><p>5 экранов</p></div>
+      <div class="feat"><h3>Игры</h3><p>Настольные игры, игровые приставки</p></div>
+      <div class="feat"><h3>Банкеты</h3><p>Банкетный зал: дни рождения, корпоративы, семейные ужины</p></div>
+      <div class="feat"><h3>Доставка и навынос</h3><p>Яндекс Еда, Delivery Club, кофе и чай с собой</p></div>
+      <div class="feat"><h3>Бизнес-ланч</h3><p>Заказ столиков по телефону</p></div>
+      <div class="feat"><h3>Подарочный сертификат</h3><p>Скидочная карта</p></div>
+      <div class="feat"><h3>Бар</h3><p>Коктейли, винная карта</p></div>
+      <div class="feat"><h3>Удобства</h3><p>Wi-Fi, бесплатная парковка, можно с собакой</p></div>
+    </div>
+    <div class="interior">
+      <img src="img/y17.jpg" alt="Зал ресторана Сантал" loading="lazy">
+      <img src="img/y5.jpg" alt="Бар Сантал" loading="lazy">
+      <img src="img/y2.jpg" alt="Зал с экранами" loading="lazy">
+      <img src="img/y19.jpg" alt="Летняя веранда" loading="lazy">
+      <img src="img/y18.jpg" alt="Кальян на веранде" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="block" id="reviews">
+  <div class="wrap">
+    <h2 data-k="Отзывы">Что пишут гости</h2>
+    <div class="rating">
+      <div><b>5,0</b> ★ в Яндексе · 67 оценок</div>
+      <div><b>5,0</b> ★ в 2ГИС · 62 отзыва</div>
+      <div><b>100%</b> положительных о еде, персонале и атмосфере (Яндекс)</div>
+    </div>
+    <div class="reviews">
+      <div class="review"><div class="stars">★★★★★</div><p>Были в «Сантале» на выходных и остались в полном восторге. Атмосфера невероятно стильная и уютная — интерьер сразу располагает к тому, чтобы расслабиться и забыть о городской суете. Кухня заслуживает отдельных комплиментов: мясо на углях просто тает во рту, а салат с хрустящими баклажанами — это какая-то магия! Но главная гордость этого заведения — его команда, которая создала для нас безупречный вечер. Менеджер Алина — невероятно гостеприимная и профессиональная! Встретила нас как самых дорогих гостей, помогла с лучшим столиком и моментально решила все организационные вопросы. Сервис на высшем уровне. Официант Анастасия — само очарование и внимательность. Очень позитивная, отлично ориентируется в меню, помогла определиться с выбором блюд и напитков. Подача была быстрой, а грязная посуда со стола исчезала незаметно. Кальянный мастер Мураз — настоящий профи своего дела! Угадал наши вкусовые предпочтения на все 100%, сделал очень дымный, вкусный и долгоиграющий кальян. Регулярно подходил и менял угли, за что отдельное спасибо. Вкусная еда, классная музыка, крутое караоке и такой душевный персонал — теперь мы ваши постоянные гости! Однозначно рекомендуем «Сантал» всем, кто хочет провести вечер в Екатеринбурге на высшем уровне.</p><div class="who"><b>Каин</b> · 13 сентября</div></div>
+      <div class="review"><div class="stars">★★★★★</div><p>Пришла впервые в это заведение и была приятно удивлена. Очень чисто, хороший летник, санузел чистый. Официант Светлана очень приятная девушка, обслужила качественно и быстро, несмотря на пятничный вечер. Ставлю 10/10, хочу сюда еще вернуться!</p><div class="who"><b>Лия</b> · 22 мая</div></div>
+      <div class="review"><div class="stars">★★★★★</div><p>Очень приятное заведение.Кухня здесь выше всяких похвал, всё очень вкусно и красиво подано. Коктейли - отдельный вид искусства, идеальный баланс и авторский подход. Ну и, конечно, кальяны — это просто лучшее, что я пробовала: мягко, ароматно и долгоиграюще.<br><br>Отдельное спасибо хочется сказать официантке<br>Карине — невероятно внимательная, тактичная и профессиональная девушка. Сразу чувствуется искренняя забота о гостях.<br>Обязательно вернусь снова</p><div class="who"><b>Мария Телепова</b> · 6 августа</div></div>
+      <div class="review"><div class="stars">★★★★★</div><p>Очень ждал открытия после ремонта! Обновлённый интерьер очень стильный и уютный, и главное что кухня осталась на столь же высоком уровне, а на баре как и раньше работает Дмитрий - персональная рекомендация!😁👍 Готовит супер-коктейли, очень вкусные напитки, а также и разговор поддержит, и что-то посоветует! Теперь за классной атмосферой - снова только туда!😎👌🏽</p><div class="who"><b>Павел</b> · 11 мая</div></div>
+      <div class="review"><div class="stars">★★★★★</div><p>Приятная атмосфера, быстрое и вежливое обслуживание, играет музыка, можно покурить кальян, большой выбор коктейлей, по вечерам караоке 🍹</p><div class="who"><b>Валерия С.</b> · 23 мая</div></div>
+      <div class="review"><div class="stars">★★★★★</div><p>Новый и стильный интерьер, вкусные блюда, быстрая подача.<br>Для приятного ожидания блюд, заказали чай со смородиной и голубикой - понравился, советую пить с сахаром, становится насыщеннее<br><br>Цезарь, карбонара и чизбургер хороши! А шоколадный фондан сделал вечер ещё приятнее<br><br>Спасибо вашему ресторану и персоналу в лице Анастасии</p><div class="who"><b>Антон Черепанов</b> · 12 сентября</div></div>
+    </div>
+    <div class="more"><a href="https://yandex.ru/maps/org/santal/12355994698/reviews/" class="btn btn-line" target="_blank" rel="noopener">Все отзывы в Яндекс Картах</a></div>
+  </div>
+</section>
+
+<section class="block" id="contacts">
+  <div class="wrap">
+    <h2>Как нас найти</h2>
+    <div class="contacts">
+      <div class="c-info">
+        <div><small>Адрес</small><div class="big">Екатеринбург, ул. Ткачей, 17</div><div>1 этаж · остановка «ЦПКиО»</div></div>
+        <div><small>Время работы</small>
+          <div class="hours">
+            <span>Пн–чт</span><span>12:00–24:00</span>
+            <span>Пт</span><span>12:00–04:00</span>
+            <span>Сб</span><span>14:00–04:00</span>
+            <span>Вс</span><span>14:00–24:00</span>
+          </div>
+        </div>
+        <div><small>Заказ столиков</small><a href="tel:+79826323300" class="big">+7 982 632-33-00</a></div>
+        <div class="btns">
+          <a href="tel:+79826323300" class="btn btn-gold">Позвонить</a>
+          <a href="https://max.ru/id6670527940_biz" class="btn btn-line" target="_blank" rel="noopener">MAX</a>
+          <a href="https://yandex.ru/maps/org/santal/12355994698/" class="btn btn-line" target="_blank" rel="noopener">Маршрут</a>
+        </div>
+      </div>
+      <div class="map">
+        <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=60.6281%2C56.8142%2C60.6381%2C56.8188&amp;layer=mapnik&amp;marker=56.816485%2C60.633113" title="Сантал на карте" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© Сантал — кухня · хука · караоке · Екатеринбург, ул. Ткачей, 17</span>
+    <a href="tel:+79826323300">+7 982 632-33-00</a>
+  </div>
+</footer>
+
+<script>
+  // Дым на первом экране: струйки поднимаются снизу из нескольких «источников»,
+  // закручиваются, расширяются и тают — как кальянный дым в полутёмном зале
+  (function () {
+    var canvas = document.querySelector('.smoke');
+    if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var ctx = canvas.getContext('2d');
+    var w, h, parts = [], sources = [];
+
+    // Шум: случайная «рваная» текстура, чтобы дым был с прожилками, а не ровным пятном
+    function makeNoise(size) {
+      var grid = [], g = 8;
+      for (var i = 0; i <= g; i++) { grid[i] = []; for (var j = 0; j <= g; j++) grid[i][j] = Math.random(); }
+      function smooth(t) { return t * t * (3 - 2 * t); }
+      function val(x, y, scale) {
+        var fx = x * scale, fy = y * scale, ix = Math.floor(fx) % g, iy = Math.floor(fy) % g;
+        var tx = smooth(fx - Math.floor(fx)), ty = smooth(fy - Math.floor(fy));
+        var a = grid[ix][iy], b = grid[ix + 1][iy], c = grid[ix][iy + 1], d = grid[ix + 1][iy + 1];
+        return (a + (b - a) * tx) + ((c + (d - c) * tx) - (a + (b - a) * tx)) * ty;
+      }
+      var cv = document.createElement('canvas'); cv.width = cv.height = size;
+      var cx = cv.getContext('2d'), img = cx.createImageData(size, size);
+      for (var y = 0; y < size; y++) for (var x = 0; x < size; x++) {
+        var u = x / size, v = y / size;
+        // несколько слоёв шума разного масштаба = «облачная» текстура
+        var n = val(u, v, 2) * 0.5 + val(u, v, 4) * 0.3 + val(u, v, 7.9) * 0.2;
+        var dx = u - 0.5, dy = v - 0.5, r = Math.sqrt(dx * dx + dy * dy) * 2;
+        var fall = Math.max(0, 1 - r); fall = fall * fall;   // к краям — в ноль, без жёстких границ
+        var a = Math.max(0, n - 0.35) * 1.6 * fall;
+        var k = (y * size + x) * 4;
+        img.data[k] = img.data[k + 1] = img.data[k + 2] = 235;
+        img.data[k + 3] = Math.min(255, a * 255);
+      }
+      cx.putImageData(img, 0, 0);
+      return cv;
+    }
+    var sprites = [makeNoise(160), makeNoise(160), makeNoise(160), makeNoise(160)];
+
+    function resize() {
+      w = canvas.width = canvas.offsetWidth;
+      h = canvas.height = canvas.offsetHeight;
+      // 3 источника дыма внизу экрана: слева, по центру и справа
+      sources = [w * 0.18, w * 0.52, w * 0.84];
+    }
+    function spawn(randomAge) {
+      var sx = sources[Math.floor(Math.random() * sources.length)] + (Math.random() - 0.5) * 80;
+      var p = {
+        x: sx, y: h + 40,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: -(0.35 + Math.random() * 0.45),      // скорость подъёма
+        size: 60 + Math.random() * 60,            // внизу струйка узкая…
+        grow: 0.35 + Math.random() * 0.35,        // …и расширяется по мере подъёма
+        rot: Math.random() * Math.PI * 2,
+        spin: (Math.random() - 0.5) * 0.004,      // медленное закручивание
+        phase: Math.random() * 100,
+        life: 0, max: 520 + Math.random() * 380,
+        sprite: sprites[Math.floor(Math.random() * sprites.length)]
+      };
+      if (randomAge) { // при загрузке страница сразу «в дыму», а не пустая
+        var age = Math.random() * p.max;
+        p.life = age; p.x += p.vx * age; p.y += p.vy * age; p.size += p.grow * age;
+      }
+      return p;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    for (var i = 0; i < 70; i++) parts.push(spawn(true));
+
+    function frame() {
+      ctx.clearRect(0, 0, w, h);
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        p.life++;
+        // завихрения: струйку плавно водит из стороны в сторону, выше — сильнее
+        var swirl = Math.sin((p.life + p.phase) / 60) * 0.35 * (p.life / p.max);
+        p.x += p.vx + swirl;
+        p.y += p.vy;
+        p.vy *= 0.999;                             // дым замедляется наверху
+        p.size += p.grow;
+        p.rot += p.spin;
+        var t = p.life / p.max;
+        // появляется быстро, исчезает медленно
+        var alpha = t < 0.12 ? t / 0.12 : Math.pow(1 - (t - 0.12) / 0.88, 1.6);
+        ctx.globalAlpha = Math.max(0, alpha) * 0.32;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.drawImage(p.sprite, -p.size / 2, -p.size / 2, p.size, p.size);
+        ctx.restore();
+        if (p.life > p.max) parts[i] = spawn(false);
+      }
+      requestAnimationFrame(frame);
+    }
+    frame();
+  })();
+
+  // номер каждого блюда в разделе — чтобы они появлялись по очереди, а не все разом
+  document.querySelectorAll('.menu-cat').forEach(function (cat) {
+    cat.querySelectorAll('.dish').forEach(function (d, i) { d.style.setProperty('--i', Math.min(i, 10)); });
+  });
+
+  // Вкладки меню: по клику показываем нужный раздел, остальные прячем
+  document.querySelectorAll('.tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
+      document.querySelectorAll('.menu-cat').forEach(function (c) { c.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.cat).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
