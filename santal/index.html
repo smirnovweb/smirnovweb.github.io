@@ -4,204 +4,446 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Сантал — ресторан, кальян, караоке · Екатеринбург, Ткачей 17</title>
-<meta name="description" content="Сантал — кухня, хука, караоке на Ткачей, 17. Мясо на углях, кальяны, коктейли, летняя веранда. Заказ столиков: +7 982 632-33-00.">
+<meta name="description" content="Сантал — кухня, хука, караоке на Ткачей, 17. Кальяны, коктейли, караоке, летняя веранда. Заказ столиков: +7 982 632-33-00.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Oswald:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* Цвета логотипа: чёрный, белый и немного красного (точки и огонёк на дереве) */
+  /* Цвета логотипа: чёрный, белый и немного красного */
   :root {
-    --bg: #0e0e0f;        /* фон — чёрный, как панель вывески */
-    --panel: #18181a;     /* карточки */
-    --line: #2a2a2d;
-    --gold: #d1342f;      /* главный акцент — красный, как точки на вывеске */
-    --gold-2: #ffffff;    /* второй акцент — чистый белый, как буквы логотипа */
+    --bg: #0b0b0c;
+    --panel: #161618;
+    --line: #262629;
     --red: #d1342f;
-    --ink: #f4f4f4;       /* текст — белый */
-    --muted: #a9a9ad;     /* серый */
+    --ink: #f4f4f4;
+    --muted: #9d9da2;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { background: var(--bg); color: var(--ink); font-family: 'Manrope', sans-serif; font-weight: 500; line-height: 1.6; }
   a { color: inherit; text-decoration: none; }
   img { display: block; max-width: 100%; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  /* Заголовки — узкий рубленый шрифт заглавными, как на афишах клубов */
+  .display { font-family: 'Oswald', sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: .02em; line-height: .95; }
+  /* маленькая подпись над заголовком: номер главы и название, красным */
+  .kicker { display: block; font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: .3em; text-transform: uppercase; color: var(--red); }
 
-  /* ---------- Шапка ---------- */
-  header { position: sticky; top: 0; z-index: 20; background: rgba(18,18,21,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-  .head { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 20px; }
-  /* название как на вывеске: округлые буквы, «т» красная (на вывеске на её месте дерево с красным огоньком) */
-  .brand { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 27px; letter-spacing: .02em; line-height: 1; }
+  /* ---------- Шапка: прозрачная поверх первого экрана, при прокрутке темнеет ---------- */
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 30; transition: background .4s, border-color .4s; border-bottom: 1px solid transparent; }
+  header.scrolled { background: rgba(11,11,12,.9); backdrop-filter: blur(10px); border-bottom-color: var(--line); }
+  .head { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 76px; }
+  nav { display: flex; gap: 30px; font-family: 'Oswald', sans-serif; font-size: 14px; letter-spacing: .2em; text-transform: uppercase; color: #cfcfd3; }
+  nav a { transition: color .2s; }
+  nav a:hover { color: #fff; }
+  /* название как на вывеске: округлые буквы, «т» красная */
+  .brand { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 30px; line-height: 1; }
   .brand b { color: var(--red); font-weight: 700; }
-  nav { display: flex; gap: 26px; font-size: 15px; color: var(--muted); }
-  nav a:hover { color: var(--gold-2); }
-  .head-tel { font-weight: 600; white-space: nowrap; }
-  .head-tel:hover { color: var(--gold-2); }
+  .head-tel { justify-self: end; font-family: 'Oswald', sans-serif; font-size: 16px; letter-spacing: .08em; }
 
   /* ---------- Кнопки ---------- */
-  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 15px 28px; border-radius: 3px; font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; transition: background .2s, color .2s, border-color .2s; }
-  .btn-gold { background: var(--red); color: #fff; }
-  .btn-gold:hover { background: #b12a26; }
-  .btn-line { border: 1px solid rgba(255,255,255,.45); color: #fff; }
-  .btn-line:hover { border-color: #fff; background: rgba(255,255,255,.08); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 30px; border: 1px solid transparent; font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; transition: background .25s, color .25s, border-color .25s; }
+  .btn-red { background: var(--red); color: #fff; }
+  .btn-red:hover { background: #b12a26; }
+  .btn-line { border-color: rgba(255,255,255,.4); color: #fff; background: none; }
+  .btn-line:hover { border-color: #fff; background: rgba(255,255,255,.07); }
 
-  /* ---------- Первый экран: логотип ---------- */
-  .hero { position: relative; text-align: center; padding: 88px 0 96px; overflow: hidden; }
-  .hero::before { content: ""; position: absolute; inset: 0; background: url(img/y17.jpg) center/cover; opacity: .2; filter: grayscale(1); }
-  /* затемнение: по краям и плавный уход в чёрный внизу, чтобы не было резкой границы со следующим блоком */
-  .hero::after { content: ""; position: absolute; inset: 0;
-    background:
-      linear-gradient(to bottom, transparent 55%, var(--bg) 100%),
-      radial-gradient(ellipse at center, transparent 0%, var(--bg) 78%); }
-  .hero + section.block { border-top: 0; }
-  .hero > .wrap { position: relative; z-index: 2; }
-  /* дым: холст поверх фото, но под логотипом и кнопками */
-  .smoke { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;
-    /* маска: дым плавно растворяется сверху и снизу, без резкой линии */
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 70%, transparent 100%);
-            mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 70%, transparent 100%); }
-  /* логотип вырезан с вывески, фон сделан прозрачным */
-  .hero-logo { width: 100%; max-width: 520px; margin: 0 auto; }
-  .hero p.lead { margin: 26px auto 0; max-width: 560px; font-size: 18px; color: var(--muted); }
-  .hero .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
-  .hero .facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin-top: 28px; font-size: 15px; color: var(--muted); }
-  .hero .facts { gap: 0; }
-  .hero .facts span { padding: 0 16px; }
-  .hero .facts span + span { border-left: 1px solid #3a3a3d; }
+  /* ---------- Первый экран: на всю высоту, фото зала, дым, логотип ---------- */
+  .hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; padding: 110px 0 90px; }
+  /* фото зала: затемнено и обесцвечено, чтобы небольшое фото с телефона не выглядело мыльным */
+  .hero-bg { position: absolute; inset: -4%; background: url(img/y17.jpg) center/cover; filter: grayscale(1) brightness(.42) blur(2px); transform: scale(1.08); animation: heroBg 2.6s .6s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes heroBg { from { transform: scale(1.2); opacity: 0; } to { transform: scale(1.08); opacity: 1; } }
+  /* затемнение по краям и плавный уход в чёрный внизу */
+  .hero::after { content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to bottom, rgba(11,11,12,.55) 0%, transparent 30%, transparent 60%, var(--bg) 100%),
+                radial-gradient(ellipse at center, transparent 30%, rgba(11,11,12,.85) 100%); }
+  .smoke { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 75%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 75%, transparent 100%); }
+  .hero-in { position: relative; z-index: 3; }
+  .hero .kicker { animation: rise 1s 1.2s both; }
+  .hero-logo { width: min(560px, 82vw); margin: 22px auto 0; animation: logoIn 1.6s .75s cubic-bezier(.2,.8,.2,1) both; }
+  /* логотип проявляется из размытия и чуть «приближается» */
+  @keyframes logoIn { from { opacity: 0; filter: blur(18px); transform: scale(1.18); } 60% { opacity: 1; } to { opacity: 1; filter: none; transform: none; } }
+  .hero .lead { margin: 26px auto 0; max-width: 520px; font-size: 18px; color: #c9c9cd; animation: rise 1s 1.5s both; }
+  .hero .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 34px; animation: rise 1s 1.7s both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  /* подсказка «листайте вниз» — тонкая линия, по которой бежит красная точка */
+  .scroll-hint { position: absolute; z-index: 3; left: 50%; bottom: 28px; width: 1px; height: 54px; background: rgba(255,255,255,.25); overflow: hidden; }
+  .scroll-hint::after { content: ""; position: absolute; left: 0; top: -20px; width: 1px; height: 20px; background: var(--red); animation: drop 2s infinite; }
+  @keyframes drop { to { top: 54px; } }
 
-  /* ---------- Блоки ---------- */
-  section.block { padding: 88px 0; border-top: 1px solid var(--line); }
-  .block h2 { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: clamp(30px, 4.4vw, 44px); line-height: 1.15; }
-  .block h2 b { font-weight: 700; }
-  /* маленькая красная подпись над заголовком — как красные точки на вывеске */
-  .block h2::before { content: attr(data-k); display: block; margin-bottom: 14px; font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--red); }
-  .block .sub { margin-top: 10px; color: var(--muted); max-width: 620px; }
+  /* ---------- Вступление: уголёк в темноте → вспышка → экран раскрывается кругом ---------- */
+  .hero { animation: openUp 1.4s .55s cubic-bezier(.7,0,.2,1) both; }
+  @keyframes openUp { from { clip-path: circle(0% at 50% 42%); } to { clip-path: circle(150% at 50% 42%); } }
+  header { animation: fadeIn .8s 1.6s both; }
+  .intro-dot { position: fixed; left: 50%; top: 42%; z-index: 90; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; pointer-events: none;
+    background: #ff6a3d; box-shadow: 0 0 20px 6px rgba(209,52,47,.8), 0 0 60px 20px rgba(209,52,47,.35); animation: introDot 1s both; }
+  @keyframes introDot { 0% { opacity: 0; transform: scale(.2); } 25% { opacity: 1; transform: scale(1); } 45% { transform: scale(.75); } 62% { opacity: 1; transform: scale(1.5); } 100% { opacity: 0; transform: scale(5); } }
+
+  /* ---------- Кнопка «Забронировать стол» — всегда в углу ---------- */
+  .book-fab { position: fixed; right: 26px; bottom: 26px; z-index: 40; box-shadow: 0 10px 30px rgba(0,0,0,.45);
+    opacity: 0; transform: translateY(20px); pointer-events: none; transition: opacity .4s, transform .4s, background .25s; }
+  .book-fab.show { opacity: 1; transform: none; pointer-events: auto; }
+
+  /* ---------- Точки сбоку — переход по главам ---------- */
+  .dots { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 25; display: flex; flex-direction: column; gap: 16px; }
+  .dots a { position: relative; width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(255,255,255,.55); transition: background .3s, border-color .3s, transform .3s; }
+  .dots a.on { background: var(--red); border-color: var(--red); transform: scale(1.3); }
+  /* при наведении рядом с точкой появляется название главы */
+  .dots a::before { content: attr(data-name); position: absolute; right: 20px; top: 50%; transform: translateY(-50%); white-space: nowrap; font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; opacity: 0; transition: opacity .25s; }
+  .dots a:hover::before { opacity: 1; }
+
+  /* временная заглушка, пока главы не сделаны */
+  .todo { padding: 140px 0; border-top: 1px solid var(--line); text-align: center; color: var(--muted); }
+  .todo .display { font-size: clamp(56px, 9vw, 120px); color: var(--ink); margin-top: 14px; }
+
+  /* ---------- Живые детали ---------- */
+  /* Плёночное зерно поверх всего сайта: шум из SVG, чуть дрожит — как кадр из кино */
+  .grain { position: fixed; inset: -50%; z-index: 60; pointer-events: none; opacity: .07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain 1s steps(6) infinite; }
+  @keyframes grain { 0%{transform:translate(0,0)} 20%{transform:translate(-3%,2%)} 40%{transform:translate(2%,-3%)} 60%{transform:translate(-2%,-1%)} 80%{transform:translate(3%,3%)} 100%{transform:translate(0,0)} }
+
+  /* Логотип «дышит»: за деревом пульсирует красное свечение, как тлеющий уголь */
+  .logo-wrap { position: relative; width: min(560px, 82vw); margin: 22px auto 0; }
+  .logo-wrap .hero-logo { width: 100%; margin: 0; position: relative; }
+  /* вспышка свечения при появлении, потом обычное «дыхание» */
+  .logo-wrap::before { content: ""; position: absolute; left: 50%; top: 36%; width: 46%; aspect-ratio: 1; transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(209,52,47,.55) 0%, rgba(209,52,47,.18) 40%, transparent 70%);
+    filter: blur(14px); animation: flare 1.8s .7s ease-out both, ember 3.2s 2.5s ease-in-out infinite; }
+  @keyframes flare { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.3); } 30% { opacity: 1; transform: translate(-50%,-50%) scale(1.9); } 100% { opacity: .55; transform: translate(-50%,-50%) scale(.9); } }
+  @keyframes ember { 0%,100% { opacity: .55; transform: translate(-50%,-50%) scale(.9); } 45% { opacity: 1; transform: translate(-50%,-50%) scale(1.08); } 60% { opacity: .75; } }
+
+  /* Бегущая строка: что есть в «Сантале» (по данным Яндекса) */
+  .marquee { position: relative; overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 26px 0; background: var(--bg); }
+  .marquee-track { display: flex; width: max-content; animation: run 38s linear infinite; }
+  .marquee span { font-family: 'Oswald', sans-serif; font-size: clamp(30px, 4.6vw, 62px); font-weight: 500; text-transform: uppercase; white-space: nowrap; padding-right: 48px; }
+  .marquee span i { font-style: normal; color: var(--red); padding-left: 48px; }
+  /* каждое второе слово — контуром, без заливки */
+  .marquee span:nth-child(even) { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.55); }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  @keyframes run { to { transform: translateX(-50%); } }
+
+  /* Заголовки собираются по буквам: каждая буква выезжает снизу из-под «шторки» */
+  .split .ch { display: inline-block; overflow: hidden; vertical-align: bottom; }
+  .split .ch > span { display: inline-block; transform: translateY(105%); transition: transform .9s cubic-bezier(.2,.8,.2,1); transition-delay: calc(var(--i) * 45ms); }
+  .split.in .ch > span { transform: none; }
+
+  /* Кнопки: при наведении цвет заливается слева направо */
+  .btn { position: relative; overflow: hidden; z-index: 0; }
+  .btn::before { content: ""; position: absolute; inset: 0; z-index: -1; transform: scaleX(0); transform-origin: left; transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+  .btn-red::before { background: #fff; }
+  .btn-red:hover { background: var(--red); color: var(--bg); }
+  .btn-line::before { background: var(--red); }
+  .btn-line:hover { background: none; border-color: var(--red); }
+  .btn:hover::before { transform: scaleX(1); }
+  /* кнопка брони в углу: правило .btn выше делает position: relative — возвращаем «прибито к экрану» */
+  .btn.book-fab { position: fixed; }
+
+  /* ---------- Главы: экран пополам — фото на всю высоту и текст ---------- */
+  /* minmax(0, 1fr): колонки строго пополам, даже если внутри длинная лента фото */
+  .chapter { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border-top: 1px solid var(--line); }
+  .chapter.flip .ch-media { order: 2; }
+  /* фото «прилипает» к экрану, пока читаешь текст рядом */
+  .ch-media { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+  .ch-media img { width: 100%; height: 118%; object-fit: cover; will-change: transform; }
+  /* фото открывается «шторкой» снизу вверх и из чёрно-белого становится цветным — как будто зал оживает */
+  .reveal { clip-path: inset(100% 0 0 0); transition: clip-path 1.5s cubic-bezier(.7,0,.2,1); }
+  .reveal img { filter: grayscale(1) brightness(.7); transform: scale(1.25); transition: filter 2.2s .6s, transform 2.4s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { clip-path: inset(0 0 0 0); }
+  .reveal.in img { filter: grayscale(.15) brightness(.92); transform: scale(1); }
+  /* затемнение у края фото со стороны текста */
+  .ch-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, transparent 60%, rgba(11,11,12,.6)); pointer-events: none; }
+  .chapter.flip .ch-media::after { background: linear-gradient(to left, transparent 60%, rgba(11,11,12,.6)); }
+  .ch-text { padding: 150px 7vw 140px; }
+  .ch-text .display { font-size: clamp(64px, 9vw, 150px); margin-top: 18px; }
+  .ch-lead { margin-top: 28px; max-width: 460px; font-size: 19px; color: #cfcfd3; }
+
+  /* список того, что есть: номер, название, подпись; линия сверху «прорисовывается» слева направо */
+  .ch-list { margin-top: 54px; list-style: none; }
+  .ch-list li { position: relative; display: grid; grid-template-columns: 52px 1fr; padding: 20px 0; }
+  .ch-list li::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--line); transform: scaleX(0); transform-origin: left; transition: transform 1.2s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0s); }
+  .ch-list li.shown::before { transform: scaleX(1); }
+  .ch-list .n { font-family: 'Oswald', sans-serif; font-size: 14px; color: var(--red); letter-spacing: .1em; padding-top: 6px; }
+  .ch-list b { display: block; font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 500; text-transform: uppercase; letter-spacing: .03em; line-height: 1.2; transition: color .3s, transform .3s; }
+  .ch-list li:hover b { color: var(--red); transform: translateX(8px); }
+  .ch-list small { display: block; margin-top: 2px; font-size: 15px; color: var(--muted); }
+
+  /* часы крупно: когда «Сантал» открыт до утра */
+  .late { display: flex; flex-wrap: wrap; gap: 14px 46px; margin-top: 46px; padding-top: 30px; border-top: 1px solid var(--line); }
+  .late div { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+  .late small { display: block; font-size: 13px; letter-spacing: .25em; color: var(--muted); }
+  .late strong { font-size: 40px; font-weight: 500; line-height: 1.1; }
+  .late strong em { font-style: normal; color: var(--red); }
+
+  /* цитата гостя (дословно из Яндекса) */
+  .quote { position: relative; margin-top: 64px; padding-left: 34px; max-width: 520px; }
+  .quote::before { content: "“"; position: absolute; left: -6px; top: -34px; font-family: 'Oswald', sans-serif; font-size: 110px; line-height: 1; color: var(--red); }
+  .quote p { font-size: 20px; line-height: 1.55; }
+  .quote cite { display: block; margin-top: 14px; font-style: normal; font-size: 14px; color: var(--muted); }
+
+  /* маленькое фото, которое при прокрутке едет быстрее страницы (параллакс) */
+  .inset { width: 62%; margin: 70px 0 0 auto; aspect-ratio: 3 / 4; overflow: hidden; }
+  .inset img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* «Летник» внутри «Вечера»: тот же шрифт, только мельче */
+  .sub-ch { margin-top: 80px; padding-top: 40px; border-top: 1px solid var(--line); }
+  .sub-title { font-size: clamp(44px, 5vw, 72px); }
+  .sub-ch .ch-lead { margin-top: 16px; }
+  .sub-quote { margin-top: 18px; font-size: 18px; }
+  .sub-quote span { display: block; margin-top: 6px; font-size: 14px; color: var(--muted); }
+
+  /* «Летник» без фото: только текст по центру — минимализм */
+  .chapter.solo { grid-template-columns: minmax(0, 1fr); }
+  .chapter.solo .ch-text { max-width: 760px; margin: 0 auto; text-align: center; padding: 160px 24px; }
+  .chapter.solo .ch-lead { margin-left: auto; margin-right: auto; }
+  .chapter.solo .quote { margin: 64px auto 0; padding-left: 0; }
+  .chapter.solo .quote::before { position: static; display: block; height: 56px; }
+
+  /* «Летник»: лента из трёх фото, которая едет вбок, пока листаешь вниз */
+  .strip { overflow: hidden; margin-top: 70px; }
+  .strip-track { display: flex; gap: 14px; width: max-content; will-change: transform; }
+  .strip img { height: 340px; width: auto; aspect-ratio: 3 / 4; object-fit: cover; filter: grayscale(.2); transition: filter .4s; }
+  .strip img:hover { filter: none; }
+
+  /* текст в главах проявляется по очереди (как у Инжира) */
+  .fx { opacity: 0; transform: translateY(32px); filter: blur(6px); transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.2,.8,.2,1), filter 1.2s ease; transition-delay: var(--d, 0s); }
+  .fx.shown { opacity: 1; transform: none; filter: none; }
+  /* блюда меню начинают появляться, только когда до меню долистали */
+  .menu-ch:not(.seen) .menu-cat.active .dish { opacity: 0; animation: none; }
 
   /* ---------- Меню ---------- */
-  /* вкладки меню — просто слова с красной чертой под активным, без «таблеток» */
-  .tabs { display: flex; flex-wrap: wrap; gap: 4px 26px; margin-top: 36px; border-bottom: 1px solid var(--line); }
-  .tab { padding: 10px 0; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; color: var(--muted); font: inherit; font-size: 15px; cursor: pointer; }
+  .menu-ch, .guests, .visit { padding: 150px 0 130px; border-top: 1px solid var(--line); }
+  .menu-ch .display, .guests .display, .visit .display { font-size: clamp(64px, 9vw, 150px); margin-top: 18px; }
+  /* вкладки: крупные слова, у активной — красная черта, которая «вырастает» */
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px 30px; margin-top: 50px; border-bottom: 1px solid var(--line); }
+  .tab { position: relative; padding: 12px 0; border: 0; background: none; color: var(--muted); font-family: 'Oswald', sans-serif; font-size: 18px; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: color .25s; }
+  .tab::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--red); transform: scaleX(0); transition: transform .4s cubic-bezier(.2,.8,.2,1); }
   .tab:hover { color: var(--ink); }
-  .tab.active { color: var(--ink); border-bottom-color: var(--red); }
-  .menu-cat { display: none; margin-top: 28px; }
-  /* карточки блюд: фото сверху, под ним название, цена, вес и описание */
-  .menu-cat.active { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px 24px; }
+  .tab.active { color: var(--ink); }
+  .tab.active::after { transform: scaleX(1); }
+  .menu-cat { display: none; margin-top: 40px; }
+  .menu-cat.active { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 44px 24px; }
+  /* блюда появляются по очереди и чуть поднимаются */
+  .menu-cat.active .dish { animation: dishIn .6s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i, 0) * 50ms); }
+  @keyframes dishIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
   .dish { display: flex; flex-direction: column; }
-  .dish img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px; background: var(--panel); }
+  .dish img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--panel); transition: transform .7s cubic-bezier(.2,.8,.2,1), filter .5s; filter: brightness(.9); }
+  /* фото в «рамке»: при наведении увеличивается внутри неё */
+  .dish { overflow: hidden; }
+  .dish > img { clip-path: inset(0); }
+  .dish:hover > img { transform: scale(1.06); filter: brightness(1.05); }
   .dish-body { padding-top: 14px; }
-  /* плавная смена раздела меню: блюда мягко проявляются и чуть поднимаются, по очереди */
-  .menu-cat.active .dish { animation: dishIn .45s ease both; animation-delay: calc(var(--i, 0) * 35ms); }
-  @keyframes dishIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-  .tab { transition: color .25s, border-color .25s; }
-  @media (prefers-reduced-motion: reduce) { .menu-cat.active .dish { animation: none; } }
-  .dish-head { display: flex; align-items: baseline; gap: 14px; }
-  .dish h3 { font-size: 17px; font-weight: 600; }
-  .dish .w { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; }
-  .dish .p { margin-left: auto; color: var(--gold-2); font-weight: 600; white-space: nowrap; }
+  .dish-head { display: flex; align-items: baseline; gap: 12px; }
+  .dish h3 { font-size: 16px; font-weight: 600; line-height: 1.35; }
+  .dish .p { margin-left: auto; font-family: 'Oswald', sans-serif; font-size: 18px; white-space: nowrap; transition: color .3s; }
+  .dish:hover .p { color: var(--red); }
+  .dish .w { display: block; margin-top: 2px; font-size: 13px; color: var(--muted); }
   .dish p { margin-top: 4px; font-size: 14px; color: var(--muted); }
-  .menu-note { margin-top: 24px; font-size: 13px; color: var(--muted); }
+  .menu-note { margin-top: 40px; font-size: 13px; color: var(--muted); }
 
-  /* ---------- Что у нас есть ---------- */
-  /* особенности — список с тонкими линиями, как в бумажном меню, без одинаковых карточек */
-  .feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 40px; margin-top: 36px; }
-  .feat { border-top: 1px solid var(--line); padding: 18px 0 20px; }
-  .feat h3 { font-size: 17px; font-weight: 600; color: var(--ink); }
-  .feat p { margin-top: 4px; font-size: 14px; color: var(--muted); }
-  .interior { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 220px 220px; gap: 8px; margin-top: 36px; }
-  .interior img { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; }
-  .interior img:first-child { grid-row: span 2; }
-
-  /* ---------- Отзывы ---------- */
-  .rating { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
-  .rating { gap: 0; }
-  .rating div { padding: 4px 22px 4px 0; margin-right: 22px; font-size: 15px; color: var(--muted); }
-  .rating div + div { border-left: 1px solid var(--line); padding-left: 22px; }
-  .rating b { font-size: 26px; color: var(--ink); font-family: 'Comfortaa', sans-serif; }
-  .reviews { columns: 3 300px; column-gap: 40px; margin-top: 36px; }
-  /* отзывы — как цитаты: красная черта слева вместо карточек */
-  .review { break-inside: avoid; border-left: 2px solid var(--red); padding: 2px 0 2px 20px; margin-bottom: 36px; }
-  .review .stars { color: var(--red); letter-spacing: 2px; }
-  .interior img { filter: grayscale(.35); }
-  .review p { margin-top: 10px; font-size: 15px; }
-  .review .who { margin-top: 12px; font-size: 14px; color: var(--muted); }
+  /* ---------- Гости ---------- */
+  /* цифры рейтинга «набегают» от нуля, когда до них долистали */
+  .scores { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; margin-top: 54px; }
+  .scores div { border-top: 1px solid var(--line); padding-top: 22px; }
+  .scores strong { display: block; font-family: 'Oswald', sans-serif; font-size: clamp(56px, 7vw, 96px); font-weight: 500; line-height: 1; }
+  .scores strong::after { content: " ★"; font-size: .4em; vertical-align: .9em; color: var(--red); }
+  .scores div:last-child strong::after { content: ""; }
+  .scores small { display: block; margin-top: 10px; font-size: 15px; color: var(--muted); }
+  /* отзывы — лента, которую можно тянуть мышкой или листать пальцем */
+  .slider { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 60px max(32px, calc((100vw - 1200px) / 2 + 32px)) 10px; scrollbar-width: none; cursor: grab; }
+  .slider::-webkit-scrollbar { display: none; }
+  .slider.drag { cursor: grabbing; scroll-snap-type: none; }
+  .review { flex: 0 0 min(440px, 82vw); scroll-snap-align: start; background: var(--panel); border-top: 2px solid var(--red); padding: 30px 30px 28px; max-height: 460px; overflow: auto; scrollbar-width: thin; transition: transform .4s; user-select: none; }
+  .review:hover { transform: translateY(-6px); }
+  /* проявление при прокрутке + подъём при наведении — оба перехода вместе */
+  .review.fx { transition: opacity 1.2s ease var(--d, 0s), filter 1.2s ease var(--d, 0s), transform .6s cubic-bezier(.2,.8,.2,1); }
+  .review .stars { color: var(--red); letter-spacing: 3px; }
+  .review p { margin-top: 14px; font-size: 16px; line-height: 1.6; }
+  .review .who { margin-top: 18px; font-size: 14px; color: var(--muted); }
   .review .who b { color: var(--ink); }
-  .more { margin-top: 12px; }
+  .slider-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; margin-top: 30px; }
+  .drag-hint { font-family: 'Oswald', sans-serif; font-size: 13px; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); }
 
   /* ---------- Контакты ---------- */
-  .contacts { display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; margin-top: 36px; }
-  .c-info { display: flex; flex-direction: column; gap: 22px; }
-  .c-info small { display: block; font-size: 13px; color: var(--muted); letter-spacing: .6px; text-transform: uppercase; }
-  .c-info .big { font-size: 20px; font-weight: 600; }
-  .hours { display: grid; grid-template-columns: auto 1fr; gap: 4px 18px; font-size: 15px; }
+  .visit-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 50px; margin-top: 54px; }
+  .visit-info { display: flex; flex-direction: column; gap: 28px; }
+  .visit-info small { display: block; margin-bottom: 4px; font-family: 'Oswald', sans-serif; font-size: 13px; letter-spacing: .25em; text-transform: uppercase; color: var(--muted); }
+  .visit-info .big { font-size: 21px; font-weight: 600; }
+  /* «Сейчас открыто» — считается по часам работы и времени на устройстве гостя */
+  .now { display: inline-flex; align-items: center; gap: 10px; font-family: 'Oswald', sans-serif; font-size: 16px; letter-spacing: .12em; text-transform: uppercase; }
+  .now::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--muted); }
+  .now.open::before { background: #3ecf6b; box-shadow: 0 0 0 0 rgba(62,207,107,.6); animation: pulse 2s infinite; }
+  @keyframes pulse { to { box-shadow: 0 0 0 12px rgba(62,207,107,0); } }
+  .hours { display: grid; grid-template-columns: auto 1fr; gap: 6px 22px; font-size: 16px; }
   .hours span:nth-child(odd) { color: var(--muted); }
-  .c-info .btns { display: flex; flex-wrap: wrap; gap: 10px; }
-  .map { position: relative; min-height: 420px; border-radius: 3px; overflow: hidden; border: 1px solid var(--line); filter: grayscale(1) contrast(1.05); }
+  .hours .today, .hours .today + span { color: var(--ink); font-weight: 600; }
+  .hours .today::after { content: " · сегодня"; color: var(--red); font-weight: 500; }
+  .visit-info .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .map { position: relative; min-height: 480px; overflow: hidden; border: 1px solid var(--line); filter: grayscale(1) brightness(.8) contrast(1.1); }
+  /* у карты свой чёрно-белый фильтр — проявление при прокрутке не должно его снимать */
+  .map.fx.shown { filter: grayscale(1) brightness(.8) contrast(1.1); }
   .map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  footer { border-top: 1px solid var(--line); padding: 26px 0; font-size: 14px; color: var(--muted); }
-  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+
+  /* ---------- Подвал: огромное «сантал» во всю ширину ---------- */
+  footer { border-top: 1px solid var(--line); padding: 60px 0 30px; overflow: hidden; }
+  .footer-word { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 25vw; line-height: .8; text-align: center; letter-spacing: -.02em; color: #1b1b1e; transition: color .6s; }
+  .footer-word b { color: rgba(209,52,47,.45); font-weight: 700; }
+  footer:hover .footer-word { color: #232327; }
+  .footer-word.fx { transition: opacity 1.4s ease, filter 1.4s ease, transform 1.4s cubic-bezier(.2,.8,.2,1), color .6s; }
+  .foot-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-top: 30px; font-size: 14px; color: var(--muted); }
+
+  /* ---------- Окно брони ---------- */
+  .book { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 16px; }
+  .book[hidden], .book [hidden] { display: none !important; }
+  .book-bg { position: absolute; inset: 0; background: rgba(5,5,6,.78); backdrop-filter: blur(6px); animation: fadeIn .35s both; }
+  .book-box { position: relative; width: min(440px, 100%); max-height: calc(100vh - 32px); overflow: auto; background: var(--panel); border-top: 2px solid var(--red); padding: 36px 32px 32px; display: flex; flex-direction: column; gap: 16px; animation: boxIn .5s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes fadeIn { from { opacity: 0; } }
+  @keyframes boxIn { from { opacity: 0; transform: translateY(30px) scale(.97); } }
+  .book-box .display { font-size: 44px; margin: 4px 0 6px; }
+  .book-x { position: absolute; right: 14px; top: 10px; background: none; border: 0; color: var(--muted); font-size: 30px; cursor: pointer; transition: color .2s, transform .3s; }
+  .book-x:hover { color: #fff; transform: rotate(90deg); }
+  .book label { display: flex; flex-direction: column; gap: 6px; font-family: 'Oswald', sans-serif; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+  .book select, .book input { width: 100%; padding: 13px 14px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); font: 500 16px 'Manrope', sans-serif; letter-spacing: 0; text-transform: none; border-radius: 0; transition: border-color .2s; }
+  .book select:focus, .book input:focus { outline: none; border-color: var(--red); }
+  .guests-pick { display: flex; align-items: center; border: 1px solid var(--line); width: max-content; }
+  .guests-pick button { width: 48px; height: 46px; background: none; border: 0; color: var(--ink); font-size: 22px; cursor: pointer; transition: background .2s; }
+  .guests-pick button:hover { background: var(--red); }
+  .guests-pick output { min-width: 50px; text-align: center; font: 500 20px 'Oswald', sans-serif; color: var(--ink); }
+  .book-go { margin-top: 6px; }
+  .book-done { display: flex; flex-direction: column; gap: 14px; animation: boxIn .5s both; }
+  .book-sum { font-family: 'Oswald', sans-serif; font-size: 24px; line-height: 1.3; text-transform: uppercase; }
+  .book-tip { color: var(--muted); font-size: 15px; }
 
   /* ---------- Телефон ---------- */
   @media (max-width: 900px) {
-    nav { display: none; }
-    .hero { padding: 56px 0 64px; }
-    .hero .actions .btn, .c-info .btns .btn { flex: 1 1 100%; }
-    .hero .facts { flex-direction: column; gap: 4px; }
-    .hero .facts span + span { border-left: 0; }
-    .rating div, .rating div + div { border-left: 0; padding-left: 0; }
-    section.block { padding: 60px 0; }
-    .menu-cat.active { grid-template-columns: 1fr 1fr; gap: 28px 14px; }
-    .dish h3 { font-size: 15px; }
-    .dish-head { flex-direction: column; gap: 2px; }
-    .dish .p { margin-left: 0; order: 3; }
-    .dish p { font-size: 13px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-    .feats { grid-template-columns: 1fr 1fr; }
-    .interior { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 140px 140px; }
-    .interior img:first-child { grid-row: auto; grid-column: span 2; }
-    .contacts { grid-template-columns: 1fr; }
-    .map { min-height: 320px; }
-  }
-  @media (max-width: 520px) {
     .wrap { padding: 0 18px; }
-    .feats { grid-template-columns: 1fr; }
+    .head { grid-template-columns: 1fr auto; height: 64px; }
+    nav { display: none; }
+    .brand { font-size: 26px; }
+    .head-tel { font-size: 15px; }
+    .hero .lead { font-size: 16px; }
+    .hero .actions .btn { flex: 1 1 100%; }
+    .dots { display: none; }
+    /* на телефоне кнопка брони — полоса во всю ширину внизу экрана */
+    .book-fab { left: 12px; right: 12px; bottom: 12px; }
+    /* главы: фото сверху (не прилипает), текст под ним */
+    .chapter { grid-template-columns: minmax(0, 1fr); }
+    .chapter.flip .ch-media { order: 0; }
+    .ch-media { position: relative; height: 72vh; }
+    .ch-media::after, .chapter.flip .ch-media::after { background: linear-gradient(to bottom, transparent 55%, var(--bg)); }
+    .ch-text { padding: 20px 18px 90px; }
+    .ch-lead { font-size: 17px; }
+    .ch-list b { font-size: 22px; }
+    .late strong { font-size: 32px; }
+    .quote p { font-size: 17px; }
+    .inset { width: 80%; }
+    .strip img { height: 260px; }
+    .chapter.solo .ch-text { padding: 100px 18px; }
+    .menu-ch, .guests, .visit { padding: 90px 0 80px; }
+    .tabs { gap: 0 22px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-left: -18px; margin-right: -18px; padding: 0 18px; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab { white-space: nowrap; font-size: 16px; }
+    .menu-cat.active { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 30px 14px; }
+    .dish-head { flex-direction: column; gap: 2px; }
+    .dish h3 { font-size: 15px; }
+    .dish .p { margin-left: 0; order: 3; font-size: 17px; }
+    .dish p { font-size: 13px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .scores { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+    .slider { padding: 40px 18px 10px; }
+    .review { padding: 24px 22px; max-height: 420px; }
+    .visit-grid { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+    .visit-info .btns .btn { flex: 1 1 100%; }
+    .map { min-height: 320px; }
+    footer { padding-bottom: 90px; }
+    .book-box { padding: 30px 22px 24px; }
+    .book-box .display { font-size: 34px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero, header, .intro-dot, .hero-bg, .hero .kicker, .hero-logo, .hero .lead, .hero .actions, .logo-wrap::before, .grain, .marquee-track { animation: none; }
+    .split .ch > span { transform: none; transition: none; }
+    .reveal, .reveal img, .fx, .ch-list li::before { clip-path: none; transform: none; opacity: 1; filter: none; transition: none; }
+    .menu-ch:not(.seen) .menu-cat.active .dish { opacity: 1; }
   }
 </style>
 </head>
 <body>
 
+<div class="intro-dot" aria-hidden="true"></div>
 <header>
   <div class="wrap head">
-    <a href="#top" class="brand">сан<b>т</b>ал</a>
     <nav>
+      <a href="#evening">Вечер</a>
+      <a href="#veranda">Летник</a>
       <a href="#menu">Меню</a>
-      <a href="#place">О месте</a>
-      <a href="#reviews">Отзывы</a>
       <a href="#contacts">Контакты</a>
     </nav>
+    <a href="#top" class="brand">сан<b>т</b>ал</a>
     <a href="tel:+79826323300" class="head-tel">+7 982 632-33-00</a>
   </div>
 </header>
 
 <section class="hero" id="top">
+  <div class="hero-bg"></div>
   <canvas class="smoke" aria-hidden="true"></canvas>
-  <div class="wrap">
-    <img src="img/logo.png" alt="Сантал — кухня, хука, караоке" class="hero-logo">
-    <p class="lead">Ресторан, лаунж-бар и караоке на Ткачей, 17. Мясо на углях, кальяны, коктейли и летняя веранда.</p>
+  <div class="wrap hero-in">
+    <span class="kicker">Ткачей, 17 · Екатеринбург</span>
+    <div class="logo-wrap"><img src="img/logo.png" alt="Сантал — кухня, хука, караоке" class="hero-logo"></div>
+    <p class="lead">Ресторан, лаунж-бар и караоке. Кальяны, коктейли и летняя веранда.</p>
     <div class="actions">
-      <a href="tel:+79826323300" class="btn btn-gold">Заказать столик</a>
+      <a href="#book" class="btn btn-red" data-book>Забронировать стол</a>
       <a href="#menu" class="btn btn-line">Смотреть меню</a>
     </div>
-    <div class="facts">
-      <span>5,0 в Яндексе · 67 оценок</span>
-      <span>Караоке</span>
-      <span>Пт и сб — до 04:00</span>
+  </div>
+  <span class="scroll-hint" aria-hidden="true"></span>
+</section>
+
+<div class="marquee" aria-label="Караоке, кальян-бар, коктейли, летняя веранда, спортивные трансляции, пятница и суббота до 04:00">
+  <div class="marquee-track" aria-hidden="true">
+    <span>Караоке<i>●</i></span><span>Кальян-бар<i>●</i></span><span>Коктейли<i>●</i></span><span>Летняя веранда<i>●</i></span><span>Спортивные трансляции<i>●</i></span><span>Пт и сб до 04:00<i>●</i></span>
+    <span>Караоке<i>●</i></span><span>Кальян-бар<i>●</i></span><span>Коктейли<i>●</i></span><span>Летняя веранда<i>●</i></span><span>Спортивные трансляции<i>●</i></span><span>Пт и сб до 04:00<i>●</i></span>
+  </div>
+</div>
+
+<!-- Глава 1. Всё — по данным Яндекс Карт и 2ГИС -->
+<section class="chapter" id="evening">
+  <div class="ch-media reveal"><img src="img/y2.jpg" alt="Коктейль у бара, танцпол и экраны в зале Сантала" data-speed="-0.12"></div>
+  <div class="ch-text">
+    <span class="kicker fx">01 — Вечер</span>
+    <h2 class="display split">Вечер</h2>
+    <p class="ch-lead fx">Караоке, кальяны и коктейли. По пятницам и субботам — до 04:00.</p>
+    <ul class="ch-list">
+      <li class="fx"><span class="n">01</span><div><b>Караоке</b><small>Танцпол, проектор</small></div></li>
+      <li class="fx"><span class="n">02</span><div><b>Кальян-бар</b></div></li>
+      <li class="fx"><span class="n">03</span><div><b>Бар</b><small>Коктейли, винная карта, барная стойка</small></div></li>
+      <li class="fx"><span class="n">04</span><div><b>Спортивные трансляции</b><small>5 экранов</small></div></li>
+      <li class="fx"><span class="n">05</span><div><b>Стендапы</b></div></li>
+      <li class="fx"><span class="n">06</span><div><b>Игры</b><small>Настольные игры, игровые приставки</small></div></li>
+    </ul>
+    <div class="late fx">
+      <div><small>Пятница</small><strong>12:00 — <em>04:00</em></strong></div>
+      <div><small>Суббота</small><strong>14:00 — <em>04:00</em></strong></div>
+    </div>
+    <blockquote class="quote fx">
+      <p>Приятная атмосфера, быстрое и вежливое обслуживание, играет музыка, можно покурить кальян, большой выбор коктейлей, по вечерам караоке 🍹</p>
+      <cite>Валерия С. · отзыв в Яндекс Картах</cite>
+    </blockquote>
+    <!-- Летник — коротко, внутри «Вечера» (решил Макар: минимализм) -->
+    <div class="sub-ch" id="veranda">
+      <h3 class="display sub-title split">Летник</h3>
+      <p class="ch-lead fx">Летняя веранда на Ткачей, 17.</p>
+      <p class="sub-quote fx">«Очень чисто, хороший летник…» <span>— Лия, отзыв в Яндекс Картах</span></p>
     </div>
   </div>
 </section>
 
-<section class="block" id="menu">
+<!-- Глава 2. Меню собирается из материалы/меню.txt (Яндекс Еда) программой build.rb -->
+<section class="menu-ch" id="menu">
   <div class="wrap">
-    <h2 data-k="Меню">Кухня, гриль и бар</h2>
-    <div class="tabs" role="tablist">
+    <span class="kicker fx">02 — Меню</span>
+    <h2 class="display split">Меню</h2>
+    <div class="tabs fx" role="tablist">
       <button class="tab active" data-cat="cat0">Закуски</button>
       <button class="tab" data-cat="cat1">Шашлык &amp; Гриль</button>
       <button class="tab" data-cat="cat2">Горячие блюда</button>
@@ -292,79 +534,60 @@
       <div class="dish"><img src="img/menu/m18.jpg" alt="Морс из клюквы" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Морс из клюквы</h3><span class="p">460 ₽</span></div><span class="w">500 мл</span><p>Освежающий напиток, который идеально утоляет жажду и радует своим ягодным вкусом. Для его приготовления используем спелые ягоды клюквы, которые придают морсу яркий цвет и насыщенный аромат</p></div></div>
       <div class="dish"><img src="img/menu/m19.jpg" alt="Морс из смородины" loading="lazy"><div class="dish-body"><div class="dish-head"><h3>Морс из смородины</h3><span class="p">460 ₽</span></div><span class="w">500 мл</span><p>Освежающий напиток, который идеально утоляет жажду и радует своим ягодным вкусом. Для его приготовления используем спелые ягоды смородины, которые придают морсу яркий цвет и насыщенный аромат</p></div></div>
     </div>
-    <p class="menu-note">Меню доставки (Яндекс Еда). На месте блюда и цены могут отличаться от указанных.</p>
+    <p class="menu-note fx">Меню доставки (Яндекс Еда). На месте блюда и цены могут отличаться от указанных.</p>
   </div>
 </section>
 
-<section class="block" id="place">
+<!-- Глава 3. Отзывы — дословно из Яндекс Карт -->
+<section class="guests" id="guests">
   <div class="wrap">
-    <h2 data-k="О месте">Что у нас есть</h2>
-    <div class="feats">
-      <div class="feat"><h3>Караоке</h3><p>Танцпол, проектор</p></div>
-      <div class="feat"><h3>Кальян</h3><p>Кальян-бар</p></div>
-      <div class="feat"><h3>Летняя веранда</h3><p>Столики на улице</p></div>
-      <div class="feat"><h3>Гриль</h3><p>Шашлык, люля-кебаб, стейки на углях</p></div>
-      <div class="feat"><h3>Спортивные трансляции</h3><p>5 экранов</p></div>
-      <div class="feat"><h3>Игры</h3><p>Настольные игры, игровые приставки</p></div>
-      <div class="feat"><h3>Банкеты</h3><p>Банкетный зал: дни рождения, корпоративы, семейные ужины</p></div>
-      <div class="feat"><h3>Доставка и навынос</h3><p>Яндекс Еда, Delivery Club, кофе и чай с собой</p></div>
-      <div class="feat"><h3>Бизнес-ланч</h3><p>Заказ столиков по телефону</p></div>
-      <div class="feat"><h3>Подарочный сертификат</h3><p>Скидочная карта</p></div>
-      <div class="feat"><h3>Бар</h3><p>Коктейли, винная карта</p></div>
-      <div class="feat"><h3>Удобства</h3><p>Wi-Fi, бесплатная парковка, можно с собакой</p></div>
+    <span class="kicker fx">03 — Гости</span>
+    <h2 class="display split">Гости</h2>
+    <div class="scores">
+      <div class="fx"><strong data-count="5.0">0,0</strong><small>Яндекс Карты · 67 оценок</small></div>
+      <div class="fx"><strong data-count="5.0">0,0</strong><small>2ГИС · 62 отзыва</small></div>
+      <div class="fx"><strong data-count="100" data-suffix="%">0%</strong><small>положительных о еде, персонале и атмосфере (Яндекс)</small></div>
     </div>
-    <div class="interior">
-      <img src="img/y17.jpg" alt="Зал ресторана Сантал" loading="lazy">
-      <img src="img/y5.jpg" alt="Бар Сантал" loading="lazy">
-      <img src="img/y2.jpg" alt="Зал с экранами" loading="lazy">
-      <img src="img/y19.jpg" alt="Летняя веранда" loading="lazy">
-      <img src="img/y18.jpg" alt="Кальян на веранде" loading="lazy">
-    </div>
+  </div>
+  <div class="slider" tabindex="0" aria-label="Отзывы гостей, листайте вбок">
+    <div class="review fx"><div class="stars">★★★★★</div><p>Были в «Сантале» на выходных и остались в полном восторге. Атмосфера невероятно стильная и уютная — интерьер сразу располагает к тому, чтобы расслабиться и забыть о городской суете. Кухня заслуживает отдельных комплиментов: мясо на углях просто тает во рту, а салат с хрустящими баклажанами — это какая-то магия! Но главная гордость этого заведения — его команда, которая создала для нас безупречный вечер. Менеджер Алина — невероятно гостеприимная и профессиональная! Встретила нас как самых дорогих гостей, помогла с лучшим столиком и моментально решила все организационные вопросы. Сервис на высшем уровне. Официант Анастасия — само очарование и внимательность. Очень позитивная, отлично ориентируется в меню, помогла определиться с выбором блюд и напитков. Подача была быстрой, а грязная посуда со стола исчезала незаметно. Кальянный мастер Мураз — настоящий профи своего дела! Угадал наши вкусовые предпочтения на все 100%, сделал очень дымный, вкусный и долгоиграющий кальян. Регулярно подходил и менял угли, за что отдельное спасибо. Вкусная еда, классная музыка, крутое караоке и такой душевный персонал — теперь мы ваши постоянные гости! Однозначно рекомендуем «Сантал» всем, кто хочет провести вечер в Екатеринбурге на высшем уровне.</p><div class="who"><b>Каин</b> · 13 сентября</div></div>
+    <div class="review fx"><div class="stars">★★★★★</div><p>Пришла впервые в это заведение и была приятно удивлена. Очень чисто, хороший летник, санузел чистый. Официант Светлана очень приятная девушка, обслужила качественно и быстро, несмотря на пятничный вечер. Ставлю 10/10, хочу сюда еще вернуться!</p><div class="who"><b>Лия</b> · 22 мая</div></div>
+    <div class="review fx"><div class="stars">★★★★★</div><p>Очень приятное заведение.Кухня здесь выше всяких похвал, всё очень вкусно и красиво подано. Коктейли - отдельный вид искусства, идеальный баланс и авторский подход. Ну и, конечно, кальяны — это просто лучшее, что я пробовала: мягко, ароматно и долгоиграюще.<br><br>Отдельное спасибо хочется сказать официантке<br>Карине — невероятно внимательная, тактичная и профессиональная девушка. Сразу чувствуется искренняя забота о гостях.<br>Обязательно вернусь снова</p><div class="who"><b>Мария Телепова</b> · 6 августа</div></div>
+    <div class="review fx"><div class="stars">★★★★★</div><p>Очень ждал открытия после ремонта! Обновлённый интерьер очень стильный и уютный, и главное что кухня осталась на столь же высоком уровне, а на баре как и раньше работает Дмитрий - персональная рекомендация!😁👍 Готовит супер-коктейли, очень вкусные напитки, а также и разговор поддержит, и что-то посоветует! Теперь за классной атмосферой - снова только туда!😎👌🏽</p><div class="who"><b>Павел</b> · 11 мая</div></div>
+    <div class="review fx"><div class="stars">★★★★★</div><p>Приятная атмосфера, быстрое и вежливое обслуживание, играет музыка, можно покурить кальян, большой выбор коктейлей, по вечерам караоке 🍹</p><div class="who"><b>Валерия С.</b> · 23 мая</div></div>
+    <div class="review fx"><div class="stars">★★★★★</div><p>Новый и стильный интерьер, вкусные блюда, быстрая подача.<br>Для приятного ожидания блюд, заказали чай со смородиной и голубикой - понравился, советую пить с сахаром, становится насыщеннее<br><br>Цезарь, карбонара и чизбургер хороши! А шоколадный фондан сделал вечер ещё приятнее<br><br>Спасибо вашему ресторану и персоналу в лице Анастасии</p><div class="who"><b>Антон Черепанов</b> · 12 сентября</div></div>
+  </div>
+  <div class="wrap slider-foot fx">
+    <span class="drag-hint">← листайте →</span>
+    <a href="https://yandex.ru/maps/org/santal/12355994698/reviews/" class="btn btn-line" target="_blank" rel="noopener">Все отзывы в Яндекс Картах</a>
   </div>
 </section>
 
-<section class="block" id="reviews">
+<!-- Глава 4. Контакты -->
+<section class="visit" id="contacts">
   <div class="wrap">
-    <h2 data-k="Отзывы">Что пишут гости</h2>
-    <div class="rating">
-      <div><b>5,0</b> ★ в Яндексе · 67 оценок</div>
-      <div><b>5,0</b> ★ в 2ГИС · 62 отзыва</div>
-      <div><b>100%</b> положительных о еде, персонале и атмосфере (Яндекс)</div>
-    </div>
-    <div class="reviews">
-      <div class="review"><div class="stars">★★★★★</div><p>Были в «Сантале» на выходных и остались в полном восторге. Атмосфера невероятно стильная и уютная — интерьер сразу располагает к тому, чтобы расслабиться и забыть о городской суете. Кухня заслуживает отдельных комплиментов: мясо на углях просто тает во рту, а салат с хрустящими баклажанами — это какая-то магия! Но главная гордость этого заведения — его команда, которая создала для нас безупречный вечер. Менеджер Алина — невероятно гостеприимная и профессиональная! Встретила нас как самых дорогих гостей, помогла с лучшим столиком и моментально решила все организационные вопросы. Сервис на высшем уровне. Официант Анастасия — само очарование и внимательность. Очень позитивная, отлично ориентируется в меню, помогла определиться с выбором блюд и напитков. Подача была быстрой, а грязная посуда со стола исчезала незаметно. Кальянный мастер Мураз — настоящий профи своего дела! Угадал наши вкусовые предпочтения на все 100%, сделал очень дымный, вкусный и долгоиграющий кальян. Регулярно подходил и менял угли, за что отдельное спасибо. Вкусная еда, классная музыка, крутое караоке и такой душевный персонал — теперь мы ваши постоянные гости! Однозначно рекомендуем «Сантал» всем, кто хочет провести вечер в Екатеринбурге на высшем уровне.</p><div class="who"><b>Каин</b> · 13 сентября</div></div>
-      <div class="review"><div class="stars">★★★★★</div><p>Пришла впервые в это заведение и была приятно удивлена. Очень чисто, хороший летник, санузел чистый. Официант Светлана очень приятная девушка, обслужила качественно и быстро, несмотря на пятничный вечер. Ставлю 10/10, хочу сюда еще вернуться!</p><div class="who"><b>Лия</b> · 22 мая</div></div>
-      <div class="review"><div class="stars">★★★★★</div><p>Очень приятное заведение.Кухня здесь выше всяких похвал, всё очень вкусно и красиво подано. Коктейли - отдельный вид искусства, идеальный баланс и авторский подход. Ну и, конечно, кальяны — это просто лучшее, что я пробовала: мягко, ароматно и долгоиграюще.<br><br>Отдельное спасибо хочется сказать официантке<br>Карине — невероятно внимательная, тактичная и профессиональная девушка. Сразу чувствуется искренняя забота о гостях.<br>Обязательно вернусь снова</p><div class="who"><b>Мария Телепова</b> · 6 августа</div></div>
-      <div class="review"><div class="stars">★★★★★</div><p>Очень ждал открытия после ремонта! Обновлённый интерьер очень стильный и уютный, и главное что кухня осталась на столь же высоком уровне, а на баре как и раньше работает Дмитрий - персональная рекомендация!😁👍 Готовит супер-коктейли, очень вкусные напитки, а также и разговор поддержит, и что-то посоветует! Теперь за классной атмосферой - снова только туда!😎👌🏽</p><div class="who"><b>Павел</b> · 11 мая</div></div>
-      <div class="review"><div class="stars">★★★★★</div><p>Приятная атмосфера, быстрое и вежливое обслуживание, играет музыка, можно покурить кальян, большой выбор коктейлей, по вечерам караоке 🍹</p><div class="who"><b>Валерия С.</b> · 23 мая</div></div>
-      <div class="review"><div class="stars">★★★★★</div><p>Новый и стильный интерьер, вкусные блюда, быстрая подача.<br>Для приятного ожидания блюд, заказали чай со смородиной и голубикой - понравился, советую пить с сахаром, становится насыщеннее<br><br>Цезарь, карбонара и чизбургер хороши! А шоколадный фондан сделал вечер ещё приятнее<br><br>Спасибо вашему ресторану и персоналу в лице Анастасии</p><div class="who"><b>Антон Черепанов</b> · 12 сентября</div></div>
-    </div>
-    <div class="more"><a href="https://yandex.ru/maps/org/santal/12355994698/reviews/" class="btn btn-line" target="_blank" rel="noopener">Все отзывы в Яндекс Картах</a></div>
-  </div>
-</section>
-
-<section class="block" id="contacts">
-  <div class="wrap">
-    <h2>Как нас найти</h2>
-    <div class="contacts">
-      <div class="c-info">
-        <div><small>Адрес</small><div class="big">Екатеринбург, ул. Ткачей, 17</div><div>1 этаж · остановка «ЦПКиО»</div></div>
-        <div><small>Время работы</small>
-          <div class="hours">
-            <span>Пн–чт</span><span>12:00–24:00</span>
-            <span>Пт</span><span>12:00–04:00</span>
-            <span>Сб</span><span>14:00–04:00</span>
-            <span>Вс</span><span>14:00–24:00</span>
+    <span class="kicker fx">04 — Контакты</span>
+    <h2 class="display split">Ткачей, 17</h2>
+    <div class="visit-grid">
+      <div class="visit-info">
+        <p class="now fx" id="now"></p>
+        <div class="fx"><small>Адрес</small><p class="big">Екатеринбург, ул. Ткачей, 17, 1 этаж</p><p>Остановка «ЦПКиО»</p></div>
+        <div class="fx"><small>Время работы</small>
+          <div class="hours" id="hours">
+            <span data-days="1,2,3,4">Пн–чт</span><span>12:00–24:00</span>
+            <span data-days="5">Пт</span><span>12:00–04:00</span>
+            <span data-days="6">Сб</span><span>14:00–04:00</span>
+            <span data-days="0">Вс</span><span>14:00–24:00</span>
           </div>
         </div>
-        <div><small>Заказ столиков</small><a href="tel:+79826323300" class="big">+7 982 632-33-00</a></div>
-        <div class="btns">
-          <a href="tel:+79826323300" class="btn btn-gold">Позвонить</a>
+        <div class="fx"><small>Заказ столиков</small><a href="tel:+79826323300" class="big">+7 982 632-33-00</a></div>
+        <div class="btns fx">
+          <a href="#book" class="btn btn-red" data-book>Забронировать стол</a>
           <a href="https://max.ru/id6670527940_biz" class="btn btn-line" target="_blank" rel="noopener">MAX</a>
           <a href="https://yandex.ru/maps/org/santal/12355994698/" class="btn btn-line" target="_blank" rel="noopener">Маршрут</a>
         </div>
       </div>
-      <div class="map">
+      <div class="map fx">
         <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=60.6281%2C56.8142%2C60.6381%2C56.8188&amp;layer=mapnik&amp;marker=56.816485%2C60.633113" title="Сантал на карте" loading="lazy"></iframe>
       </div>
     </div>
@@ -372,22 +595,59 @@
 </section>
 
 <footer>
-  <div class="wrap">
-    <span>© Сантал — кухня · хука · караоке · Екатеринбург, ул. Ткачей, 17</span>
+  <div class="footer-word fx" aria-hidden="true">сан<b>т</b>ал</div>
+  <div class="wrap foot-row fx">
+    <span>Кухня · хука · караоке · Екатеринбург, ул. Ткачей, 17</span>
     <a href="tel:+79826323300">+7 982 632-33-00</a>
   </div>
 </footer>
 
+<!-- Окно брони: гость выбирает дату, время и число гостей, потом звонит, чтобы подтвердить -->
+<div class="book" id="book" role="dialog" aria-modal="true" aria-labelledby="book-title" hidden>
+  <div class="book-bg" data-close></div>
+  <form class="book-box" id="book-form">
+    <button type="button" class="book-x" data-close aria-label="Закрыть">×</button>
+    <span class="kicker">Бронь стола</span>
+    <h3 class="display" id="book-title">Забронировать</h3>
+    <label>Дата<select id="b-date" required></select></label>
+    <label>Время<select id="b-time" required></select></label>
+    <label>Гостей
+      <div class="guests-pick">
+        <button type="button" data-step="-1" aria-label="Меньше">−</button>
+        <output id="b-guests">2</output>
+        <button type="button" data-step="1" aria-label="Больше">+</button>
+      </div>
+    </label>
+    <label>Ваше имя<input id="b-name" type="text" autocomplete="given-name" placeholder="Как к вам обращаться"></label>
+    <button type="submit" class="btn btn-red book-go">Дальше</button>
+    <!-- шаг 2: итог брони и звонок -->
+    <div class="book-done" hidden>
+      <p class="book-sum" id="book-sum"></p>
+      <p class="book-tip">Позвоните и назовите эти данные — администратор подтвердит бронь.</p>
+      <a href="tel:+79826323300" class="btn btn-red">Позвонить: +7 982 632-33-00</a>
+    </div>
+  </form>
+</div>
+
+<nav class="dots" aria-label="Главы">
+  <a href="#top" data-name="Начало"></a>
+  <a href="#evening" data-name="Вечер"></a>
+  <a href="#veranda" data-name="Летник"></a>
+  <a href="#menu" data-name="Меню"></a>
+  <a href="#guests" data-name="Гости"></a>
+  <a href="#contacts" data-name="Контакты"></a>
+</nav>
+
+<a href="#book" class="btn btn-red book-fab" data-book>Забронировать стол</a>
+<div class="grain" aria-hidden="true"></div>
+
 <script>
-  // Дым на первом экране: струйки поднимаются снизу из нескольких «источников»,
-  // закручиваются, расширяются и тают — как кальянный дым в полутёмном зале
+  // Дым на первом экране (тот же, что в первой версии): струйки поднимаются снизу, закручиваются и тают
   (function () {
     var canvas = document.querySelector('.smoke');
     if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var ctx = canvas.getContext('2d');
     var w, h, parts = [], sources = [];
-
-    // Шум: случайная «рваная» текстура, чтобы дым был с прожилками, а не ровным пятном
     function makeNoise(size) {
       var grid = [], g = 8;
       for (var i = 0; i <= g; i++) { grid[i] = []; for (var j = 0; j <= g; j++) grid[i][j] = Math.random(); }
@@ -402,10 +662,9 @@
       var cx = cv.getContext('2d'), img = cx.createImageData(size, size);
       for (var y = 0; y < size; y++) for (var x = 0; x < size; x++) {
         var u = x / size, v = y / size;
-        // несколько слоёв шума разного масштаба = «облачная» текстура
         var n = val(u, v, 2) * 0.5 + val(u, v, 4) * 0.3 + val(u, v, 7.9) * 0.2;
         var dx = u - 0.5, dy = v - 0.5, r = Math.sqrt(dx * dx + dy * dy) * 2;
-        var fall = Math.max(0, 1 - r); fall = fall * fall;   // к краям — в ноль, без жёстких границ
+        var fall = Math.max(0, 1 - r); fall = fall * fall;
         var a = Math.max(0, n - 0.35) * 1.6 * fall;
         var k = (y * size + x) * 4;
         img.data[k] = img.data[k + 1] = img.data[k + 2] = 235;
@@ -415,71 +674,190 @@
       return cv;
     }
     var sprites = [makeNoise(160), makeNoise(160), makeNoise(160), makeNoise(160)];
-
     function resize() {
       w = canvas.width = canvas.offsetWidth;
       h = canvas.height = canvas.offsetHeight;
-      // 3 источника дыма внизу экрана: слева, по центру и справа
-      sources = [w * 0.18, w * 0.52, w * 0.84];
+      // 4 источника дыма внизу экрана
+      sources = [w * 0.12, w * 0.38, w * 0.64, w * 0.9];
     }
+    // мышка: где курсор над первым экраном (дым от него расходится)
+    var mouse = { x: -9999, y: -9999 };
+    canvas.parentNode.addEventListener('mousemove', function (e) {
+      var r = canvas.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+    });
+    canvas.parentNode.addEventListener('mouseleave', function () { mouse.x = mouse.y = -9999; });
+    // искры-угольки: маленькие красно-оранжевые точки, летят вверх и мерцают
+    var sparks = [];
+    function spark(randomAge) {
+      var s = { x: Math.random() * w, y: h + 10, vx: (Math.random() - 0.5) * 0.4, vy: -(0.6 + Math.random() * 1.1),
+        r: 0.8 + Math.random() * 1.8, life: 0, max: 260 + Math.random() * 300, flick: Math.random() * 10 };
+      if (randomAge) { var age = Math.random() * s.max; s.life = age; s.x += s.vx * age; s.y += s.vy * age; }
+      return s;
+    }
+    // сноп искр из одной точки: разлетаются во все стороны, тормозят и уходят вверх
+    function burst(bx, by, n) {
+      for (var i = 0; i < n; i++) {
+        var a = Math.random() * Math.PI * 2, v = 2 + Math.random() * Math.random() * 11;
+        sparks.push({ x: bx, y: by, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 1.5, r: 0.9 + Math.random() * 2, life: 0,
+          max: 60 + Math.random() * 110, flick: Math.random() * 10, burst: true });
+      }
+    }
+    // искр сначала втрое больше обычного, за 6 секунд их становится меньше до спокойного уровня
+    var t0 = performance.now();
+    function sparkTarget() { var base = w < 700 ? 22 : 40; return Math.round(base + base * 2 * Math.max(0, 1 - (performance.now() - t0) / 6000)); }
+    // вспышка при входе — в момент, когда уголёк в центре «взрывается»
+    setTimeout(function () { burst(w / 2, h * 0.42, w < 700 ? 110 : 200); }, 600);
+    // клик или тап по первому экрану тоже выбивает искры
+    canvas.parentNode.addEventListener("click", function (e) {
+      if (e.target.closest("a, button")) return;
+      var r = canvas.getBoundingClientRect(); burst(e.clientX - r.left, e.clientY - r.top, 45);
+    });
     function spawn(randomAge) {
       var sx = sources[Math.floor(Math.random() * sources.length)] + (Math.random() - 0.5) * 80;
-      var p = {
-        x: sx, y: h + 40,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: -(0.35 + Math.random() * 0.45),      // скорость подъёма
-        size: 60 + Math.random() * 60,            // внизу струйка узкая…
-        grow: 0.35 + Math.random() * 0.35,        // …и расширяется по мере подъёма
-        rot: Math.random() * Math.PI * 2,
-        spin: (Math.random() - 0.5) * 0.004,      // медленное закручивание
-        phase: Math.random() * 100,
-        life: 0, max: 520 + Math.random() * 380,
-        sprite: sprites[Math.floor(Math.random() * sprites.length)]
-      };
-      if (randomAge) { // при загрузке страница сразу «в дыму», а не пустая
-        var age = Math.random() * p.max;
-        p.life = age; p.x += p.vx * age; p.y += p.vy * age; p.size += p.grow * age;
-      }
+      var p = { x: sx, y: h + 40, vx: (Math.random() - 0.5) * 0.25, vy: -(0.35 + Math.random() * 0.45),
+        size: 60 + Math.random() * 60, grow: 0.35 + Math.random() * 0.35, rot: Math.random() * Math.PI * 2,
+        spin: (Math.random() - 0.5) * 0.004, phase: Math.random() * 100, life: 0, max: 520 + Math.random() * 380,
+        sprite: sprites[Math.floor(Math.random() * sprites.length)] };
+      if (randomAge) { var age = Math.random() * p.max; p.life = age; p.x += p.vx * age; p.y += p.vy * age; p.size += p.grow * age; }
       return p;
     }
     resize();
     window.addEventListener('resize', resize);
-    for (var i = 0; i < 70; i++) parts.push(spawn(true));
-
+    // дыма почти вдвое больше, чем в первой версии (на телефоне чуть меньше, чтобы не тормозило)
+    var count = w < 700 ? 80 : 130;
+    for (var i = 0; i < count; i++) parts.push(spawn(true));
+    for (var i = 0; i < (w < 700 ? 66 : 120); i++) sparks.push(spark(true));
     function frame() {
       ctx.clearRect(0, 0, w, h);
       for (var i = 0; i < parts.length; i++) {
         var p = parts[i];
         p.life++;
-        // завихрения: струйку плавно водит из стороны в сторону, выше — сильнее
         var swirl = Math.sin((p.life + p.phase) / 60) * 0.35 * (p.life / p.max);
-        p.x += p.vx + swirl;
-        p.y += p.vy;
-        p.vy *= 0.999;                             // дым замедляется наверху
-        p.size += p.grow;
-        p.rot += p.spin;
+        // курсор «рассекает» дым: клубы рядом с ним отталкиваются в стороны
+        var dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx * dx + dy * dy;
+        if (d2 < 32000) { var f = (1 - d2 / 32000) * 1.6, d = Math.sqrt(d2) || 1; p.vx += dx / d * f * 0.12; p.vy += dy / d * f * 0.06; }
+        p.vx *= 0.985;
+        p.x += p.vx + swirl; p.y += p.vy; p.vy = p.vy * 0.995 - 0.003; p.size += p.grow; p.rot += p.spin;
         var t = p.life / p.max;
-        // появляется быстро, исчезает медленно
         var alpha = t < 0.12 ? t / 0.12 : Math.pow(1 - (t - 0.12) / 0.88, 1.6);
-        ctx.globalAlpha = Math.max(0, alpha) * 0.32;
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rot);
+        ctx.globalAlpha = Math.max(0, alpha) * 0.42;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
         ctx.drawImage(p.sprite, -p.size / 2, -p.size / 2, p.size, p.size);
         ctx.restore();
         if (p.life > p.max) parts[i] = spawn(false);
       }
+      // искры поверх дыма: светятся и мерцают
+      ctx.globalCompositeOperation = 'lighter';
+      var ambient = 0, target = sparkTarget();
+      for (var j = sparks.length - 1; j >= 0; j--) {
+        var s = sparks[j];
+        if (s.burst) { s.vx *= 0.95; s.vy = s.vy * 0.95 - 0.05; } else ambient++;
+        s.life++; s.x += s.vx + (s.burst ? 0 : Math.sin((s.life + s.flick * 20) / 25) * 0.3); s.y += s.vy;
+        var k = s.life / s.max, fl = 0.6 + Math.sin(s.life * 0.3 + s.flick) * 0.4;
+        ctx.globalAlpha = Math.max(0, (k < 0.1 ? k / 0.1 : 1 - k)) * fl;
+        ctx.fillStyle = k < 0.5 ? '#ff6a3d' : '#d1342f';
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r * (1 - k * 0.5), 0, Math.PI * 2); ctx.fill();
+        if (s.life > s.max || s.y < -10) {
+          // искры от вспышки и лишние обычные просто гаснут, остальные рождаются заново внизу
+          if (s.burst || ambient > target) { sparks.splice(j, 1); if (!s.burst) ambient--; }
+          else sparks[j] = spark(false);
+        }
+      }
+      ctx.globalCompositeOperation = 'source-over';
       requestAnimationFrame(frame);
     }
     frame();
   })();
 
-  // номер каждого блюда в разделе — чтобы они появлялись по очереди, а не все разом
-  document.querySelectorAll('.menu-cat').forEach(function (cat) {
-    cat.querySelectorAll('.dish').forEach(function (d, i) { d.style.setProperty('--i', Math.min(i, 10)); });
+  // Шапка темнеет, а кнопка брони появляется, когда ушли с первого экрана
+  var header = document.querySelector('header'), fab = document.querySelector('.book-fab');
+  function onScroll() {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+    fab.classList.toggle('show', window.scrollY > window.innerHeight * 0.6);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Точки сбоку: подсвечиваем главу, которая сейчас на экране
+  var dots = document.querySelectorAll('.dots a');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      dots.forEach(function (d) { d.classList.toggle('on', d.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  dots.forEach(function (d) { io.observe(document.querySelector(d.getAttribute('href'))); });
+
+  // Заголовки по буквам: каждую букву оборачиваем в span со своим номером (--i) для задержки
+  document.querySelectorAll('.split').forEach(function (el) {
+    var text = el.textContent; el.setAttribute('aria-label', text); el.textContent = '';
+    text.split('').forEach(function (c, i) {
+      var outer = document.createElement('span'), inner = document.createElement('span');
+      outer.className = 'ch'; outer.setAttribute('aria-hidden', 'true');
+      inner.textContent = c === ' ' ? ' ' : c; inner.style.setProperty('--i', i);
+      outer.appendChild(inner); el.appendChild(outer);
+    });
+  });
+  var ioSplit = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); ioSplit.unobserve(e.target); } });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.split').forEach(function (el) { ioSplit.observe(el); });
+
+  // Фото зала на первом экране чуть сдвигается за мышкой — появляется глубина
+  var heroBg = document.querySelector('.hero-bg');
+  document.querySelector('.hero').addEventListener('mousemove', function (e) {
+    var x = (e.clientX / window.innerWidth - 0.5) * -24, y = (e.clientY / window.innerHeight - 0.5) * -16;
+    heroBg.style.transform = 'scale(1.08) translate(' + x + 'px,' + y + 'px)';
   });
 
-  // Вкладки меню: по клику показываем нужный раздел, остальные прячем
+  // Главы: тексты (.fx) проявляются по очереди — задержка по номеру внутри главы
+  document.querySelectorAll('.ch-text, .menu-ch .wrap, .guests .wrap, .slider, .visit .wrap, footer').forEach(function (box) {
+    box.querySelectorAll(':scope > .fx, :scope .fx').forEach(function (el, i) { if (!el.style.getPropertyValue('--d')) el.style.setProperty('--d', Math.min(i, 6) * 0.09 + 's'); });
+  });
+  // меню: блюда запускаются, когда раздел меню заходит на экран
+  var ioMenu = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('seen'); ioMenu.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  ioMenu.observe(document.querySelector('.menu-ch'));
+  var ioFx = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('shown'); ioFx.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fx').forEach(function (el) { ioFx.observe(el); });
+  // шторку фото открываем, когда на экран заходит сама глава (спрятанное за шторкой фото браузер «не видит»)
+  var ioReveal = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { var rv = e.target.querySelector('.reveal'); if (rv) rv.classList.add('in'); ioReveal.unobserve(e.target); } });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.chapter').forEach(function (el) { ioReveal.observe(el); });
+
+  // Параллакс: картинки с data-speed едут с другой скоростью, чем страница.
+  // Лента «Летника» при прокрутке вниз уезжает влево.
+  var movers = document.querySelectorAll('[data-speed]'), track = document.querySelector('.strip-track');
+  function parallax() {
+    var vh = window.innerHeight;
+    movers.forEach(function (img) {
+      var box = img.parentNode.getBoundingClientRect();
+      if (box.bottom < -200 || box.top > vh + 200) return;
+      var center = box.top + box.height / 2 - vh / 2;
+      img.style.transform = 'translateY(' + (center * parseFloat(img.dataset.speed)) + 'px)';
+    });
+    if (track) {
+      var r = track.parentNode.getBoundingClientRect();
+      var k = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+      track.style.transform = 'translateX(' + (-k * Math.max(0, track.scrollWidth - track.parentNode.offsetWidth)) + 'px)';
+    }
+  }
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.addEventListener('scroll', function () { requestAnimationFrame(parallax); }, { passive: true });
+    parallax();
+  }
+
+  // Тексты в остальных главах тоже проявляются по очереди
+  document.querySelectorAll('.menu-ch .fx, .guests .fx, .visit .fx').forEach(function (el) { ioFx.observe(el); });
+
+  // Меню: номер блюда для задержки появления + вкладки
+  document.querySelectorAll('.menu-cat').forEach(function (cat) {
+    cat.querySelectorAll('.dish').forEach(function (d, i) { d.style.setProperty('--i', Math.min(i, 12)); });
+  });
   document.querySelectorAll('.tab').forEach(function (tab) {
     tab.addEventListener('click', function () {
       document.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
@@ -487,6 +865,108 @@
       tab.classList.add('active');
       document.getElementById(tab.dataset.cat).classList.add('active');
     });
+  });
+
+  // Рейтинг: цифры набегают от нуля до настоящего значения
+  var ioCount = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      ioCount.unobserve(e.target);
+      var el = e.target, end = parseFloat(el.dataset.count), suf = el.dataset.suffix || '', dec = end < 10 ? 1 : 0, t0 = performance.now();
+      (function tick(t) {
+        var k = Math.min(1, (t - t0) / 1600), v = end * (1 - Math.pow(1 - k, 3));
+        el.textContent = v.toFixed(dec).replace('.', ',') + suf;
+        if (k < 1) requestAnimationFrame(tick);
+      })(t0);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(function (el) { ioCount.observe(el); });
+
+  // Ленту отзывов можно тянуть мышкой (пальцем она листается и так)
+  var slider = document.querySelector('.slider'), down = false, sx = 0, sl = 0;
+  slider.addEventListener('mousedown', function (e) { down = true; sx = e.pageX; sl = slider.scrollLeft; slider.classList.add('drag'); });
+  window.addEventListener('mouseup', function () { down = false; slider.classList.remove('drag'); });
+  slider.addEventListener('mousemove', function (e) { if (down) { e.preventDefault(); slider.scrollLeft = sl - (e.pageX - sx) * 1.3; } });
+
+  // Часы работы (из 2ГИС). Для каждого дня недели: открытие и закрытие в часах; 28 = 04:00 следующего утра.
+  // 0 — воскресенье, 1 — понедельник … 6 — суббота
+  var HOURS = { 0: [14, 24], 1: [12, 24], 2: [12, 24], 3: [12, 24], 4: [12, 24], 5: [12, 28], 6: [14, 28] };
+  // время закрытия пишем как в часах работы: «24:00», а не «00:00»
+  function closeAt(x) { return x === 24 ? '24:00' : hh(x); }
+  function hh(x) { x = ((x % 24) + 24) % 24; var h = Math.floor(x), m = Math.round((x - h) * 60); return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m; }
+  // «Сейчас открыто / закрыто» — по времени на устройстве гостя
+  (function () {
+    var d = new Date(), wd = d.getDay(), t = d.getHours() + d.getMinutes() / 60, el = document.getElementById('now');
+    var today = HOURS[wd], yest = HOURS[(wd + 6) % 7];
+    if (t + 24 < yest[1]) { el.textContent = 'Сейчас открыто до ' + closeAt(yest[1]); el.classList.add('open'); }
+    else if (t >= today[0] && t < today[1]) { el.textContent = 'Сейчас открыто до ' + closeAt(today[1]); el.classList.add('open'); }
+    else if (t < today[0]) el.textContent = 'Сейчас закрыто · откроемся в ' + hh(today[0]);
+    else el.textContent = 'Сейчас закрыто';
+    // подсвечиваем сегодняшний день в часах работы
+    document.querySelectorAll('#hours [data-days]').forEach(function (s) { if (s.dataset.days.split(',').indexOf(String(wd)) > -1) s.classList.add('today'); });
+  })();
+
+  // ---------- Бронь ----------
+  var book = document.getElementById('book'), form = document.getElementById('book-form');
+  var selDate = document.getElementById('b-date'), selTime = document.getElementById('b-time'), outG = document.getElementById('b-guests');
+  var DAYS = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'], MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+  // время брони: с открытия до часа до закрытия, каждые 30 минут; сегодня — только то, что ещё не прошло
+  function slots(date) {
+    var h = HOURS[date.getDay()], out = [], now = new Date(), isToday = date.toDateString() === now.toDateString();
+    var from = isToday ? Math.max(h[0], Math.ceil((now.getHours() + now.getMinutes() / 60 + 0.5) * 2) / 2) : h[0];
+    for (var x = from; x <= h[1] - 1; x += 0.5) out.push(x);
+    return out;
+  }
+  function fillDates() {
+    selDate.innerHTML = '';
+    for (var i = 0; i < 14; i++) {
+      var d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + i);
+      if (!slots(d).length) continue;
+      var o = document.createElement('option');
+      o.value = d.toISOString(); o.dataset.ts = d.getTime();
+      o.textContent = (i === 0 ? 'Сегодня, ' : i === 1 ? 'Завтра, ' : '') + d.getDate() + ' ' + MONTHS[d.getMonth()] + ', ' + DAYS[d.getDay()];
+      selDate.appendChild(o);
+    }
+    fillTimes();
+  }
+  function fillTimes() {
+    var d = new Date(+selDate.selectedOptions[0].dataset.ts);
+    selTime.innerHTML = '';
+    slots(d).forEach(function (x) {
+      var o = document.createElement('option'); o.value = x;
+      o.textContent = hh(x) + (x >= 24 ? ' (ночь)' : ''); selTime.appendChild(o);
+    });
+    // по умолчанию предлагаем вечер — 19:00, если это время есть в списке
+    var seven = [].find.call(selTime.options, function (o) { return +o.value === 19; });
+    if (seven) seven.selected = true;
+  }
+  selDate.addEventListener('change', fillTimes);
+  // если гость что-то поменял после «Дальше» — прячем старый итог, чтобы он не расходился с выбором
+  function resetDone() { form.querySelector('.book-done').hidden = true; form.querySelector('.book-go').hidden = false; }
+  form.addEventListener('change', resetDone);
+  form.addEventListener('input', resetDone);
+  form.querySelectorAll('[data-step]').forEach(function (b) {
+    b.addEventListener('click', function () { outG.value = outG.textContent = Math.min(20, Math.max(1, +outG.textContent + +b.dataset.step)); resetDone(); });
+  });
+  function openBook(e) {
+    e.preventDefault();
+    form.querySelector('.book-done').hidden = true; form.querySelector('.book-go').hidden = false;
+    fillDates(); book.hidden = false; document.body.style.overflow = 'hidden';
+    selDate.focus();
+  }
+  function closeBook() { book.hidden = true; document.body.style.overflow = ''; }
+  document.querySelectorAll('[data-book]').forEach(function (a) { a.addEventListener('click', openBook); });
+  book.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', closeBook); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !book.hidden) closeBook(); });
+  // «Дальше»: показываем итог брони и кнопку звонка
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var g = +outG.textContent, name = document.getElementById('b-name').value.trim();
+    var word = g % 10 === 1 && g % 100 !== 11 ? 'гость' : (g % 10 >= 2 && g % 10 <= 4 && (g % 100 < 10 || g % 100 >= 20)) ? 'гостя' : 'гостей';
+    document.getElementById('book-sum').textContent =
+      selDate.selectedOptions[0].textContent.replace(/^(Сегодня|Завтра), /, '') + ' · ' + hh(+selTime.value) + ' · ' + g + ' ' + word + (name ? ' · ' + name : '');
+    form.querySelector('.book-go').hidden = true;
+    form.querySelector('.book-done').hidden = false;
   });
 </script>
 
