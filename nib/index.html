@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIB — The pen that answers back</title>
+<meta name="description" content="NIB is a real pen with an AI inside. Write, ask, translate, solve — and hear the answer in your earbud.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Inter Tight — плотный «эппловский» шрифт для огромных заголовков, JetBrains Mono — для технических подписей -->
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Чёрно-белый + ОДИН акцент. Поменяй --accent — и перекрасится весь сайт */
+  :root {
+    --bg: #050505;
+    --fg: #f5f5f3;
+    --muted: #8a8a86;
+    --line: #222;
+    --accent: #ff5b1f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: clip; }   /* clip — ничего не вылезает вбок, даже то, что двигает анимация */
+  body { background: var(--bg); color: var(--fg); font-family: 'Inter Tight', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+  a { color: inherit; text-decoration: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- Верхняя панель ---------- */
+  nav.top { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; mix-blend-mode: difference; }
+  nav.top .logo { font-weight: 900; font-size: 20px; letter-spacing: .02em; }
+  nav.top .logo i { font-style: normal; color: var(--accent); }
+  nav.top .links { display: flex; gap: 28px; font-size: 14px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 999px; background: var(--fg); color: var(--bg); font-weight: 700; font-size: 14px; transition: background .2s, color .2s; }
+  .btn:hover { background: var(--accent); color: #000; }
+  .btn-accent { background: var(--accent); color: #000; }
+  .btn-accent:hover { background: var(--fg); }
+
+  /* ---------- «Кино»: длинная секция, внутри «сцена» прилипает к экрану,
+       а прокрутка двигает таймлайн Anime.js (ручка летает, крутится, разбирается) ---------- */
+  .film { position: relative; height: 900vh; }
+  .stage { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; place-items: center; }
+  /* мягкое пятно света за ручкой — тоже анимируется */
+  .glow { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; background: radial-gradient(circle, rgba(255,91,31,.22) 0%, rgba(255,91,31,0) 60%); filter: blur(20px); opacity: .0; }
+  .pen { position: absolute; width: min(78vw, 720px); will-change: transform; }
+  .pen svg { width: 100%; height: auto; overflow: visible; display: block; transform: translateX(60vw) rotate(-25deg); }   /* до заставки ручка за правым краем */
+  /* детали ручки вращаются и двигаются вокруг своего центра */
+  .pen svg g { transform-box: fill-box; transform-origin: center; }
+
+  /* огромные заголовки глав, по одному на каждый «кадр» */
+  .chapter { position: absolute; left: 0; right: 0; padding: 0 28px; text-align: center; pointer-events: none; opacity: 0; }
+  .chapter .kicker { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+  .chapter h2 { font-size: clamp(44px, 9vw, 140px); font-weight: 900; line-height: .92; letter-spacing: -.04em; margin-top: 14px; }
+  .chapter p { margin: 18px auto 0; max-width: 520px; font-size: clamp(16px, 1.6vw, 20px); color: var(--muted); line-height: 1.5; }
+  .ch-top { top: 12vh; }
+  .ch-bottom { bottom: 10vh; }
+  .ch-left { text-align: left; left: 6vw; right: auto; max-width: 44vw; top: 50%; transform: translateY(-50%); }
+  .ch-right { text-align: right; right: 6vw; left: auto; max-width: 44vw; top: 50%; transform: translateY(-50%); }
+  .ch-left p, .ch-right p { margin-left: 0; margin-right: 0; }
+  .ch-right p { margin-left: auto; }
+
+  /* первый кадр — главный заголовок, буквы NIB вылетают по одной */
+  .hero-title { position: absolute; top: 9vh; left: 0; right: 0; text-align: center; pointer-events: none; }
+  .hero-title h1 { font-size: clamp(110px, 26vw, 380px); font-weight: 900; letter-spacing: -.035em; line-height: .8; }
+  .hero-title h1 span { display: inline-block; opacity: 0; }   /* спрятаны до конца заставки — потом их выводит Anime.js */
+  .hero-title h1 .dot { color: var(--accent); }
+  .hero-sub { position: absolute; bottom: 9vh; left: 0; right: 0; text-align: center; opacity: 0; }
+  .hero-sub p { font-size: clamp(18px, 2vw, 24px); color: var(--muted); }
+  .hero-sub p b { color: var(--fg); font-weight: 500; }
+  .hero-sub .scroll { margin-top: 22px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .2em; color: var(--muted); }
+  .hero-sub .scroll::after { content: ""; display: block; width: 1px; height: 46px; margin: 12px auto 0; background: linear-gradient(var(--fg), transparent); animation: drip 1.8s ease-in-out infinite; transform-origin: top; }
+  @keyframes drip { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+
+  /* «рукописная» линия, которую ручка пишет в главе Write */
+  .ink { position: absolute; width: min(70vw, 640px); left: 50%; top: 62%; transform: translateX(-62%); overflow: visible; }
+  .ink path { fill: none; stroke: var(--fg); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* звуковые волны из наушника в главе Ask */
+  .waves { position: absolute; width: 10px; height: 10px; }
+  .waves i { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px; border: 1.5px solid var(--accent); border-radius: 50%; opacity: 0; }
+
+  /* луч сканера камеры в главе See */
+  .scan { position: absolute; width: min(60vw, 520px); height: 2px; background: var(--accent); box-shadow: 0 0 24px 4px rgba(255,91,31,.6); opacity: 0; }
+
+  /* подписи деталей в разобранном виде */
+  .labels { position: absolute; inset: 0; pointer-events: none; }
+  .label { position: absolute; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .08em; color: var(--fg); opacity: 0; white-space: nowrap; }
+  .label::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: middle; }
+
+  /* полоска прогресса «фильма» снизу */
+  .progress { position: absolute; left: 28px; right: 28px; bottom: 28px; height: 1px; background: var(--line); }
+  .progress b { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: var(--fg); transform-origin: left; transform: scaleX(0); }
+
+  /* ---------- 360°: блок с 3D-ручкой ---------- */
+  .spin { position: relative; min-height: 100vh; padding: 120px 0 60px; display: flex; flex-direction: column; align-items: center; background: radial-gradient(ellipse at 50% 60%, #161616 0%, var(--bg) 65%); }
+  .spin-head { text-align: center; padding: 0 28px; }
+  .spin-head .kicker { font-size: 13px; letter-spacing: .2em; color: var(--accent); }
+  .spin-head h2 { font-size: clamp(56px, 10vw, 150px); font-weight: 900; letter-spacing: -.04em; line-height: .9; margin-top: 12px; }
+  .spin-head p { margin-top: 16px; color: var(--muted); font-size: clamp(16px, 1.6vw, 20px); }
+  #pen3d { width: 100%; height: 56vh; min-height: 340px; cursor: grab; touch-action: pan-y; }
+  #pen3d.grabbing { cursor: grabbing; }
+  .spin-ui { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; justify-content: center; }
+  .spin-ui .hint { font-size: 12px; letter-spacing: .2em; color: var(--muted); }
+  button.btn { border: 0; cursor: pointer; font-family: inherit; }
+
+  /* ---------- Общее для обычных блоков ---------- */
+  .sec { position: relative; padding: 140px 0; }
+  .sec .wrap { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+  .sec-head .kicker { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .2em; color: var(--accent); }
+  .sec-head h2 { font-size: clamp(48px, 8vw, 120px); font-weight: 900; letter-spacing: -.04em; line-height: .92; margin-top: 12px; }
+  .sec-head p { margin-top: 16px; color: var(--muted); font-size: clamp(16px, 1.6vw, 20px); max-width: 520px; line-height: 1.5; }
+  .reveal { opacity: 0; }   /* появляется через Motion, когда долистали */
+
+  /* ---------- Фишки ---------- */
+  .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 64px; }
+  .feature { background: var(--bg); padding: 40px 36px; min-height: 240px; display: flex; flex-direction: column; transition: background .3s; }
+  .feature:hover { background: #0e0e0e; }
+  .feature .num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
+  .feature h3 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; margin-top: auto; }
+  .feature p { margin-top: 10px; color: var(--muted); line-height: 1.5; }
+  .feature .eg { margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--fg); }
+  .feature .eg b { color: var(--accent); font-weight: 500; }
+
+  /* ---------- Демо-диалог: вопрос → ответ «в наушнике» печатается сам ---------- */
+  .demo-box { margin-top: 56px; max-width: 640px; border: 1px solid var(--line); border-radius: 28px; padding: 32px; background: linear-gradient(180deg, #0c0c0c, #050505); }
+  .bubble { padding: 16px 20px; border-radius: 20px; font-size: 18px; line-height: 1.45; max-width: 85%; }
+  .bubble.q { background: #1a1a1a; margin-left: auto; border-bottom-right-radius: 6px; }
+  .bubble.a { background: var(--fg); color: var(--bg); margin-top: 16px; border-bottom-left-radius: 6px; min-height: 58px; }
+  .bubble.a .cursor { display: inline-block; width: 2px; height: 1em; background: var(--accent); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .demo-meta { display: flex; align-items: center; gap: 10px; margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
+  .demo-meta i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: blink 1s steps(1) infinite; }
+  .demo-tabs { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
+  .demo-tabs button { border: 1px solid var(--line); background: none; color: var(--fg); font: 500 14px 'Inter Tight', sans-serif; padding: 10px 18px; border-radius: 999px; cursor: pointer; }
+  .demo-tabs button.on { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+  /* ---------- Характеристики ---------- */
+  .specs { margin-top: 56px; border-top: 1px solid var(--line); }
+  .spec { display: grid; grid-template-columns: 1fr 1.4fr; padding: 22px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .spec dt { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+  .spec dd { font-size: clamp(22px, 3vw, 34px); font-weight: 700; letter-spacing: -.02em; }
+
+  /* ---------- Предзаказ ---------- */
+  .order { text-align: center; }
+  .order .sec-head p { margin-left: auto; margin-right: auto; }
+  .price-card { display: inline-block; margin-top: 56px; padding: 48px 56px; border: 1px solid var(--line); border-radius: 32px; background: radial-gradient(ellipse at 50% 0%, rgba(255,91,31,.18), transparent 60%), #080808; }
+  .price-card .old { font-size: 20px; color: var(--muted); text-decoration: line-through; }
+  .price-card .new { font-size: clamp(80px, 12vw, 150px); font-weight: 900; letter-spacing: -.05em; line-height: 1; }
+  .price-card .new sup { font-size: .4em; vertical-align: .9em; margin-right: 4px; }
+  .price-card ul { list-style: none; margin: 24px 0 32px; color: var(--muted); line-height: 2; }
+  .price-card .note { margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); min-height: 1.4em; }
+
+  footer.end { border-top: 1px solid var(--line); padding: 40px 28px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
+
+  /* ---------- Motion: всякие «живые» штуки ---------- */
+  /* полоска прокрутки страницы сверху */
+  .page-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform-origin: left; transform: scaleX(0); z-index: 60; }
+  /* ---------- Заставка при открытии: ручка «пишет» nib, счётчик 0→100, потом шторки разъезжаются ---------- */
+  .intro { position: fixed; inset: 0; z-index: 100; pointer-events: none; }
+  .intro .half { position: absolute; left: 0; right: 0; height: 50.5%; background: #000; }
+  .intro .top { top: 0; } .intro .bottom { bottom: 0; }
+  .intro .line { position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; background: var(--accent); transform: scaleX(0); box-shadow: 0 0 30px 6px rgba(255,91,31,.5); }
+  .intro .sign { position: absolute; left: 50%; top: 50%; width: min(56vw, 360px); transform: translate(-50%, -58%); overflow: visible; }
+  .intro .sign path { fill: none; stroke: var(--fg); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+  .intro .sign .swoosh { stroke: var(--accent); stroke-width: 5; }
+  .intro .sign circle { fill: var(--accent); }
+  .intro .count { position: absolute; right: 28px; bottom: 18px; font-size: clamp(64px, 12vw, 160px); font-weight: 900; letter-spacing: -.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .intro .status { position: absolute; left: 28px; bottom: 28px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; }
+  /* если скрипт вдруг не загрузился — заставка сама исчезнет через 4 секунды, сайт не «застрянет» */
+  .intro { animation: introFallback .4s 4s forwards; }
+  @keyframes introFallback { to { opacity: 0; visibility: hidden; } }
+  html.no-scroll, html.no-scroll body { overflow: hidden; }
+  /* заголовки режем на слова — каждое слово выезжает из-под «маски» */
+  .split .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+  .split .w > span { display: inline-block; transform: translateY(110%); }
+  /* бегущая строка между блоками */
+  .marquee { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 26px 0; white-space: nowrap; }
+  .marquee .track { display: inline-block; font-size: clamp(40px, 7vw, 96px); font-weight: 900; letter-spacing: -.03em; }
+  .marquee .track span { color: transparent; -webkit-text-stroke: 1.5px var(--fg); }
+  .marquee .track i { font-style: normal; color: var(--accent); margin: 0 .35em; }
+  /* карточки фишек наклоняются за мышкой в 3D, а под курсором светится пятно */
+  .features { perspective: 1000px; }
+  .feature { position: relative; overflow: hidden; transform-style: preserve-3d; }
+  .feature::before { content: ""; position: absolute; width: 320px; height: 320px; left: var(--mx, -999px); top: var(--my, -999px); margin: -160px 0 0 -160px; background: radial-gradient(circle, rgba(255,91,31,.22), transparent 65%); pointer-events: none; }
+  .feature > * { position: relative; }
+  /* «магнитная» кнопка предзаказа */
+  .magnet { will-change: transform; }
+
+  /* ---------- Телефон ---------- */
+  @media (max-width: 760px) {
+    nav.top { padding: 14px 18px; }
+    nav.top .links { display: none; }
+    .pen { width: 92vw; }
+    .ch-left, .ch-right { left: 0; right: 0; max-width: none; text-align: center; top: auto; bottom: 12vh; transform: none; }
+    .ch-left p, .ch-right p { margin: 14px auto 0; }
+    .progress { left: 18px; right: 18px; bottom: 18px; }
+    .sec { padding: 96px 0; }
+    .sec .wrap { padding: 0 18px; }
+    .features { grid-template-columns: 1fr; }
+    .feature { padding: 30px 24px; min-height: 200px; }
+    .demo-box { padding: 20px; }
+    .bubble { font-size: 16px; }
+    .spec { grid-template-columns: 1fr; gap: 6px; }
+    .price-card { padding: 36px 24px; width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page-progress"></div>
+<!-- Заставка при открытии страницы -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="half top"></div>
+  <div class="half bottom"></div>
+  <div class="line"></div>
+  <svg class="sign" viewBox="0 0 160 110">
+    <!-- «nib» от руки: каждая линия рисуется по очереди, как будто пишет ручка -->
+    <path d="M14 82 L14 46 C14 26 46 26 46 46 L46 82"/>
+    <path d="M68 50 L68 82"/>
+    <circle class="dot" cx="68" cy="30" r="5"/>
+    <path d="M92 10 L92 82 M92 66 C92 42 136 40 136 62 C136 86 96 88 92 72"/>
+    <path class="swoosh" d="M6 98 C 50 90, 110 90, 154 96"/>
+  </svg>
+  <div class="status" id="introStatus">Waking up the pen</div>
+  <div class="count" id="introCount">0</div>
+</div>
+
+<nav class="top">
+  <a href="#" class="logo">NIB<i>.</i></a>
+  <div class="links mono">
+    <a href="#film">Film</a>
+    <a href="#features">Features</a>
+    <a href="#specs">Specs</a>
+  </div>
+  <a href="#preorder" class="btn magnet">Pre-order — $89</a>
+</nav>
+
+
+<section class="film" id="film">
+  <div class="stage">
+    <div class="glow"></div>
+
+    <!-- Кадр 0: главный экран -->
+    <div class="hero-title"><h1><span>N</span><span>I</span><span>B</span><span class="dot">.</span></h1></div>
+    <div class="hero-sub">
+      <p>A real pen. <b>With a brain inside.</b></p>
+      <div class="scroll">SCROLL TO PLAY</div>
+    </div>
+
+    <!-- Кадр 1: Write -->
+    <div class="chapter ch-right" id="ch1">
+      <div class="kicker">01 — Write</div>
+      <h2>Just write.</h2>
+      <p>It's a pen. Real ink, real paper. NIB reads every word you put down — and remembers it.</p>
+    </div>
+    <svg class="ink" viewBox="0 0 640 120" aria-hidden="true">
+      <!-- выдуманная «подпись»: одна линия, которую рисует ручка -->
+      <path id="inkPath" d="M10 80 C 40 20, 70 20, 80 70 S 120 110, 140 60 S 170 10, 190 60 S 230 100, 250 50 C 260 25, 290 25, 290 60 C 290 90, 320 95, 340 60 S 380 20, 400 60 S 440 100, 470 55 C 490 25, 520 30, 520 65 S 560 95, 600 40 L 630 30"/>
+    </svg>
+
+    <!-- Кадр 2: Ask -->
+    <div class="chapter ch-left" id="ch2">
+      <div class="kicker">02 — Ask</div>
+      <h2>Ask out loud.</h2>
+      <p>Whisper a question. The answer lands in your earbud. Nobody else hears a thing.</p>
+    </div>
+    <div class="waves"><i></i><i></i><i></i></div>
+
+    <!-- Кадр 3: See -->
+    <div class="chapter ch-top" id="ch3">
+      <div class="kicker">03 — See</div>
+      <h2>It sees the page.</h2>
+      <p>A tiny camera by the tip reads equations, foreign words and your messy notes.</p>
+    </div>
+    <div class="scan"></div>
+
+    <!-- Кадр 4: разобранный вид -->
+    <div class="chapter ch-top" id="ch4">
+      <div class="kicker">04 — Inside</div>
+      <h2>Small. Absurdly smart.</h2>
+    </div>
+    <div class="labels">
+      <div class="label" id="lb1">Magnetic cap</div>
+      <div class="label" id="lb2">AI chip + 18h battery</div>
+      <div class="label" id="lb3">4K micro-camera</div>
+      <div class="label" id="lb4">Swiss ink nib</div>
+    </div>
+
+    <!-- Кадр 5: финал -->
+    <div class="chapter ch-bottom" id="ch5">
+      <div class="kicker">05 — Yours</div>
+      <h2>The pen that<br>answers back.</h2>
+      <p><a href="#preorder" class="btn btn-accent" style="pointer-events:auto">Pre-order for $89</a></p>
+    </div>
+
+    <!-- САМА РУЧКА: нарисована кодом. Каждая деталь — отдельная группа <g>, чтобы её можно было двигать -->
+    <div class="pen" id="pen">
+      <svg viewBox="0 0 640 90" aria-label="NIB pen">
+        <defs>
+          <linearGradient id="gBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3a3a3a"/><stop offset=".35" stop-color="#1b1b1b"/><stop offset="1" stop-color="#060606"/>
+          </linearGradient>
+          <linearGradient id="gCap" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f4f4f2"/><stop offset=".45" stop-color="#bdbdb8"/><stop offset="1" stop-color="#6d6d69"/>
+          </linearGradient>
+          <linearGradient id="gNib" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#a9a9a5"/><stop offset="1" stop-color="#4c4c49"/>
+          </linearGradient>
+          <radialGradient id="gLens" cx=".35" cy=".35" r=".7">
+            <stop offset="0" stop-color="#6b6b6b"/><stop offset=".5" stop-color="#111"/><stop offset="1" stop-color="#000"/>
+          </radialGradient>
+        </defs>
+
+        <!-- внутренности: видны только в разобранном виде -->
+        <g id="core" opacity="0">
+          <rect x="214" y="33" width="170" height="24" rx="4" fill="#ff5b1f"/>
+          <rect x="392" y="35" width="70" height="20" rx="3" fill="#f5f5f3"/>
+          <g fill="#050505"><rect x="400" y="40" width="8" height="10"/><rect x="412" y="40" width="8" height="10"/><rect x="424" y="40" width="8" height="10"/><rect x="436" y="40" width="8" height="10"/><rect x="448" y="40" width="8" height="10"/></g>
+          <text x="226" y="49" font-family="JetBrains Mono, monospace" font-size="10" fill="#050505">LI-ION 18H</text>
+        </g>
+
+        <!-- корпус -->
+        <g id="body">
+          <rect x="188" y="24" width="300" height="42" rx="8" fill="url(#gBody)"/>
+          <rect x="188" y="26" width="300" height="3" rx="1.5" fill="#fff" opacity=".12"/>
+          <!-- микрофон: решёточка -->
+          <g fill="#555"><circle cx="222" cy="40" r="1.4"/><circle cx="228" cy="40" r="1.4"/><circle cx="234" cy="40" r="1.4"/><circle cx="222" cy="50" r="1.4"/><circle cx="228" cy="50" r="1.4"/><circle cx="234" cy="50" r="1.4"/></g>
+          <!-- логотип на корпусе -->
+          <text x="300" y="50" font-family="Inter Tight, sans-serif" font-weight="900" font-size="14" letter-spacing="2" fill="#f5f5f3" opacity=".85">NIB</text>
+          <!-- индикатор: светится акцентом, когда ручка «слушает» -->
+          <circle id="led" cx="460" cy="45" r="3.2" fill="#ff5b1f"/>
+        </g>
+
+        <!-- колпачок с клипсой -->
+        <g id="cap">
+          <rect x="22" y="22" width="170" height="46" rx="23" fill="url(#gCap)"/>
+          <rect x="176" y="22" width="16" height="46" fill="#8e8e8a"/>
+          <rect x="44" y="11" width="122" height="9" rx="4.5" fill="#d9d9d5"/>
+          <rect x="150" y="11" width="16" height="17" rx="4" fill="#d9d9d5"/>
+        </g>
+
+        <!-- кольцо камеры у кончика -->
+        <g id="cam">
+          <rect x="486" y="25" width="40" height="40" rx="6" fill="#0d0d0d" stroke="#2c2c2c"/>
+          <circle cx="506" cy="45" r="11" fill="url(#gLens)" stroke="#333"/>
+          <circle id="lensDot" cx="506" cy="45" r="3" fill="#ff5b1f"/>
+        </g>
+
+        <!-- перо -->
+        <g id="nib">
+          <path d="M526 28 L592 41 Q614 45 592 49 L526 62 Z" fill="url(#gNib)"/>
+          <path d="M540 45 L604 45" stroke="#3a3a37" stroke-width="1"/>
+          <circle cx="552" cy="45" r="2.2" fill="#3a3a37"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="progress"><b id="bar"></b></div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div class="track"><span>WRITE</span><i>●</i><span>ASK</span><i>●</i><span>TRANSLATE</span><i>●</i><span>SOLVE</span><i>●</i><span>REMIND</span><i>●</i></div></div>
+
+<!-- ---------- Фишки ---------- -->
+<section class="sec" id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">What it does</div>
+      <h2>Four superpowers.<br>One pen.</h2>
+      <p>NIB looks like a pen because it is one. Everything else happens quietly in your ear.</p>
+    </div>
+    <div class="features">
+      <div class="feature reveal"><span class="num">/01</span><h3>Reads your handwriting</h3><p>Every note becomes searchable text on your phone. Even the messy ones.</p><div class="eg">“find my notes about <b>photosynthesis</b>”</div></div>
+      <div class="feature reveal"><span class="num">/02</span><h3>Translates anything</h3><p>Point the tip at a word in any of 40 languages. Hear it in yours.</p><div class="eg">“<b>Schmetterling</b>” → butterfly</div></div>
+      <div class="feature reveal"><span class="num">/03</span><h3>Explains the problem</h3><p>Stuck on an equation? NIB walks you through it, step by step.</p><div class="eg">“why is it <b>2x</b>?”</div></div>
+      <div class="feature reveal"><span class="num">/04</span><h3>Remembers for you</h3><p>Say it once. NIB reminds you before the test, not after.</p><div class="eg">“remind me: <b>essay due Friday</b>”</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Демо-диалог ---------- -->
+<section class="sec" id="demo">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Hear it</div>
+      <h2>Ask. Listen.<br>Done.</h2>
+      <p>Pick a question and hear what NIB whispers back.</p>
+    </div>
+    <div class="demo-tabs reveal">
+      <button type="button" class="on" data-q="0">Math</button>
+      <button type="button" data-q="1">Translate</button>
+      <button type="button" data-q="2">Remind</button>
+    </div>
+    <div class="demo-box reveal">
+      <div class="bubble q" id="demoQ">What's the derivative of x²?</div>
+      <div class="bubble a"><span id="demoA"></span><span class="cursor"></span></div>
+      <div class="demo-meta"><i></i> playing in your earbud</div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- 360°: настоящая 3D-ручка (Three.js). Её можно крутить мышкой или пальцем в любую сторону ---------- -->
+<section class="spin" id="spin">
+  <div class="spin-head">
+    <div class="kicker mono">06 — 360°</div>
+    <h2>Spin it.</h2>
+    <p>Drag to turn NIB any way you like. Then take it apart.</p>
+  </div>
+  <canvas id="pen3d" aria-label="3D model of the NIB pen. Drag to rotate."></canvas>
+  <div class="spin-ui">
+    <span class="hint mono">↻ DRAG TO ROTATE</span>
+    <button class="btn magnet" id="explodeBtn" type="button">Take it apart</button>
+  </div>
+</section>
+
+
+<div class="marquee" aria-hidden="true"><div class="track"><span>18H BATTERY</span><i>●</i><span>19 GRAMS</span><i>●</i><span>40+ LANGUAGES</span><i>●</i><span>ONE PEN</span><i>●</i></div></div>
+
+<!-- ---------- Характеристики ---------- -->
+<section class="sec" id="specs">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Specs</div>
+      <h2>The numbers.</h2>
+    </div>
+    <dl class="specs">
+      <div class="spec reveal"><dt>Battery</dt><dd>18 hours</dd></div>
+      <div class="spec reveal"><dt>Charging</dt><dd>USB-C, full in 45 min</dd></div>
+      <div class="spec reveal"><dt>Weight</dt><dd>19 g</dd></div>
+      <div class="spec reveal"><dt>Camera</dt><dd>4K micro-camera by the tip</dd></div>
+      <div class="spec reveal"><dt>Languages</dt><dd>40+</dd></div>
+      <div class="spec reveal"><dt>Connection</dt><dd>Bluetooth 5.3, any earbuds</dd></div>
+      <div class="spec reveal"><dt>Ink</dt><dd>Standard refill, 2 km of writing</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ---------- Предзаказ ---------- -->
+<section class="sec order" id="preorder">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Pre-order</div>
+      <h2>Be first.</h2>
+      <p>First batch ships in spring. Early price for early people.</p>
+    </div>
+    <div class="price-card reveal">
+      <div class="old">$129</div>
+      <div class="new"><sup>$</sup>89</div>
+      <ul>
+        <li>NIB pen + 3 ink refills</li>
+        <li>USB-C cable</li>
+        <li>Free shipping</li>
+      </ul>
+      <button class="btn btn-accent magnet" id="reserveBtn" type="button">Reserve my NIB</button>
+      <div class="note" id="reserveNote"></div>
+    </div>
+  </div>
+</section>
+
+<footer class="end">
+  <span>NIB<span style="color:var(--accent)">.</span> — the pen that answers back</span>
+  <span>Concept site · 2026</span>
+</footer>
+
+<script type="importmap">
+  { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  } }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/animejs@4.2.2/dist/bundles/anime.umd.min.js"></script>
+<script>
+  const { animate, createTimeline, onScroll, stagger, svg } = anime;
+
+  // ---------- 1. Главный экран: буквы NIB вылетают снизу по очереди, ручка въезжает справа ----------
+  // главный экран запускаем по сигналу «заставка закончилась» (его шлёт заставка на Motion, когда разъезжаются шторки)
+  function startHero() {
+    animate('.hero-title h1 span', {
+      translateY: ['110%', '0%'], rotate: [12, 0], opacity: [0, 1],
+      delay: stagger(90), duration: 1200, ease: 'outExpo'
+    });
+    // въезд анимируем у картинки внутри #pen, а сам #pen оставляем таймлайну прокрутки — иначе они спорят
+    animate('#pen svg', { translateX: ['60vw', '0vw'], rotate: [-25, 0], duration: 1800, ease: 'outExpo', delay: 150 });
+    animate('.hero-sub', { opacity: [0, 1], translateY: [20, 0], duration: 1000, delay: 700, ease: 'outQuad' });
+  }
+  let heroStarted = false;
+  const goHero = () => { if (!heroStarted) { heroStarted = true; startHero(); } };
+  addEventListener('intro:done', goHero);
+  setTimeout(goHero, 4200);   // запасной вариант: если заставка не загрузилась, всё равно показываем главный экран
+
+  // «рукописная» линия: превращаем путь в «рисуемый», в начале он пустой
+  const [ink] = svg.createDrawable('#inkPath');
+  ink.setAttribute('draw', '0 0');
+
+  // ---------- 2. Главный таймлайн «фильма» — привязан к прокрутке ----------
+  // enter 'top top' — старт, когда верх секции дошёл до верха экрана;
+  // leave 'bottom bottom' — конец, когда низ секции дошёл до низа экрана.
+  // sync: .85 — таймлайн плавно «догоняет» прокрутку, а не дёргается
+  const film = createTimeline({
+    defaults: { ease: 'inOutQuad', duration: 1000 },
+    autoplay: onScroll({ target: '.film', enter: 'top top', leave: 'bottom bottom', sync: .85 })
+  });
+
+  film
+    // полоска прогресса растёт всё время фильма
+    .add('#bar', { scaleX: [0, 1], duration: 10000, ease: 'linear' }, 0)
+
+    // — Кадр 0 → 1: заголовок уезжает, ручка наклоняется «для письма» и уходит влево
+    .add('.hero-title', { translateY: [0, '-30vh'], opacity: [1, 0], duration: 900 }, 0)
+    .add('.hero-sub', { opacity: [1, 0], duration: 500 }, 0)
+    .add('#pen', { translateX: '-12vw', translateY: '-10vh', rotate: 30, scale: .8, duration: 1200 }, 300)
+    .add('#ch1', { opacity: [0, 1], translateX: [40, 0], duration: 700 }, 900)
+    .add(ink, { draw: ['0 0', '0 1'], duration: 1400, ease: 'inOutSine' }, 1100)
+
+    // — Кадр 1 → 2: линия гаснет, ручка вылетает вправо, загорается свет, идут звуковые волны
+    .add('#ch1', { opacity: 0, duration: 500 }, 2700)
+    .add('.ink', { opacity: [1, 0], duration: 500 }, 2700)
+    .add('#pen', { translateX: '16vw', translateY: '0vh', rotate: 8, scale: .95, duration: 1200, ease: 'inOutCubic' }, 2800)
+    .add('.glow', { opacity: [0, 1], scale: [.6, 1], duration: 900 }, 3000)
+    .add('#ch2', { opacity: [0, 1], translateX: [-40, 0], duration: 700 }, 3500)
+    .add('.waves', { translateX: '16vw', duration: 10 }, 3400)
+    .add('.waves i', { opacity: [0, .9, 0], scale: [.2, 2.4], delay: stagger(250), duration: 1200, ease: 'outQuad' }, 3600)
+    .add('#led', { opacity: [1, .2, 1, .2, 1], duration: 1200 }, 3600)
+
+    // — Кадр 2 → 3: ручка в центре крупно, камера светится, по странице бежит луч сканера
+    .add('#ch2', { opacity: 0, duration: 500 }, 5000)
+    .add('#pen', { translateX: '-22vw', translateY: '8vh', rotate: 0, scale: 1.7, duration: 1300, ease: 'inOutCubic' }, 5000)
+    .add('#lensDot', { r: [3, 7, 3], duration: 900 }, 5900)
+    .add('#ch3', { opacity: [0, 1], translateY: [30, 0], duration: 700 }, 5600)
+    .add('.scan', { opacity: [0, 1, 0], translateY: ['-10vh', '24vh'], duration: 1200, ease: 'inOutSine' }, 5900)
+
+    // — Кадр 3 → 4: РАЗБОРКА. Колпачок улетает влево, перо и камера — вправо, корпус становится прозрачным
+    .add('#ch3', { opacity: 0, duration: 500 }, 7100)
+    .add('#pen', { translateX: '0vw', translateY: '4vh', rotate: 0, scale: .9, duration: 1000 }, 7100)
+    .add('#cap', { translateX: -150, rotate: -8, duration: 900, ease: 'outBack' }, 7600)
+    .add('#nib', { translateX: 150, duration: 900, ease: 'outBack' }, 7650)
+    .add('#cam', { translateX: 80, translateY: -40, duration: 900, ease: 'outBack' }, 7700)
+    .add('#body', { opacity: .18, duration: 600 }, 7700)
+    .add('#core', { opacity: 1, duration: 600 }, 7800)
+    .add('#ch4', { opacity: [0, 1], translateY: [30, 0], duration: 600 }, 7700)
+    .add('.label', { opacity: [0, 1], translateY: [10, 0], delay: stagger(120), duration: 500 }, 8200)
+
+    // — Кадр 4 → 5: собираем обратно, ручка эффектно встаёт под углом, финальный слоган
+    .add(['#ch4', '.label'], { opacity: 0, duration: 400 }, 8900)
+    .add(['#cap', '#nib', '#cam'], { translateX: 0, translateY: 0, rotate: 0, duration: 700, ease: 'inOutCubic' }, 8950)
+    .add('#body', { opacity: 1, duration: 500 }, 9000)
+    .add('#core', { opacity: 0, duration: 400 }, 9000)
+    .add('#pen', { translateY: '-12vh', rotate: -18, scale: 1.05, duration: 800 }, 9100)
+    .add('#ch5', { opacity: [0, 1], translateY: [40, 0], duration: 600 }, 9300);
+
+  // подписи деталей ставим рядом с деталями (координаты считаем от размеров ручки на экране)
+  function placeLabels() {
+    const w = Math.min(innerWidth * (innerWidth <= 760 ? .92 : .78), 720);
+    const cx = innerWidth / 2, cy = innerHeight / 2 + innerHeight * .04;
+    const k = w / 640 * .9;   // масштаб ручки в разобранном кадре
+    const pos = { lb1: [-210, -60], lb2: [-60, 50], lb3: [140, -95], lb4: [250, 40] };
+    for (const id in pos) {
+      const el = document.getElementById(id);
+      el.style.left = (cx + pos[id][0] * k) + 'px';
+      el.style.top = (cy + pos[id][1] * k) + 'px';
+    }
+  }
+  placeLabels();
+  addEventListener('resize', placeLabels);
+</script>
+
+<script type="module">
+  // ---------- 3D-ручка: собираем её из простых фигур — цилиндров, шара и конуса ----------
+  import * as THREE from 'three';
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+  import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+  const canvas = document.getElementById('pen3d');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+  const scene = new THREE.Scene();
+  // «комната» вокруг ручки — от неё металл красиво отражает свет
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+  camera.position.set(0, 1.2, 9);
+
+  // оранжевая подсветка сбоку — наш акцент
+  const rim = new THREE.PointLight(0xff5b1f, 30, 12);
+  rim.position.set(-3, 2, -2);
+  scene.add(rim);
+
+  // материалы: белый металл, чёрный матовый корпус, сталь пера, светящийся оранжевый
+  const metalWhite = new THREE.MeshStandardMaterial({ color: 0xe8e8e4, metalness: 0.9, roughness: 0.22 });
+  const matteBlack = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.35, roughness: 0.45 });
+  const darkRing   = new THREE.MeshStandardMaterial({ color: 0x060606, metalness: 0.6, roughness: 0.3 });
+  const steel      = new THREE.MeshStandardMaterial({ color: 0xcfcfcb, metalness: 1, roughness: 0.15 });
+  const glowOrange = new THREE.MeshStandardMaterial({ color: 0xff5b1f, emissive: 0xff5b1f, emissiveIntensity: 2 });
+
+  // цилиндры в Three.js стоят вертикально — кладём их на бок, вдоль оси X
+  const along = (mesh) => { mesh.rotation.z = Math.PI / 2; return mesh; };
+  const pen = new THREE.Group();     // вся ручка
+  scene.add(pen);
+
+  // колпачок: цилиндр + закруглённый конец + клипса
+  const cap = new THREE.Group();
+  cap.add(along(new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 1.6, 64), metalWhite)));
+  const capEnd = new THREE.Mesh(new THREE.SphereGeometry(0.24, 64, 32), metalWhite);
+  capEnd.position.x = -0.8; capEnd.scale.x = 0.6;
+  cap.add(capEnd);
+  const clip = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.06, 0.12), metalWhite);
+  clip.position.set(-0.1, 0.31, 0);
+  cap.add(clip);
+  cap.position.x = -1.6;
+  pen.add(cap);
+
+  // корпус + индикатор
+  const body = new THREE.Group();
+  body.add(along(new THREE.Mesh(new THREE.CylinderGeometry(0.21, 0.21, 2.6, 64), matteBlack)));
+  const led = new THREE.Mesh(new THREE.SphereGeometry(0.035, 16, 16), glowOrange);
+  led.position.set(0.95, 0.2, 0.06);
+  body.add(led);
+  body.position.x = 0.5;
+  pen.add(body);
+
+  // внутренности — видны, когда ручку разбирают
+  const core = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 1.8, 32), glowOrange);
+  along(core); core.position.x = 0.4; core.scale.set(0.001, 0.001, 0.001);
+  pen.add(core);
+
+  // кольцо камеры с объективом сбоку
+  const cam = new THREE.Group();
+  cam.add(along(new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.36, 64), darkRing)));
+  const lens = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.06, 32), glowOrange);
+  lens.rotation.x = Math.PI / 2; lens.position.z = 0.21;
+  cam.add(lens);
+  cam.position.x = 1.98;
+  pen.add(cam);
+
+  // перо — конус
+  const nib = along(new THREE.Mesh(new THREE.ConeGeometry(0.2, 0.9, 64), steel));
+  nib.rotation.z = -Math.PI / 2;     // острие смотрит вправо
+  nib.position.x = 2.61;
+  const nibGroup = new THREE.Group(); nibGroup.add(nib);
+  pen.add(nibGroup);
+
+  pen.position.x = -0.4;             // центр ручки в центре экрана
+  pen.rotation.set(0.35, 0, -0.25);  // красивый наклон по умолчанию
+
+  // ---------- управление: тянем мышкой/пальцем — вращаем на 360° ----------
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableZoom = false;       // колесо мышки листает страницу, а не приближает
+  controls.enablePan = false;
+  controls.enableDamping = true;     // вращение плавно «докатывается»
+  controls.autoRotate = true;        // пока не трогают — ручка медленно крутится сама
+  controls.autoRotateSpeed = 2.2;
+  controls.addEventListener('start', () => { controls.autoRotate = false; canvas.classList.add('grabbing'); });
+  controls.addEventListener('end', () => { canvas.classList.remove('grabbing'); setTimeout(() => { if (!apart) controls.autoRotate = true; }, 2500); });
+
+  // ---------- кнопка «разобрать»: Anime.js двигает детали 3D-модели ----------
+  const { animate } = anime;
+  let apart = false;
+  document.getElementById('explodeBtn').addEventListener('click', (e) => {
+    apart = !apart;
+    const d = { duration: 1100, ease: apart ? 'outBack' : 'inOutCubic' };
+    // камера плавно встаёт сбоку, чтобы все детали были в кадре, а сама ручка на время перестаёт крутиться
+    controls.autoRotate = !apart;
+    const dist = camera.position.length();
+    animate(camera.position, { x: 0, y: dist * 0.13, z: dist * 0.99, duration: 900, ease: 'inOutCubic' });
+    animate(cap.position, { x: apart ? -3.1 : -1.6, ...d });
+    animate(cap.rotation, { z: apart ? 0.5 : 0, ...d });
+    animate(cam.position, { x: apart ? 2.9 : 1.98, y: apart ? 0.5 : 0, ...d });
+    animate(nibGroup.position, { x: apart ? 1.4 : 0, ...d });
+    animate(body.position, { y: apart ? -0.55 : 0, ...d });
+    animate(core.scale, { x: apart ? 1 : 0.001, y: apart ? 1 : 0.001, z: apart ? 1 : 0.001, ...d });
+    e.currentTarget.textContent = apart ? 'Put it back' : 'Take it apart';
+  });
+
+  // размер холста подстраиваем под экран
+  function resize() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    // отодвигаем камеру так, чтобы ручка (длина ~5.6 + запас на поворот к камере) всегда влезала по ширине — на узком телефоне дальше
+    const fit = 7.5 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect);
+    camera.position.setLength(Math.max(9, fit));
+    camera.updateProjectionMatrix();
+  }
+  addEventListener('resize', resize);
+  resize();
+
+  // рисуем 60 раз в секунду, но только когда блок на экране — чтобы не тратить батарею
+  let visible = false;
+  new IntersectionObserver(([e]) => visible = e.isIntersecting).observe(canvas);
+  renderer.setAnimationLoop(() => {
+    if (!visible) return;
+    led.material.emissiveIntensity = 1.5 + Math.sin(performance.now() / 300);   // индикатор «дышит»
+    controls.update();
+    renderer.render(scene, camera);
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+<script>
+  // ---------- Motion: анимации обычных блоков ----------
+  const M = Motion;
+  const spring = { type: 'spring', stiffness: 260, damping: 20 };
+
+  // 0. Заставка при открытии: ручка пишет «nib», счётчик бежит до 100, потом шторки разъезжаются вверх и вниз
+  (function intro() {
+    const box = document.getElementById('intro');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { box.remove(); dispatchEvent(new Event('intro:done')); return; }
+    box.style.animation = 'none';                       // скрипт работает — запасной таймер не нужен
+    document.documentElement.classList.add('no-scroll'); // пока идёт заставка, страницу не листаем
+    scrollTo(0, 0);
+
+    // линии «рисуются» так: делаем пунктир длиной во всю линию и сдвигаем его от конца к началу
+    const paths = box.querySelectorAll('.sign path');
+    paths.forEach((p, i) => {
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
+      M.animate(p, { strokeDashoffset: [len, 0] }, { duration: .45, delay: .15 + i * .32, ease: 'easeInOut' });
+    });
+    M.animate(box.querySelector('.dot'), { scale: [0, 1] }, { type: 'spring', stiffness: 400, damping: 12, delay: .8 });
+
+    // счётчик 0 → 100 и подписи «что сейчас грузится»
+    const count = document.getElementById('introCount'), status = document.getElementById('introStatus');
+    const steps = ['Waking up the pen', 'Loading the brain', 'Connecting earbud', 'Ready'];
+    M.animate(0, 100, { duration: 1.6, ease: [.6, 0, .2, 1], onUpdate: v => {
+      count.textContent = Math.round(v);
+      status.textContent = steps[Math.min(3, Math.floor(v / 26))];
+    } });
+
+    // финал: вспышка-линия по центру и шторки разъезжаются
+    M.animate(box.querySelector('.line'), { scaleX: [0, 1] }, { duration: .5, delay: 1.55, ease: [.7, 0, .3, 1] });
+    M.animate([box.querySelector('.sign'), count, status], { opacity: 0 }, { duration: .25, delay: 1.75 });
+    setTimeout(() => dispatchEvent(new Event('intro:done')), 2000);   // сигнал главному экрану: шторки поехали
+    M.animate(box.querySelector('.top'), { y: '-100%' }, { duration: .8, delay: 1.95, ease: [.8, 0, .2, 1] });
+    M.animate(box.querySelector('.bottom'), { y: '100%' }, { duration: .8, delay: 1.95, ease: [.8, 0, .2, 1] });
+    M.animate(box.querySelector('.line'), { opacity: 0, scaleY: [1, 30] }, { duration: .5, delay: 1.95 });
+    setTimeout(() => { box.remove(); document.documentElement.classList.remove('no-scroll'); }, 2850);
+  })();
+
+  // 1. Полоска прокрутки сверху: растёт от 0 до 100% вместе со страницей
+  M.scroll(M.animate('.page-progress', { scaleX: [0, 1] }, { ease: 'linear' }));
+
+  // 2. Заголовки: режем на слова, и слова выезжают снизу по очереди, когда заголовок на экране
+  document.querySelectorAll('.sec-head h2, .spin-head h2').forEach(h => {
+    h.classList.add('split');
+    h.innerHTML = h.innerHTML.split(/(<br>)/).map(part =>
+      part === '<br>' ? part : part.split(' ').filter(Boolean).map(w => `<span class="w"><span>${w}</span></span>`).join(' ')
+    ).join('');
+    M.inView(h, () => {
+      M.animate(h.querySelectorAll('.w > span'), { y: ['110%', '0%'], rotate: [6, 0] }, { duration: .9, delay: M.stagger(.07), ease: [.2, .7, .2, 1] });
+    }, { amount: .5 });
+  });
+
+  // 3. Остальное выплывает снизу с лёгким размытием, соседние элементы — по очереди
+  document.querySelectorAll('.reveal').forEach(el => {
+    M.inView(el, () => {
+      const i = Array.prototype.indexOf.call(el.parentElement.children, el);
+      M.animate(el, { opacity: [0, 1], y: [50, 0], filter: ['blur(10px)', 'blur(0px)'] }, { duration: .9, delay: (i % 4) * .09, ease: [.2, .7, .2, 1] });
+    }, { amount: .2 });
+  });
+
+  // 4. Бегущая строка: едет сама и ещё сдвигается от прокрутки (крутишь вниз — едет быстрее влево)
+  document.querySelectorAll('.marquee').forEach(mq => {
+    const track = mq.querySelector('.track');
+    track.innerHTML += track.innerHTML;                          // дублируем, чтобы лента была бесконечной
+    M.animate(track, { x: ['0%', '-50%'] }, { duration: 22, repeat: Infinity, ease: 'linear' });
+    M.scroll(M.animate(mq, { x: ['8%', '-8%'] }, { ease: 'linear' }), { target: mq, offset: ['start end', 'end start'] });
+  });
+
+  // 5. Карточки фишек: наклоняются за мышкой и подсвечиваются под курсором
+  document.querySelectorAll('.feature').forEach(card => {
+    card.addEventListener('pointermove', e => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      M.animate(card, { rotateY: px * 10, rotateX: -py * 10, scale: 1.02 }, spring);
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--mx', '-999px');
+      M.animate(card, { rotateY: 0, rotateX: 0, scale: 1 }, spring);
+    });
+  });
+
+  // 6. Характеристики: числа «накручиваются» от нуля, когда строка появляется
+  document.querySelectorAll('.spec dd').forEach(dd => {
+    const m = dd.textContent.match(/^(\D*)(\d+(?:\.\d+)?)(.*)$/);
+    if (!m) return;
+    const [, before, num, after] = m;
+    const dec = (num.split('.')[1] || '').length;      // 5.3 так и остаётся с одной цифрой после точки
+    M.inView(dd, () => {
+      M.animate(0, +num, { duration: 1.4, ease: [.2, .7, .2, 1], onUpdate: v => dd.textContent = before + v.toFixed(dec) + after });
+    }, { amount: .8 });
+  });
+
+  // 7. Цена: старая $129 зачёркивается, новая $89 прыгает на пружине
+  M.inView('.price-card', () => {
+    M.animate('.price-card .new', { scale: [.6, 1], opacity: [0, 1] }, { type: 'spring', stiffness: 180, damping: 11, delay: .3 });
+    M.animate('.price-card .old', { opacity: [0, 1], y: [-20, 0] }, { duration: .5 });
+  }, { amount: .5 });
+
+  // 8. «Магнитные» кнопки: тянутся к курсору, когда он рядом, и пружинят обратно
+  document.querySelectorAll('.magnet').forEach(btn => {
+    btn.addEventListener('pointermove', e => {
+      const r = btn.getBoundingClientRect();
+      M.animate(btn, { x: (e.clientX - r.left - r.width / 2) * .35, y: (e.clientY - r.top - r.height / 2) * .35 }, spring);
+    });
+    btn.addEventListener('pointerleave', () => M.animate(btn, { x: 0, y: 0 }, { type: 'spring', stiffness: 150, damping: 9 }));
+  });
+
+  // 9. Демо-диалог: пузыри выпрыгивают на пружине, ответ печатается по буквам
+  const dialogs = [
+    ["What's the derivative of x²?", "2x. Bring the power down, then drop it by one. Want another example?"],
+    ["How do you say “good luck” in Spanish?", "“¡Buena suerte!” — sounds like BWEH-nah SWER-teh."],
+    ["Remind me about the history essay.", "Done. I'll whisper it Thursday at 6 pm, the night before it's due."]
+  ];
+  const qEl = document.getElementById('demoQ'), aEl = document.getElementById('demoA');
+  let typing = 0;
+  function play(n) {
+    const run = ++typing;            // если нажали другую вкладку — старая печать останавливается
+    qEl.textContent = dialogs[n][0]; aEl.textContent = '';
+    M.animate(qEl, { opacity: [0, 1], x: [40, 0], scale: [.9, 1] }, { type: 'spring', stiffness: 300, damping: 18 });
+    M.animate(aEl.parentElement, { opacity: [0, 1], x: [-40, 0], scale: [.9, 1] }, { type: 'spring', stiffness: 300, damping: 18, delay: .35 });
+    const text = dialogs[n][1];
+    let i = 0;
+    const tick = () => {
+      if (run !== typing) return;
+      aEl.textContent = text.slice(0, ++i);
+      if (i < text.length) setTimeout(tick, 26);
+    };
+    setTimeout(tick, 650);
+  }
+  document.querySelectorAll('.demo-tabs button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.demo-tabs button').forEach(x => x.classList.toggle('on', x === b));
+    M.animate(b, { scale: [.9, 1] }, spring);
+    play(+b.dataset.q);
+  }));
+  M.inView('#demo', () => { play(0); }, { amount: .5 });
+
+  // кнопка предзаказа: это концепт, настоящих заказов нет — честно говорим об этом
+  document.getElementById('reserveBtn').addEventListener('click', () => {
+    const note = document.getElementById('reserveNote');
+    note.textContent = 'This is a concept site — pre-orders aren’t open yet.';
+    M.animate(note, { opacity: [0, 1], y: [10, 0] }, { duration: .4 });
+  });
+</script>
+
+</body>
+</html>
