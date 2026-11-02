@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ПроЦветы — магазин цветов · Екатеринбург, просп. Академика Сахарова, 107/1</title>
+<meta name="description" content="Магазин цветов «ПроЦветы» на проспекте Академика Сахарова, 107/1. Букеты, цветы поштучно, шары, упаковка подарков. Каждый день 10:00–23:00.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Два шрифта, как у Инжира: изящный с засечками для заголовков и простой для текста -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Палитра из логотипа ПроЦветов: нежно-розовый фон и чёрная тонкая линия */
+  :root {
+    --pink: #fed6d6;      /* розовый точно как фон логотипа */
+    --blush: #fff0ef;     /* светлый розовый — основной фон */
+    --rose: #c9606f;      /* акцент: подписи, иконки */
+    --ink: #1f1a1b;       /* текст и кнопки — чёрный, как линия логотипа */
+    --muted: #6b5b5d;
+    --line: #f3c3c3;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--blush); color: var(--ink); font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 16px; line-height: 1.6; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- Шапка: логотип по центру на его родном розовом фоне ---------- */
+  header { position: sticky; top: 0; z-index: 20; background: var(--pink); border-bottom: 1px solid var(--line); }
+  .head-top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 76px; }
+  .head-top .left { font-size: 14px; color: var(--muted); }
+  /* логотип квадратный, с большими полями — обрезаем поля, чтобы он был крупнее */
+  .head-logo { height: 70px; width: 70px; object-fit: cover; object-position: center 55%; transform: scale(1.3); }
+  .head-top .right { justify-self: end; display: flex; align-items: center; gap: 18px; font-size: 15px; font-weight: 600; }
+  .head-top .right a:hover { color: var(--rose); }
+  nav.menu { display: flex; justify-content: center; gap: 40px; padding: 0 0 12px; font-size: 14px; letter-spacing: .04em; }
+  nav.menu a { color: var(--muted); }
+  nav.menu a:hover { color: var(--ink); }
+
+  /* ---------- Кнопки ---------- */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 30px; border-radius: 999px; font-size: 14px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; transition: background .2s, color .2s; }
+  .btn-dark { background: var(--ink); color: #fff; }
+  .btn-dark:hover { background: var(--rose); }
+  .btn-line { border: 1px solid var(--ink); color: var(--ink); }
+  .btn-line:hover { background: var(--ink); color: #fff; }
+
+  /* ---------- Первый экран: текст слева, три их букета справа ---------- */
+  .hero { padding: 72px 0 88px; overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: center; }
+  .hero .kicker { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--rose); }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(44px, 6vw, 76px); line-height: 1.02; margin-top: 14px; }
+  .hero h1 em { font-style: italic; color: var(--rose); }
+  /* большой логотип на первом экране: края квадрата мягко растворяются в фоне (маска-градиент),
+     поэтому розовый квадрат логотипа не виден — остаётся только «облако» вокруг тюльпана */
+  .hero-logo { width: 300px; height: 300px; margin: -40px 0 -36px -46px;
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 71%);
+            mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 71%); }
+  .hero p { margin-top: 18px; font-size: 18px; max-width: 470px; color: var(--muted); }
+  .hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .hero .hours { margin-top: 26px; font-size: 14px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .hero .hours::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #5bb37a; }
+
+  /* коллаж: три фото из их каталога — квадратные, чтобы их логотип на фото не обрезался */
+  .collage { position: relative; height: 540px; }
+  .collage img { position: absolute; object-fit: cover; aspect-ratio: 1 / 1; border-radius: 200px 200px 18px 18px; box-shadow: 0 24px 50px -24px rgba(120,50,60,.45); }
+  .collage .c1 { left: 23%; top: 0; width: 54%; z-index: 2; }
+  .collage .c2 { left: 0; bottom: 0; width: 38%; z-index: 3; }
+  .collage .c3 { right: 0; bottom: 10%; width: 36%; }
+  /* тонкий тюльпан из логотипа — как украшение за фото */
+  .collage .ring { position: absolute; left: 12%; top: 6%; width: 76%; height: 90%; border: 1px solid var(--rose); opacity: .35; border-radius: 999px 999px 24px 24px; }
+
+  /* ---------- Плашка с плюсами: всё из особенностей их страницы в Яндексе ---------- */
+  .perks { background: var(--pink); }
+  .perks .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .perk { display: flex; align-items: center; gap: 14px; padding: 26px 20px; }
+  .perk + .perk { border-left: 1px solid rgba(31,26,27,.12); }
+  .perk svg { flex: 0 0 34px; width: 34px; height: 34px; stroke: var(--ink); fill: none; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+  .perk b { display: block; font-size: 15px; font-weight: 600; }
+  .perk span { font-size: 13px; color: var(--muted); }
+
+  /* ---------- Появление при загрузке: фото «отъезжают», текст выезжает по очереди ---------- */
+  .collage img { animation: imgIn 1.8s cubic-bezier(.2,.7,.2,1) both; }
+  .collage .c2 { left: 0; bottom: 0; width: 38%; z-index: 3; }
+  .collage .c3 { right: 0; bottom: 10%; width: 36%; }
+  @keyframes imgIn { from { opacity: 0; transform: translateY(30px) scale(1.06); } to { opacity: 1; transform: none; } }
+  .hero-text > * { animation: textIn 1s ease both; }
+  .hero-text > :nth-child(2) { animation-delay: .15s; }
+  .hero-text > :nth-child(3) { animation-delay: .3s; }
+  .hero-text > :nth-child(4) { animation-delay: .45s; }
+  .hero-text > :nth-child(5) { animation-delay: .6s; }
+  @keyframes textIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+  /* логотип выплывает из размытия: сначала мягкое пятно, потом становится чётким */
+  .hero-text > .hero-logo { animation: logoIn 2.2s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes logoIn { from { opacity: 0; filter: blur(18px); transform: translateY(26px) scale(.9); } 60% { opacity: 1; } to { opacity: 1; filter: blur(0); transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .collage img, .hero-text > * { animation: none; } }
+
+  /* ---------- Общее для блоков ---------- */
+  section.block { padding: 96px 0; }
+  section[id] { scroll-margin-top: 110px; }   /* блок останавливается под шапкой, а не прячется за ней */
+  .block-head { text-align: center; margin-bottom: 48px; }
+  .block-head .kicker { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--rose); }
+  .block-head h2 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 4.5vw, 54px); line-height: 1.1; margin-top: 8px; }
+  .block-head p { margin-top: 10px; color: var(--muted); }
+
+  /* ---------- Каталог: их 12 позиций с Яндекс-сайта, карточки с аркой как в первом экране ---------- */
+  .products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px 24px; }
+  .product { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .product .pic { width: 100%; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 160px 160px 16px 16px; background: var(--pink); }
+  .product .pic img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+  .product:hover .pic img { transform: scale(1.05); }
+  .product h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 24px; line-height: 1.15; margin-top: 16px; }
+  .product .price { margin-top: 4px; font-size: 15px; }
+  .product .price small { color: var(--muted); font-size: 13px; }
+  .product .order { margin-top: 12px; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+  .product .order:hover { color: var(--rose); border-color: var(--rose); }
+
+  /* ---------- Отзывы: белые карточки на розовом ---------- */
+  .reviews-sec { background: var(--pink); }
+  .reviews { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 1040px; margin: 0 auto; }
+  .review { background: #fff; border-radius: 22px; padding: 34px 34px 28px; }
+  .review blockquote { font-family: 'Cormorant Garamond', serif; font-size: 21px; line-height: 1.45; }
+  .review .stars { color: var(--rose); letter-spacing: 3px; font-size: 14px; margin-bottom: 12px; }
+  .review .who { margin-top: 16px; font-size: 14px; color: var(--muted); }
+  .review .who b { color: var(--ink); font-weight: 600; }
+  .reviews-more { text-align: center; margin-top: 40px; }
+
+  /* ---------- Контакты: слева информация, справа карта ---------- */
+  .contacts .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 56px; align-items: stretch; }
+  .contacts h2 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 4vw, 50px); line-height: 1.1; margin-top: 8px; }
+  .contacts .kicker { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--rose); }
+  .contacts dl { margin-top: 28px; display: grid; grid-template-columns: auto 1fr; gap: 12px 24px; font-size: 15px; }
+  .contacts dt { color: var(--muted); }
+  .contacts dd a:hover { color: var(--rose); }
+  .contacts .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .map { border-radius: 22px; overflow: hidden; min-height: 380px; background: var(--pink); }
+  .map iframe { width: 100%; height: 100%; min-height: 380px; border: 0; display: block; }
+
+  /* ---------- Подвал ---------- */
+  footer { background: var(--ink); color: #f3e3e3; padding: 64px 0 32px; }
+  .foot { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 40px; }
+  .foot-logo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; }
+  .foot h4 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--pink); margin-bottom: 14px; font-weight: 600; }
+  .foot p, .foot a { display: block; font-size: 15px; line-height: 1.9; }
+  .foot a:hover { color: #fff; text-decoration: underline; }
+  .foot-bottom { margin-top: 48px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.15); font-size: 13px; color: #bfa9ab; }
+
+  /* ---------- Появление при прокрутке: как у Инжира — каждый кусок появляется отдельно ---------- */
+  .fx { opacity: 0; transform: translateY(24px); transition: opacity 1s ease, transform 1s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+  .fx.shown { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .fx { opacity: 1; transform: none; transition: none; } }
+
+  /* ---------- Телефон ---------- */
+  @media (max-width: 860px) {
+    .head-top { grid-template-columns: auto 1fr; height: 64px; }
+    .head-top .left { display: none; }
+    .head-logo { height: 58px; width: 58px; }
+    .head-top .right .tel { display: none; }
+    nav.menu { gap: 22px; overflow-x: auto; justify-content: flex-start; padding: 0 0 10px; white-space: nowrap; }
+    .hero { padding: 40px 0 56px; }
+    .hero .wrap { grid-template-columns: 1fr; gap: 36px; }
+    .hero p { font-size: 16px; }
+    .hero-logo { width: 240px; height: 240px; margin: -30px auto -28px; }
+    .hero-text { text-align: center; }
+    .hero p { margin-left: auto; margin-right: auto; }
+    .hero .hours { justify-content: center; }
+    .hero .actions .btn { flex: 1 1 100%; }
+    .collage { height: 420px; }
+    .perks .wrap { grid-template-columns: 1fr 1fr; padding: 0; }
+    .perk { padding: 18px 16px; }
+    .perk + .perk { border-left: 0; }
+    .perk:nth-child(even) { border-left: 1px solid rgba(31,26,27,.12); }
+    .perk:nth-child(n+3) { border-top: 1px solid rgba(31,26,27,.12); }
+    section.block { padding: 64px 0; }
+    section[id] { scroll-margin-top: 100px; }
+    .block-head { margin-bottom: 32px; }
+    .products { grid-template-columns: 1fr 1fr; gap: 28px 14px; }
+    .product h3 { font-size: 20px; }
+    .reviews { grid-template-columns: 1fr; }
+    .review { padding: 26px 22px 22px; }
+    .review blockquote { font-size: 19px; }
+    .contacts .wrap { grid-template-columns: 1fr; gap: 32px; }
+    .contacts .actions .btn { flex: 1 1 100%; }
+    .map, .map iframe { min-height: 300px; }
+    .foot { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+    .foot > div:first-child { grid-column: span 2; }
+  }
+  @media (min-width: 861px) and (max-width: 1100px) { .products { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 520px) { .wrap { padding: 0 18px; } .collage { height: 360px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="head-top">
+      <div class="left">Екатеринбург, просп. Академика Сахарова, 107/1</div>
+      <a href="#top"><img src="img/logo.jpg" alt="ПРОцветы" class="head-logo"></a>
+      <div class="right">
+        <a href="tel:+79530010466" class="tel">+7 953 001-04-66</a>
+        <a href="https://t.me/Procvetokekb" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+    <nav class="menu">
+      <a href="#catalog">Каталог</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-text">
+      <img class="hero-logo" src="img/logo.jpg" alt="ПРОцветы — магазин цветов">
+      <h1>Свежие цветы<br>на <em>Сахарова</em></h1>
+      <p>Букеты, цветы поштучно, сухоцветы и воздушные шары. Упаковка подарков, доставка и самовывоз.</p>
+      <div class="actions">
+        <a href="https://wa.me/79530010466" class="btn btn-dark" target="_blank" rel="noopener">Заказать в WhatsApp</a>
+        <a href="#catalog" class="btn btn-line">Смотреть каталог</a>
+      </div>
+      <div class="hours">Каждый день 10:00–23:00</div>
+    </div>
+    <div class="collage">
+      <div class="ring"></div>
+      <img class="c1" src="img/f07.jpg" alt="Розы">
+      <img class="c2" src="img/f08.jpg" alt="Тюльпаны">
+      <img class="c3" src="img/f06.jpg" alt="Эустома">
+    </div>
+  </div>
+</section>
+
+<!-- Плашка с плюсами — из особенностей на их странице в Яндексе -->
+<section class="perks">
+  <div class="wrap">
+    <div class="perk">
+      <svg viewBox="0 0 32 32"><path d="M3 9h16v13H3z"/><path d="M19 13h6l4 5v4h-10"/><circle cx="9" cy="24" r="2.5"/><circle cx="24" cy="24" r="2.5"/></svg>
+      <div><b>Доставка</b><span>и самовывоз</span></div>
+    </div>
+    <div class="perk">
+      <svg viewBox="0 0 32 32"><rect x="4" y="12" width="24" height="16" rx="1"/><path d="M4 18h24M16 12v16"/><path d="M16 12c-3-6-9-6-8-2 1 3 8 2 8 2zM16 12c3-6 9-6 8-2-1 3-8 2-8 2z"/></svg>
+      <div><b>Упаковка подарков</b><span>и подарочная упаковка</span></div>
+    </div>
+    <div class="perk">
+      <svg viewBox="0 0 32 32"><circle cx="16" cy="11" r="5"/><path d="M16 16v13M16 22c-4 0-7-2-8-5M16 25c4 0 7-2 8-5"/></svg>
+      <div><b>Свадебная флористика</b></div>
+    </div>
+    <div class="perk">
+      <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"/><path d="M16 9v7l5 3"/></svg>
+      <div><b>До 23:00</b><span>каждый день</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Каталог — их товары с Яндекс-сайта, названия, фото и цены дословно (цены «от») -->
+<section class="block" id="catalog">
+  <div class="wrap">
+    <div class="block-head">
+      <div class="kicker">Каталог</div>
+      <h2>Цветы и шары</h2>
+      <p>Цена указана от. Чтобы заказать — напишите нам</p>
+    </div>
+    <div class="products">
+      <div class="product">
+        <div class="pic"><img src="img/f07.jpg" alt="Розы" loading="lazy"></div>
+        <h3>Розы</h3>
+        <div class="price"><small>от</small> 180 ₽</div>
+        <a class="order" href="https://wa.me/79530010466?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%3A%20%D0%A0%D0%BE%D0%B7%D1%8B" target="_blank" rel="noopener">Заказать</a>
+      </div>
+      <div class="product">
+        <div class="pic"><img src="img/f08.jpg" alt="Тюльпаны" loading="lazy"></div>
+        <h3>Тюльпаны</h3>
+        <div class="price"><small>от</small> 200 ₽</div>
+        <a class="order" href="https://wa.me/79530010466?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%3A%20%D0%A2%D1%8E%D0%BB%D1%8C%D0%BF%D0%B0%D0%BD%D1%8B" target="_blank" rel="noopener">Заказать</a>
+      </div>
+      <div class="product">
+        <div class="pic"><img src="img/f06.jpg" alt="Эустома" loading="lazy"></div>
+        <h3>Эустома</h3>
+        <div class="price"><small>от</small> 300 ₽</div>
+        <a class="order" href="https://wa.me/79530010466?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%3A%20%D0%AD%D1%83%D1%81%D1%82%D0%BE%D0%BC%D0%B0" target="_blank" rel="noopener">Заказать</a>
+      </div>
+      <div class="product">
+        <div class="pic"><img src="img/f09.jpg" alt="Лилии" loading="lazy"></div>
+        <h3>Лилии</h3>
+        <div class="price"><small>от</small> 650 ₽</div>
+        <a class="order" href="https://wa.me/79530010466?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%3A%20%D0%9B%D0%B8%D0%BB%D0%B8%D0%B8" target="_blank" rel="noopener">Заказать</a>
+      </div>
+      <div class="product">
+        <div class="pic"><img src="img/f11.jpg" alt="Альстромерии" loading="lazy"></div>
+        <h3>Альстромерии</h3>
+        <div class="price"><small>от</small> 160 ₽</div>
+        <a class="order" href="https://wa.me/79530010466?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%3A%20%D0%90%D0%BB%D1%8C%D1%81%D1%82%D1%80%D0%BE%D0%BC%D0%B5%D1%80%D0%B8%D0%B8" target="_blank" rel="noopener">Заказать</a>
+      </div>
+      <div class="product">
+        <div class="pic"><img src="img/f10.jpg" alt="Гвоздика в ассортименте" loading="lazy"></div>
+        <h3>Гвоздика в ассортименте</h3>
+        <div class="price"><small>от</small> 100 ₽</div>
+        <a class="order" href="https://wa.me/79530010466?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%3A%20%D0%93%D0%B2%D0%BE%D0%B7%D0%B4%D0%B8%D0%BA%D0%B0%20%D0%B2%20%D0%B0%D1%81%D1%81%D0%BE%D1%80%D1%82%D0%B8%D0%BC%D0%B5%D0%BD%D1%82%D0%B5" target="_blank" rel="noopener">Заказать</a>
+      </div>
+      <div class="product">
+        <div class="pic"><img src="img/f05.jpg" alt="Гипсофилы" loading="lazy"></div>
+        <h3>Гипсофилы</h3>
+        <div class="price"><small>от</small> 250 ₽</div>
+        <a class="order" href="https://wa.me/79530010466?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%3A%20%D0%93%D0%B8%D0%BF%D1%81%D0%BE%D1%84%D0%B8%D0%BB%D1%8B" target="_blank" rel="noopener">Заказать</a>
+      </div>
+      <div class="product">
+        <div class="pic"><img src="img/f04.jpg" alt="Гиперикум" loading="lazy"></div>
+        <h3>Гиперикум</h3>
+        <div class="price"><small>от</small> 150 ₽</div>
+        <a class="order" href="https://wa.me/79530010466?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%3A%20%D0%93%D0%B8%D0%BF%D0%B5%D1%80%D0%B8%D0%BA%D1%83%D0%BC" target="_blank" rel="noopener">Заказать</a>
+      </div>
+      <div class="product">
+        <div class="pic"><img src="img/f03.jpg" alt="Лимониум" loading="lazy"></div>
+        <h3>Лимониум</h3>
+        <div class="price"><small>от</small> 150 ₽</div>
+        <a class="order" href="https://wa.me/79530010466?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%3A%20%D0%9B%D0%B8%D0%BC%D0%BE%D0%BD%D0%B8%D1%83%D0%BC" target="_blank" rel="noopener">Заказать</a>
+      </div>
+      <div class="product">
+        <div class="pic"><img src="img/f02.jpg" alt="Сухоцветы" loading="lazy"></div>
+        <h3>Сухоцветы</h3>
+        <div class="price"><small>от</small> 150 ₽</div>
+        <a class="order" href="https://wa.me/79530010466?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%3A%20%D0%A1%D1%83%D1%85%D0%BE%D1%86%D0%B2%D0%B5%D1%82%D1%8B" target="_blank" rel="noopener">Заказать</a>
+      </div>
+      <div class="product">
+        <div class="pic"><img src="img/f12.jpg" alt="Зелень в ассортименте" loading="lazy"></div>
+        <h3>Зелень в ассортименте</h3>
+        <div class="price"><small>от</small> 30 ₽</div>
+        <a class="order" href="https://wa.me/79530010466?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%3A%20%D0%97%D0%B5%D0%BB%D0%B5%D0%BD%D1%8C%20%D0%B2%20%D0%B0%D1%81%D1%81%D0%BE%D1%80%D1%82%D0%B8%D0%BC%D0%B5%D0%BD%D1%82%D0%B5" target="_blank" rel="noopener">Заказать</a>
+      </div>
+      <div class="product">
+        <div class="pic"><img src="img/f01.jpg" alt="Воздушные шары в ассортименте" loading="lazy"></div>
+        <h3>Воздушные шары в ассортименте</h3>
+        <div class="price"><small>от</small> 150 ₽</div>
+        <a class="order" href="https://wa.me/79530010466?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%3A%20%D0%92%D0%BE%D0%B7%D0%B4%D1%83%D1%88%D0%BD%D1%8B%D0%B5%20%D1%88%D0%B0%D1%80%D1%8B%20%D0%B2%20%D0%B0%D1%81%D1%81%D0%BE%D1%80%D1%82%D0%B8%D0%BC%D0%B5%D0%BD%D1%82%D0%B5" target="_blank" rel="noopener">Заказать</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Отзывы — дословно с их Яндекс-сайта -->
+<section class="block reviews-sec" id="reviews">
+  <div class="wrap">
+    <div class="block-head">
+      <div class="kicker">Отзывы</div>
+      <h2>Что говорят покупатели</h2>
+      <p>4,6 на Яндекс Картах</p>
+    </div>
+    <div class="reviews">
+      <div class="review">
+        <blockquote>Побывала в магазине "Процветы". Брала букеты маме и бабушке на дни рождения, осталась в полном восторге! 😍 Выбор большой, все цветы свежие и ароматные. Сотрудники вежливые и доброжелательные. Помогли подобрать подходящие цветы и упаковку. Дали советы по уходу. В магазине уютно и комфортно. Цена соответствует качеству. Я довольна своим выбором и с удовольствием вернусь снова 🤗</blockquote>
+        <div class="who"><b>Софья Штанько</b> · 7 декабря</div>
+      </div>
+      <div class="review">
+        <blockquote>очень милый цветочный! букеты все такие нежные и красивые 😍 муж подарил букет, стоит 2 недели уже! 1 фото с момента покупки, 2 спустя 2 недели 🫶🏼</blockquote>
+        <div class="who"><b>Екатерина</b> · 3 октября</div>
+      </div>
+      <div class="review">
+        <blockquote>Не в первый раз неожиданно покупаю себе букет в этом чудесном месте Флористы всегда очень приятные девушки, цветы стоят долго, а композиции шикарны</blockquote>
+        <div class="who"><b>Екатерина</b> · 19 февраля</div>
+      </div>
+      <div class="review">
+        <blockquote>Отличный выбор , если вы нуждаетесь в покупке цветов или шаров! Цветы всегда свежие, работники делают свою работу качественно и красиво , особенно букеты-это отдельный шик! шарики тоже отличного качества! так что , если вам нужны отличные букеты или шары , смело обращайтесь сюда!</blockquote>
+        <div class="who"><b>игнат лавров</b> · 23 декабря</div>
+      </div>
+    </div>
+    <div class="reviews-more"><a href="https://yandex.ru/maps/org/protsvety/55075622091/reviews/" class="btn btn-line" target="_blank" rel="noopener">Все отзывы в Яндекс Картах</a></div>
+  </div>
+</section>
+
+<!-- Контакты — Яндекс Карты и их страница -->
+<section class="block contacts" id="contacts">
+  <div class="wrap">
+    <div>
+      <div class="kicker">Контакты</div>
+      <h2>Проспект Академика Сахарова, 107/1</h2>
+      <dl>
+        <dt>Адрес</dt><dd>Екатеринбург, просп. Академика Сахарова, 107/1</dd>
+        <dt>Часы</dt><dd>Каждый день 10:00–23:00</dd>
+        <dt>Телефон</dt><dd><a href="tel:+79530010466">+7 953 001-04-66</a></dd>
+        <dt>Написать</dt><dd><a href="https://wa.me/79530010466" target="_blank" rel="noopener">WhatsApp</a> · <a href="https://t.me/Procvetokekb" target="_blank" rel="noopener">Telegram</a></dd>
+        <dt>Оплата</dt><dd>Картой</dd>
+      </dl>
+      <div class="actions">
+        <a href="https://yandex.ru/maps/org/protsvety/55075622091/" class="btn btn-dark" target="_blank" rel="noopener">Как добраться</a>
+        <a href="tel:+79530010466" class="btn btn-line">Позвонить</a>
+      </div>
+    </div>
+    <div class="map">
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=60.4936%2C56.7897%2C60.5056%2C56.7953&amp;layer=mapnik&amp;marker=56.792518%2C60.499608" title="ПроЦветы на карте" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><img src="img/logo.jpg" alt="ПРОцветы" class="foot-logo"></div>
+      <div>
+        <h4>Адрес</h4>
+        <p>Екатеринбург,<br>просп. Академика Сахарова, 107/1</p>
+        <a href="https://yandex.ru/maps/org/protsvety/55075622091/" target="_blank" rel="noopener">Яндекс Карты</a>
+      </div>
+      <div>
+        <h4>Часы</h4>
+        <p>Каждый день<br>10:00–23:00</p>
+      </div>
+      <div>
+        <h4>Связаться</h4>
+        <a href="tel:+79530010466">+7 953 001-04-66</a>
+        <a href="https://wa.me/79530010466" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://t.me/Procvetokekb" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+    <div class="foot-bottom">© ПроЦветы — магазин цветов, Екатеринбург</div>
+  </div>
+</footer>
+
+<script>
+  // Появление при прокрутке: карточки, отзывы и заголовки выплывают по очереди, когда до них доходит экран
+  (function () {
+    if (!('IntersectionObserver' in window)) return;   // старый браузер — просто без анимаций
+    var els = document.querySelectorAll('.perk, .block-head > *, .product, .review, .reviews-more, .contacts .wrap > div');
+    els.forEach(function (el) {
+      var i = Array.prototype.indexOf.call(el.parentElement.children, el);
+      el.classList.add('fx');
+      el.style.setProperty('--d', (Math.min(i % 4, 4) * 0.12) + 's');   // соседи в ряду — с задержкой друг за другом
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('shown'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
