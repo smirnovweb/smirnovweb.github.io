@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATRIUM FLEUR — цветочная мастерская · Екатеринбург, ул. Академика Вонсовского, 21</title>
+<meta name="description" content="Цветочная мастерская ATRIUM FLEUR на Академика Вонсовского, 21. Букеты и композиции, доставка и самовывоз. Каждый день 10:00–21:00.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Cormorant Garamond — буквы с засечками, как ATRIUM FLEUR на их логотипе, Raleway — как «цветочная мастерская» на логотипе,
+     Marck Script — рукописный слоган как на их неоне в витрине, Manrope — обычный текст -->
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&family=Marck+Script&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Цвета их логотипа из Яндекс Карт: тёмный изумруд #194949 и кремовые линии #efe9d1.
+   Слоган светится мягким кремовым «неоном», как надпись в их витрине */
+:root {
+  --bg: #194949;        /* изумрудный фон логотипа */
+  --bg2: #143e3e;       /* блоки чуть темнее */
+  --neon: #f7f1dc;      /* кремовый неон */
+  --glow: 239, 233, 209;/* кремовое свечение (RGB) */
+  --text: #efe9d1;      /* крем — как линии логотипа */
+  --muted: #a7bdb5;     /* приглушённый шалфей для второстепенного текста */
+  --line: #2e5f5d;
+  --accent: #d9c79c;    /* золотистый крем — подписи и мелкие акценты */
+}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { background: var(--bg); color: var(--text); font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 16px; line-height: 1.6; overflow-x: clip; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+
+  /* неоновое свечение: несколько теней разного размера, как у настоящей трубки */
+  .neon { color: var(--neon); text-shadow: 0 0 3px rgba(255,255,255,.7), 0 0 10px rgba(var(--glow), .7), 0 0 26px rgba(var(--glow), .4), 0 0 54px rgba(var(--glow), .22); }
+
+  /* ---------- Шапка: как у Flowerdose — название по центру, меню строкой под ним ---------- */
+  header { position: sticky; top: 0; z-index: 30; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .head-top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 74px; }
+  .head-top .left { font-size: 14px; color: var(--muted); }
+  .logo { display: flex; align-items: center; gap: 12px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; letter-spacing: .12em; }
+  .logo img, .hero-lotus { mix-blend-mode: lighten; }   /* лотос из их логотипа: тёмный фон картинки «растворяется», остаются только линии */
+  .logo img { width: 40px; height: 40px; }
+  .head-top .right { justify-self: end; display: flex; gap: 18px; font-size: 15px; font-weight: 600; }
+  .head-top .right a:hover { color: var(--accent); }
+  nav.menu { display: flex; justify-content: center; gap: 38px; padding-bottom: 14px; font-size: 14px; letter-spacing: .04em; }
+  nav.menu a { color: var(--muted); transition: color .2s; }
+  nav.menu a:hover { color: var(--neon); }
+
+  /* ---------- Кнопки ---------- */
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 15px 30px; border-radius: 999px; font-size: 14px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; transition: box-shadow .3s, background .3s, color .3s; }
+  .btn-neon { background: var(--neon); color: var(--bg); box-shadow: 0 0 18px rgba(var(--glow), .55); }
+  .btn-neon:hover { box-shadow: 0 0 34px rgba(var(--glow), .9); }
+  .btn-line { border: 1px solid rgba(239,233,209,.4); color: var(--text); }
+  .btn-line:hover { border-color: var(--neon); box-shadow: 0 0 18px rgba(var(--glow), .4) inset, 0 0 18px rgba(var(--glow), .3); }
+
+  /* ---------- Первый экран: слева неоновый слоган, справа большое фото букета ---------- */
+  .hero { position: relative; padding: 70px 0 90px; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; left: -10%; top: 10%; width: 60%; height: 80%; background: radial-gradient(closest-side, rgba(var(--glow), .08), transparent); pointer-events: none; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  .hero-lotus { width: 110px; height: 110px; margin-bottom: 18px; }
+  .kicker { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+  .hero-brand { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(30px, 4vw, 48px); letter-spacing: .16em; margin-top: 22px; }
+  .hero h1 { font-family: 'Marck Script', cursive; font-weight: 400; font-size: clamp(54px, 7.4vw, 104px); line-height: 1.02; margin-top: 10px; }
+  .hero h1 .w { display: inline-block; }
+  .hero p.sub { margin-top: 24px; font-size: 18px; max-width: 470px; color: var(--muted); }
+  .hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .badge { display: inline-flex; align-items: center; gap: 12px; margin-top: 30px; padding: 10px 18px 10px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; color: var(--muted); }
+  .badge b { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--neon); line-height: 1; }
+  .badge .stars { color: var(--accent); letter-spacing: 2px; }
+  /* фото в неоновой рамке-арке */
+  .hero-pic { position: relative; aspect-ratio: 4 / 5; border-radius: 300px 300px 22px 22px; }
+  .hero-pic .frame { position: absolute; inset: -14px; border-radius: 320px 320px 30px 30px; border: 2px solid var(--neon); box-shadow: 0 0 10px rgba(var(--glow), .9), 0 0 30px rgba(var(--glow), .5), inset 0 0 18px rgba(var(--glow), .4); }
+  .hero-pic .img { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; }
+  .hero-pic img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---------- Плашка с плюсами ---------- */
+  .perks { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg2); }
+  .perks .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .perk { display: flex; align-items: center; gap: 14px; padding: 26px 20px; }
+  .perk + .perk { border-left: 1px solid var(--line); }
+  .perk svg { flex: 0 0 32px; width: 32px; height: 32px; stroke: var(--neon); fill: none; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 4px rgba(var(--glow), .8)); }
+  .perk b { display: block; font-size: 15px; font-weight: 600; }
+  .perk span { font-size: 13px; color: var(--muted); }
+
+  /* ---------- Общее для блоков ---------- */
+  section.block { padding: 110px 0; }
+  section[id] { scroll-margin-top: 110px; }
+  .block-head { text-align: center; margin-bottom: 56px; }
+  .block-head h2 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(38px, 5vw, 60px); line-height: 1.08; margin-top: 10px; }
+  .block-head p { margin-top: 12px; color: var(--muted); }
+
+  /* ---------- Каталог: красивый прайс-лист (у букетов в Яндексе нет фото — картинки не приписываем) ---------- */
+  .price-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 72px; }
+  .price-cols h3 { font-family: 'Raleway', sans-serif; font-weight: 400; font-size: 16px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .item { padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .item .row { display: flex; align-items: baseline; gap: 14px; }
+  .item .name { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 25px; line-height: 1.15; }
+  .item .dots { flex: 1; border-bottom: 1px dotted rgba(239,233,209,.3); transform: translateY(-6px); }
+  .item .price { font-family: 'Cormorant Garamond', serif; font-size: 25px; white-space: nowrap; }
+  .item .comp { margin-top: 6px; font-size: 14px; color: var(--muted); max-width: 470px; }
+  .item .order { display: inline-block; margin-top: 10px; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--neon); border-bottom: 1px solid rgba(239,233,209,.4); padding-bottom: 2px; transition: text-shadow .3s, border-color .3s; }
+  .item .order:hover { text-shadow: 0 0 10px rgba(var(--glow), .9); border-color: var(--neon); }
+  .price-note { margin-top: 36px; text-align: center; font-size: 14px; color: var(--muted); }
+
+  /* ---------- Наши работы: лента фото, едет вбок при прокрутке ---------- */
+  .works { overflow: hidden; }
+  .strip { display: flex; gap: 18px; width: max-content; padding-left: 28px; }
+  .strip figure { flex: 0 0 auto; width: 300px; height: 400px; border-radius: 160px 160px 16px 16px; overflow: hidden; }
+  .strip figure:nth-child(even) { margin-top: 60px; }
+  .strip img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; }
+  .strip figure:hover img { transform: scale(1.06); }
+
+  /* ---------- Наша студия ---------- */
+  .studio { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .studio .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; }
+  .studio-pic { aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; }
+  .studio-pic img { width: 100%; height: 100%; object-fit: cover; }
+  .studio h2 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 4vw, 52px); line-height: 1.1; margin-top: 10px; }
+  .studio dl { margin-top: 28px; display: grid; grid-template-columns: auto 1fr; gap: 12px 24px; font-size: 15px; }
+  .studio dt { color: var(--muted); }
+  .studio dd a:hover { color: var(--accent); }
+  .studio .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+  /* ---------- Отзывы ---------- */
+  .rating { display: flex; justify-content: center; align-items: center; gap: 22px; margin-bottom: 48px; }
+  .rating .num { font-family: 'Cormorant Garamond', serif; font-size: 84px; line-height: 1; }
+  .rating .meta { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .rating .meta b { color: var(--text); font-weight: 600; }
+  .reviews { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; max-width: 1040px; margin: 0 auto; }
+  .review { background: var(--bg2); border: 1px solid var(--line); border-radius: 22px; padding: 32px; transition: border-color .4s, box-shadow .4s; }
+  .review:hover { border-color: rgba(var(--glow), .5); box-shadow: 0 0 30px rgba(var(--glow), .12); }
+  .review blockquote { font-family: 'Cormorant Garamond', serif; font-size: 21px; line-height: 1.45; }
+  .review .who { margin-top: 16px; font-size: 14px; color: var(--muted); }
+  .review .who b { color: var(--text); font-weight: 600; }
+  .reviews-more { text-align: center; margin-top: 40px; }
+
+  /* ---------- Подвал ---------- */
+  footer { border-top: 1px solid var(--line); padding: 64px 0 32px; }
+  .foot { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; }
+  .foot .logo { font-size: 24px; }
+  .foot .sub { font-family: 'Raleway', sans-serif; font-weight: 300; font-size: 15px; letter-spacing: .06em; color: var(--muted); margin-top: 4px; }
+  .foot .slogan { font-family: 'Marck Script', cursive; font-size: 28px; margin-top: 10px; color: var(--muted); }
+  .foot h4 { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; font-weight: 600; }
+  .foot p, .foot a { display: block; font-size: 15px; line-height: 1.9; }
+  .foot a:hover { color: var(--neon); }
+  .foot-bottom { margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+
+  /* элементы, которые выплывают через Motion, до появления спрятаны */
+  .reveal { opacity: 0; }
+
+  /* ---------- Телефон ---------- */
+  @media (max-width: 860px) {
+    .head-top { grid-template-columns: auto 1fr; height: 62px; }
+    .head-top .left { display: none; }
+    .logo { font-size: 18px; }
+    .head-top .right .tel { display: none; }
+    nav.menu { gap: 22px; overflow-x: auto; justify-content: flex-start; white-space: nowrap; padding-bottom: 12px; }
+    .hero { padding: 40px 0 64px; }
+    .hero .wrap { grid-template-columns: 1fr; gap: 48px; }
+    .hero .actions .btn { flex: 1 1 100%; }
+    .hero-pic { max-width: 420px; margin: 0 auto; width: 88%; }
+    .perks .wrap { grid-template-columns: 1fr 1fr; padding: 0; }
+    .perk { padding: 18px 16px; }
+    .perk + .perk { border-left: 0; }
+    .perk:nth-child(even) { border-left: 1px solid var(--line); }
+    .perk:nth-child(n+3) { border-top: 1px solid var(--line); }
+    section.block { padding: 72px 0; }
+    .block-head { margin-bottom: 36px; }
+    .price-cols { grid-template-columns: 1fr; gap: 40px; }
+    .item .name, .item .price { font-size: 22px; }
+    .strip figure { width: 220px; height: 300px; }
+    .strip figure:nth-child(even) { margin-top: 40px; }
+    .studio .wrap { grid-template-columns: 1fr; gap: 28px; }
+    .studio .actions .btn { flex: 1 1 100%; }
+    .reviews { grid-template-columns: 1fr; }
+    .review { padding: 24px 22px; }
+    .foot { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+    .foot > div:first-child { grid-column: span 2; }
+    section[id] { scroll-margin-top: 100px; }
+  }
+  @media (max-width: 520px) { .wrap { padding: 0 18px; } .strip { padding-left: 18px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="head-top">
+      <div class="left">Екатеринбург, ул. Академика Вонсовского, 21</div>
+      <a href="#top" class="logo"><img src="img/lotus.jpg" alt="">ATRIUM FLEUR</a>
+      <div class="right">
+        <a href="tel:+79623106759" class="tel">+7 962 310-67-59</a>
+        <a href="https://t.me/+79623106759" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+    <nav class="menu">
+      <a href="#catalog">Каталог</a>
+      <a href="#works">Наши работы</a>
+      <a href="#studio">Мастерская</a>
+      <a href="#reviews">Отзывы</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Первый экран: слоган — дословно с их неоновой вывески в витрине -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <img class="hero-lotus" id="lotus" src="img/lotus.jpg" alt="">
+      <div class="kicker reveal">Цветочная мастерская · Екатеринбург</div>
+      <div class="hero-brand neon" id="brand">ATRIUM FLEUR</div>
+      <h1 class="neon" id="slogan">говорим о чувствах цветами</h1>
+      <p class="sub reveal">Букеты и композиции, шары и подарки. Доставка и самовывоз — каждый день 10:00–21:00.</p>
+      <div class="actions reveal">
+        <a href="https://wa.me/79623120609" class="btn btn-neon" target="_blank" rel="noopener">Заказать в WhatsApp</a>
+        <a href="#catalog" class="btn btn-line">Смотреть каталог</a>
+      </div>
+      <div class="badge reveal"><b>5,0</b><span><span class="stars">★★★★★</span><br>«Хорошее место 2026» в Яндекс Картах</span></div>
+    </div>
+    <div class="hero-pic" id="heroPic">
+      <div class="frame"></div>
+      <div class="img"><img src="img/p035.jpg" alt="Букет из кустовых роз в нежных оттенках"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Плюсы — из особенностей в Яндекс Картах -->
+<section class="perks">
+  <div class="wrap">
+    <div class="perk reveal"><svg viewBox="0 0 32 32"><path d="M3 9h16v13H3z"/><path d="M19 13h6l4 5v4h-10"/><circle cx="9" cy="24" r="2.5"/><circle cx="24" cy="24" r="2.5"/></svg><div><b>Доставка</b><span>и самовывоз</span></div></div>
+    <div class="perk reveal"><svg viewBox="0 0 32 32"><circle cx="16" cy="11" r="5"/><path d="M16 16v13M16 22c-4 0-7-2-8-5M16 25c4 0 7-2 8-5"/></svg><div><b>Свадебная флористика</b></div></div>
+    <div class="perk reveal"><svg viewBox="0 0 32 32"><ellipse cx="16" cy="12" rx="7" ry="8.5"/><path d="M16 20.5l-1.5 2h3zM16 22.5c0 3-3 4-2 7"/></svg><div><b>Шары</b><span>гелиевые, с цифрами</span></div></div>
+    <div class="perk reveal"><svg viewBox="0 0 32 32"><rect x="4" y="12" width="24" height="16" rx="1"/><path d="M4 18h24M16 12v16"/><path d="M16 12c-3-6-9-6-8-2 1 3 8 2 8 2zM16 12c3-6 9-6 8-2-1 3-8 2-8 2z"/></svg><div><b>Подарки</b><span>открытки, игрушки, свечи</span></div></div>
+  </div>
+</section>
+
+<!-- Каталог — дословно из Яндекс Карт («Товары и услуги», от представителя организации) -->
+<section class="block" id="catalog">
+  <div class="wrap">
+    <div class="block-head reveal">
+      <div class="kicker">Каталог</div>
+      <h2>Букеты и композиции</h2>
+      <p>Чтобы заказать — нажмите «Заказать», откроется WhatsApp</p>
+    </div>
+    <div class="price-cols">
+      <div>
+        <h3 class="reveal">Букеты</h3>
+        <div class="item reveal" data-name="Букет-комплимент"><div class="row"><span class="name">Букет-комплимент</span><span class="dots"></span><span class="price">2 500 ₽</span></div><p class="comp">Мини букет отлично подойдет в качестве комплимента или простого знака внимания. В составе: кустовая роза, пионовидная роза, хризантема, диантус, эвкалипт</p><a class="order">Заказать</a></div>
+        <div class="item reveal" data-name="Сборный букет"><div class="row"><span class="name">Сборный букет</span><span class="dots"></span><span class="price">2 850 ₽</span></div><p class="comp">Сборный букет в нежных оттенках со стойким составом! Точно порадует получателя. В составе: роза, диантус, хризантема, эвкалипт</p><a class="order">Заказать</a></div>
+        <div class="item reveal" data-name="Букет в пастельных тонах"><div class="row"><span class="name">Букет в пастельных тонах</span><span class="dots"></span><span class="price">3 400 ₽</span></div><p class="comp">Сборный нежный букет из свежих цветов. В составе: кустовая роза, одноголовая роза, хризантема, диантус, эвкалипт</p><a class="order">Заказать</a></div>
+        <div class="item reveal" data-name="Букет с гортензией"><div class="row"><span class="name">Букет с гортензией</span><span class="dots"></span><span class="price">3 400 ₽</span></div><p class="comp">Букет с голландской гортензией и диантусами. В составе: гортензия Голландия, диантус, эвкалипт, техническая зелень. Наличие уточняйте заранее</p><a class="order">Заказать</a></div>
+        <div class="item reveal" data-name="Моно букет из гвоздик"><div class="row"><span class="name">Моно букет из гвоздик</span><span class="dots"></span><span class="price">3 550 ₽</span></div><p class="comp">Нежный и стойкий букет из 15 гвоздик с эвкалиптом в оформлении. Оттенок согласовывается заранее исходя из наличия цветов</p><a class="order">Заказать</a></div>
+        <div class="item reveal" data-name="Дуо букет"><div class="row"><span class="name">Дуо букет</span><span class="dots"></span><span class="price">3 850 ₽</span></div><p class="comp">Дуо букеты состоят из двух цветков с добавлением зелени. В составе: кустовая роза, диантус, эвкалипт</p><a class="order">Заказать</a></div>
+        <div class="item reveal" data-name="Вау букет из красных роз"><div class="row"><span class="name">Вау букет из красных роз</span><span class="dots"></span><span class="price">5 100 ₽</span></div><p class="comp">Яркий необычный букет с классическим составом! Красная роза, статица, эвкалипт и декоративные элементы (бусы)</p><a class="order">Заказать</a></div>
+        <div class="item reveal" data-name="Нежный сборный букет"><div class="row"><span class="name">Нежный сборный букет</span><span class="dots"></span><span class="price">6 000 ₽</span></div><p class="comp">В составе: роза кустовая, роза пионовидная одноголовая, хризантема кустовая, диантус, антирринум, эвкалипт</p><a class="order">Заказать</a></div>
+      </div>
+      <div>
+        <h3 class="reveal">Композиции</h3>
+        <div class="item reveal" data-name="Мини композиция"><div class="row"><span class="name">Мини композиция</span><span class="dots"></span><span class="price">2 300 ₽</span></div><p class="comp">Композиция из кустовой хризантемы, танацетума и эвкалипта. Стойкий состав будет радовать получателя очень долго</p><a class="order">Заказать</a></div>
+        <div class="item reveal" data-name="Мини-композиция в шляпной коробке"><div class="row"><span class="name">Мини-композиция</span><span class="dots"></span><span class="price">2 500 ₽</span></div><p class="comp">Композиция в шляпной коробке и флористической губке. Удобный формат, если нет возможности поставить букет в воду</p><a class="order">Заказать</a></div>
+        <div class="item reveal" data-name="Композиция из кустовой розы"><div class="row"><span class="name">Композиция из кустовой розы</span><span class="dots"></span><span class="price">6 000 ₽</span></div><p class="comp">Композиция из кустовой розы в нежных оттенках с добавлением эвкалипта. Удобный формат букета в флористической губке</p><a class="order">Заказать</a></div>
+        <div class="item reveal" data-name="Большая сборная корзина"><div class="row"><span class="name">Большая сборная корзина</span><span class="dots"></span><span class="price">7 500 ₽</span></div><p class="comp">Сборная корзина из сезонных цветов в нежных оттенках! Соберем под ваш запрос: вау-эффект, максимальная стойкость или необычные цветы</p><a class="order">Заказать</a></div>
+        <h3 class="reveal" style="margin-top:44px">Ещё</h3>
+        <div class="item reveal" data-name="Гелиевые шары"><div class="row"><span class="name">Гелиевые шары</span><span class="dots"></span><span class="price">180 ₽</span></div><p class="comp">Большой выбор латексных и фольгированных шаров</p><a class="order">Заказать</a></div>
+        <div class="item reveal" data-name="Арома-свечи ручной работы"><div class="row"><span class="name">Арома-свечи ручной работы</span><span class="dots"></span><span class="price">1 200 ₽</span></div><p class="comp">Большой выбор ароматических свечей из натурального соевого и кокосового воска</p><a class="order">Заказать</a></div>
+      </div>
+    </div>
+    <p class="price-note reveal">Состав может немного меняться в зависимости от наличия цветов — без изменений в форме, цвете и объёме</p>
+  </div>
+</section>
+
+<!-- Наши работы — фото из Яндекс Карт -->
+<section class="block works" id="works">
+  <div class="wrap"><div class="block-head reveal"><div class="kicker">Наши работы</div><h2>Букеты, которые уже подарили</h2></div></div>
+  <div class="strip" id="strip">
+    <figure><img src="img/p009.jpg" alt="Букет из малиновых кустовых роз" loading="lazy"></figure>
+    <figure><img src="img/p033.jpg" alt="Букет из гортензий" loading="lazy"></figure>
+    <figure><img src="img/p060.jpg" alt="Букет из пионов" loading="lazy"></figure>
+    <figure><img src="img/p029.jpg" alt="Букет из пионовидных роз" loading="lazy"></figure>
+    <figure><img src="img/p045.jpg" alt="Букет из хризантем" loading="lazy"></figure>
+    <figure><img src="img/p125.jpg" alt="Белые розы" loading="lazy"></figure>
+    <figure><img src="img/p031.jpg" alt="Пионы в вазе" loading="lazy"></figure>
+    <figure><img src="img/p069.jpg" alt="Розовые розы" loading="lazy"></figure>
+    <figure><img src="img/p034.jpg" alt="Букет из хризантем" loading="lazy"></figure>
+    <figure><img src="img/p103.jpg" alt="Пионовидные розы" loading="lazy"></figure>
+    <figure><img src="img/p100.jpg" alt="Белый букет" loading="lazy"></figure>
+  </div>
+</section>
+
+<!-- Наша студия — всё из Яндекс Карт -->
+<section class="block studio" id="studio">
+  <div class="wrap">
+    <div class="studio-pic reveal"><img src="img/p042.jpg" alt="Неоновая вывеска ATRIUM FLEUR «говорим о чувствах цветами»" loading="lazy"></div>
+    <div>
+      <div class="kicker reveal">Наша мастерская</div>
+      <h2 class="reveal">Академика Вонсовского, 21</h2>
+      <dl class="reveal">
+        <dt>Адрес</dt><dd>Екатеринбург, ул. Академика Вонсовского, 21</dd>
+        <dt>Часы</dt><dd>Каждый день 10:00–21:00</dd>
+        <dt>Телефон</dt><dd><a href="tel:+79623106759">+7 962 310-67-59</a></dd>
+        <dt>Написать</dt><dd><a href="https://wa.me/79623120609" target="_blank" rel="noopener">WhatsApp</a> · <a href="https://max.ru/+79623120609" target="_blank" rel="noopener">MAX</a> · <a href="https://t.me/+79623106759" target="_blank" rel="noopener">Telegram</a></dd>
+        <dt>Оплата</dt><dd>Картой, наличными, QR, СБП, переводом</dd>
+        <dt>Ещё</dt><dd>Парковка · можно с собакой</dd>
+      </dl>
+      <div class="actions reveal">
+        <a href="https://yandex.ru/maps/org/atrium_fler/157849726654/" class="btn btn-neon" target="_blank" rel="noopener">Как добраться</a>
+        <a href="tel:+79623106759" class="btn btn-line">Позвонить</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Отзывы — дословно из Яндекс Карт -->
+<section class="block" id="reviews">
+  <div class="wrap">
+    <div class="block-head reveal"><div class="kicker">Отзывы</div><h2>Что говорят гости</h2></div>
+    <div class="rating reveal"><span class="num neon" id="rateNum">5,0</span><span class="meta"><b>132 оценки</b> в Яндекс Картах<br>«Хорошее место 2026»</span></div>
+    <div class="reviews">
+      <div class="review reveal"><blockquote>Очень хороший салон цветов!😍Большое разнообразие, огромный выбор цветов на любой вкус и кошелек! В магазине большой выбор сумочек и открыток - как дополнение к букетику! Забронировала цветочки накануне для Дня Рождения близкого человека, приехала и выкупила! Приятные флористы, дарят хорошее настроение и радость!</blockquote><div class="who"><b>Ольга Усатых</b> · 15 сентября</div></div>
+      <div class="review reveal"><blockquote>Искал красные розы по району, заехал в три цветочных рядом… Увидел этот салон по картам, зашел и был в восторге от выбора, качества и сервиса. … Всегда приятно приходить в место, в которое вкладывают душу.</blockquote><div class="who"><b>Иван</b> · 8 декабря 2025</div></div>
+      <div class="review reveal"><blockquote>Красивущие букеты в готовой сборке, большой ассортимент цветов, девочки флористы все подскажут и помогут в составлении индивидуальной композиции! Так же сразу можно приобрести вазы и дополнительные подарочки вашим любимым и близким 🤍</blockquote><div class="who"><b>Анастасия</b> · 27 августа 2025</div></div>
+      <div class="review reveal"><blockquote>Каждый цветок свежий, ухоженный, композиции собраны со вкусом и вниманием к деталям — видно, что флористы думают не шаблонами, а настроением и смыслом.</blockquote><div class="who"><b>Maksim Shipitsyn</b> · 14 декабря 2025</div></div>
+    </div>
+    <div class="reviews-more reveal"><a href="https://yandex.ru/maps/org/atrium_fler/157849726654/reviews/" class="btn btn-line" target="_blank" rel="noopener">Все отзывы в Яндекс Картах</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><div class="logo"><img src="img/lotus.jpg" alt="">ATRIUM FLEUR</div><div class="sub">цветочная мастерская</div><div class="slogan">говорим о чувствах цветами</div></div>
+      <div><h4>Адрес</h4><p>Екатеринбург,<br>ул. Академика Вонсовского, 21</p><a href="https://yandex.ru/maps/org/atrium_fler/157849726654/" target="_blank" rel="noopener">Яндекс Карты</a></div>
+      <div><h4>Часы</h4><p>Каждый день<br>10:00–21:00</p></div>
+      <div><h4>Связаться</h4><a href="tel:+79623106759">+7 962 310-67-59</a><a href="https://wa.me/79623120609" target="_blank" rel="noopener">WhatsApp</a><a href="https://t.me/+79623106759" target="_blank" rel="noopener">Telegram</a></div>
+    </div>
+    <div class="foot-bottom">© ATRIUM FLEUR — цветочная мастерская, Екатеринбург</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+<script>
+  // кнопки «Заказать» в каталоге: открывают WhatsApp с готовым сообщением «Хочу заказать: <название>»
+  document.querySelectorAll('.item').forEach(item => {
+    const a = item.querySelector('.order');
+    a.href = 'https://wa.me/79623120609?text=' + encodeURIComponent('Здравствуйте! Хочу заказать: ' + item.dataset.name);
+    a.target = '_blank'; a.rel = 'noopener';
+  });
+
+  const M = Motion;
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (calm) { document.querySelectorAll('.reveal').forEach(el => el.style.opacity = 1); }
+  else {
+    // 1. Неон «загорается»: название и слоган мигают и вспыхивают, как настоящая вывеска при включении
+    const flicker = { opacity: [0, .9, .15, 1, .4, 1, .85, 1] };
+    M.animate('#brand', flicker, { duration: 1.4, delay: .2 });
+    // слоган — по словам: каждое слово зажигается чуть позже предыдущего
+    const slogan = document.getElementById('slogan');
+    slogan.innerHTML = slogan.textContent.split(' ').map(w => `<span class="w">${w}</span>`).join(' ');
+    M.animate(slogan.querySelectorAll('.w'), flicker, { duration: 1.2, delay: M.stagger(.22, { startDelay: .7 }) });
+    // а потом неон иногда чуть «моргает» сам — как живая трубка
+    setInterval(() => {
+      const ws = slogan.querySelectorAll('.w'); const w = ws[Math.floor(Math.random() * ws.length)];
+      M.animate(w, { opacity: [1, .3, 1, .6, 1] }, { duration: .5 });
+    }, 3200);
+
+    M.animate('#lotus', { opacity: [0, 1], scale: [.7, 1], rotate: [-8, 0] }, { duration: 1.6, ease: [.2, .7, .2, 1] });
+
+    // 2. Фото на первом экране: рамка-арка появляется, фото «отъезжает» из увеличения
+    M.animate('#heroPic .frame', { opacity: [0, 1], scale: [.96, 1] }, { duration: 1.2, delay: .4 });
+    M.animate('#heroPic img', { scale: [1.25, 1], opacity: [0, 1] }, { duration: 1.8, ease: [.2, .7, .2, 1] });
+    // и чуть-чуть плывёт вверх при прокрутке (параллакс)
+    M.scroll(M.animate('#heroPic .img', { y: [0, -60] }, { ease: 'linear' }), { target: document.querySelector('.hero'), offset: ['start start', 'end start'] });
+
+    // 3. Всё остальное выплывает снизу, когда долистали; соседние элементы — по очереди
+    document.querySelectorAll('.reveal').forEach(el => {
+      M.inView(el, () => {
+        const i = Array.prototype.indexOf.call(el.parentElement.children, el);
+        M.animate(el, { opacity: [0, 1], y: [36, 0] }, { duration: .8, delay: (i % 6) * .06, ease: [.2, .7, .2, 1] });
+      }, { amount: .25 });
+    });
+
+    // 4. Лента «Наши работы» едет вбок, пока листаешь страницу
+    const strip = document.getElementById('strip');
+    const shift = Math.max(0, strip.scrollWidth - innerWidth + 56);   // насколько ленте нужно уехать, чтобы показать последнее фото
+    M.scroll(M.animate(strip, { x: [0, -shift] }, { ease: 'linear' }),
+      { target: document.getElementById('works'), offset: ['start end', 'end start'] });
+
+    // 5. Рейтинг 5,0 «набегает» от нуля
+    M.inView('#rateNum', () => {
+      const el = document.getElementById('rateNum');
+      M.animate(0, 5, { duration: 1.4, ease: [.2, .7, .2, 1], onUpdate: v => el.textContent = v.toFixed(1).replace('.', ',') });
+    }, { amount: .8 });
+  }
+</script>
+</body>
+</html>
