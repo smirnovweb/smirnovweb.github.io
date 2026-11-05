@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Раневская — кафе советского быта, Екатеринбург</title>
+<meta name="description" content="Кафе советского быта «Раневская» на Луначарского, 136. Пельмешки и вареники собственной лепки, обеды, банкеты. Пн–Сб 12:00–21:00.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Marck+Script&family=PT+Mono&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --room:#14100c; --room2:#1d1610; --cream:#f3e7cf; --muted:#b9a88c;
+  --kraft:#cdaf7c; --kraft2:#bf9e68; --ink:#2b1c0f; --ink2:#5a4227;
+  --green:#3f5a1f; --green2:#2b3f14; --wine:#6d1a1e; --wine2:#4f1115;
+  --lamp:#e2502f; --amber:#efac45;
+  --slab:'Oswald','PT Serif',serif; --script:'Marck Script','PT Serif',cursive;
+  --serif:'PT Serif',Georgia,serif; --mono:'PT Mono',monospace;
+  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .12 0 0 0 0 .05 0 0 0 .32 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--room);color:var(--cream);font:400 18px/1.55 var(--serif);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.wrap{width:min(1180px,100% - 40px);margin-inline:auto}
+.label{font:400 13px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+h2{font:400 clamp(38px,6vw,68px)/1.02 var(--slab);letter-spacing:.01em;text-transform:uppercase}
+.script{font-family:var(--script);font-weight:400}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 28px;background:var(--lamp);color:#fff7ea;font:400 20px/1 var(--slab);letter-spacing:.04em;text-transform:uppercase;text-decoration:none;border-radius:3px;box-shadow:0 0 0 1px #ffb08a44,0 12px 40px -10px #e2502f99;transition:transform .2s,background .2s}
+.btn:hover{background:#f0623f;transform:translateY(-2px)}
+.btn.ghost{background:none;box-shadow:inset 0 0 0 1.5px #f3e7cf88;color:var(--cream)}
+.btn.ghost:hover{background:#f3e7cf18}
+
+/* шапка */
+.top{position:fixed;inset:0 0 auto 0;z-index:30;transition:background .3s,box-shadow .3s}
+.top.on{background:#14100cf0;box-shadow:0 1px 0 #f3e7cf1f}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px}
+.logo{font:400 30px/1 var(--script);text-decoration:none;color:var(--cream)}
+.top nav{display:flex;align-items:center;gap:26px;font:400 13px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.top nav a{text-decoration:none;opacity:.85}
+.top nav a:hover{opacity:1;color:var(--amber)}
+.top .tel{font:400 15px/1 var(--mono);text-decoration:none;white-space:nowrap}
+
+/* первый экран */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden;background:#000}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:32% 30%;filter:brightness(.82) saturate(1.05);animation:lampOn 2s .25s both}
+@keyframes lampOn{0%{filter:brightness(.12) saturate(.7)}12%{filter:brightness(.55) saturate(1)}18%{filter:brightness(.16) saturate(.8)}34%{filter:brightness(.82) saturate(1.05)}100%{filter:brightness(.82) saturate(1.05)}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#14100c99 0,#14100c00 26%,#14100c00 40%,#14100cd9 74%,var(--room) 100%)}
+.hero .in{position:relative;z-index:2;padding-block:0 clamp(30px,7vh,76px)}
+.hero .kicker{font:400 clamp(30px,4.6vw,48px)/1 var(--script);color:var(--amber)}
+.hero h1{font:400 clamp(52px,18vw,212px)/1 var(--slab);text-transform:uppercase;letter-spacing:.005em;margin:.06em 0 .14em -.03em;text-shadow:0 6px 40px #000a}
+.hero p{max-width:30em;font-size:clamp(18px,2vw,22px);line-height:1.4}
+.hero .row{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:24px}
+.now{font:400 14px/1.3 var(--mono);display:inline-flex;align-items:center;gap:9px}
+.now i{width:9px;height:9px;border-radius:50%;background:#8fc25a;box-shadow:0 0 10px #8fc25a}
+.now.off i{background:var(--lamp);box-shadow:0 0 10px var(--lamp)}
+
+/* цитата */
+.quote{background:var(--wine) var(--noise);padding:clamp(70px,11vw,130px) 0}
+.quote blockquote{font:400 clamp(35px,5.4vw,66px)/1.14 var(--script);max-width:19em}
+.quote cite{display:block;margin-top:22px;font:400 13px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#f3cfa9}
+.quote p{margin-top:30px;max-width:31em;color:#f6dfca}
+
+/* квартира */
+.flat{padding:clamp(70px,10vw,120px) 0 clamp(60px,8vw,100px);background:var(--room)}
+.flat .head{display:grid;grid-template-columns:1.1fr 1fr;gap:24px 60px;align-items:end;margin-bottom:38px}
+.flat .head p{color:#e4d6bd}
+.strip{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x proximity;padding:0 max(20px,calc((100vw - 1180px)/2)) 14px;scrollbar-width:thin;scrollbar-color:#6b5438 transparent}
+.strip figure{flex:0 0 auto;width:min(74vw,350px);scroll-snap-align:center}
+.strip figure.w{width:min(88vw,590px)}
+.strip img{width:100%;height:clamp(350px,56vh,470px);object-fit:cover;border-radius:2px}
+.strip figcaption{font:400 13px/1.35 var(--mono);color:var(--muted);padding-top:10px}
+
+/* меню */
+.menu{background:var(--green2);padding:clamp(60px,9vw,110px) 0;position:relative}
+.sheet{background:var(--kraft) var(--noise);color:var(--ink);border-radius:3px;box-shadow:0 30px 70px -30px #000c;display:grid;grid-template-columns:58px minmax(0,1fr);position:relative}
+.rope{position:relative;background:linear-gradient(90deg,transparent 26px,#2b1c0f 26px,#2b1c0f 31px,transparent 31px)}
+.rope::before{content:"";position:absolute;inset:18px 0;background:radial-gradient(circle at 28.5px 50%,#d9c39a 0 4px,#2b1c0f 4.5px 10px,transparent 10.5px) 0 0/58px 118px repeat-y}
+.sheet .body{padding:clamp(26px,4vw,50px) clamp(18px,4.5vw,56px) clamp(28px,4vw,48px) 6px}
+.sheet h2{color:var(--ink);font-size:clamp(58px,10vw,118px);line-height:.9}
+.sheet .sub{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 30px;margin:6px 0 24px}
+.sheet .sub .script{font-size:clamp(28px,3.4vw,38px);line-height:1.1}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px;position:sticky;top:68px;z-index:5;background:var(--kraft) var(--noise);padding:10px 0;border-bottom:2px solid var(--ink)}
+.tabs button{padding:9px 13px;font:400 15px/1.1 var(--slab);letter-spacing:.03em;text-transform:uppercase;border-radius:2px;color:var(--ink)}
+.tabs button:hover{background:#2b1c0f1a}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--kraft)}
+.pane{display:none;grid-template-columns:minmax(0,1fr) 270px;gap:36px;align-items:start}
+.pane.on{display:grid;animation:rise .35s both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}}
+.pane h3{font:400 clamp(26px,3.4vw,38px)/1.05 var(--slab);text-transform:uppercase;margin-bottom:14px}
+.pane ul{list-style:none;padding:0}
+.pane li{display:grid;grid-template-columns:1fr auto;gap:2px 14px;padding:11px 0;border-bottom:1.5px dotted #2b1c0f77}
+.pane li b{font-weight:700;font-size:18px;line-height:1.28}
+.pane li span{font:400 17px/1.3 var(--mono);white-space:nowrap}
+.pane li small{grid-column:1/-1;font-size:15px;line-height:1.3;color:var(--ink2)}
+.pane figure img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:2px;filter:sepia(.14);box-shadow:0 12px 26px -14px #2b1c0f}
+.pane .hit{display:inline-block;background:var(--wine);color:#fbe9d7;font:400 11px/1 var(--mono);padding:3px 6px;margin-right:6px;vertical-align:2px;letter-spacing:.06em}
+.stamp{margin-top:28px;font:400 clamp(16px,2vw,20px)/1.3 var(--slab);text-transform:uppercase;color:#2b1c0fb0}
+.draft{margin-top:12px;font:400 13px/1.4 var(--mono);color:var(--ink2)}
+
+/* обед, банкет */
+.split{display:grid;grid-template-columns:1fr 1fr}
+.split>div{min-height:520px}
+.split .ph{position:relative;overflow:hidden}
+.split .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.split .tx{padding:clamp(46px,7vw,92px) clamp(20px,6vw,84px);display:flex;flex-direction:column;justify-content:center;gap:18px}
+.lunch .tx{background:var(--room2)}
+.lunch .price{font:400 clamp(66px,9vw,110px)/.95 var(--slab);color:var(--amber)}
+.lunch .price small{font-size:.32em;display:block;color:var(--cream);letter-spacing:.04em;margin-bottom:6px}
+.banq .tx{background:var(--green) var(--noise)}
+.banq ul{list-style:none;padding:0;display:grid;gap:8px}
+.banq li{padding-left:24px;position:relative}
+.banq li::before{content:"★";position:absolute;left:0;color:var(--amber);font-size:15px;top:2px}
+.note{font:400 14px/1.45 var(--mono);color:#e7dcc4}
+.wolf{background:var(--amber) var(--noise);color:var(--ink);padding:clamp(38px,5vw,60px) 0}
+.wolf .wrap{display:grid;grid-template-columns:auto 1fr;gap:18px 44px;align-items:center}
+.wolf .big{font:400 clamp(68px,12vw,134px)/.9 var(--slab)}
+.wolf h2{font-size:clamp(28px,4vw,44px);margin-bottom:8px}
+
+/* отзывы */
+.voices{padding:clamp(70px,10vw,120px) 0;background:var(--room)}
+.score{display:flex;flex-wrap:wrap;gap:14px 46px;margin:22px 0 40px}
+.score div{font:400 14px/1.3 var(--mono);color:var(--muted)}
+.score b{display:block;font:400 54px/1 var(--slab);color:var(--amber)}
+.say{columns:3 300px;column-gap:22px}
+.say figure{break-inside:avoid;margin-bottom:22px;padding:22px 22px 18px;background:var(--room2);border-top:3px solid var(--wine)}
+.say blockquote{font-size:19px;line-height:1.42}
+.say figcaption{margin-top:12px;font:400 13px/1.3 var(--mono);color:var(--muted)}
+
+/* как найти */
+.find{background:var(--wine2) var(--noise);padding:clamp(66px,9vw,110px) 0 clamp(100px,12vw,120px)}
+.find .wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:34px 70px;align-items:start}
+.find dl{display:grid;gap:18px;margin-top:24px}
+.find dt{font:400 12px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#f3cfa9}
+.find dd{margin:2px 0 0;font-size:21px;line-height:1.3}
+.find dd a{text-decoration-thickness:1px;text-underline-offset:3px}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.links a{font:400 14px/1 var(--mono);padding:11px 14px;box-shadow:inset 0 0 0 1px #f3e7cf77;text-decoration:none;border-radius:2px}
+.links a:hover{background:#f3e7cf18}
+.find figure img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:2px}
+footer{background:#0e0b08;color:var(--muted);font:400 13px/1.5 var(--mono);padding:24px 0 96px}
+
+/* бронь */
+dialog{border:0;padding:0;margin:auto;width:min(480px,100% - 28px);max-height:calc(100dvh - 28px);background:var(--kraft) var(--noise);color:var(--ink);border-radius:3px;box-shadow:0 30px 90px #000}
+dialog::backdrop{background:#0a0705cc}
+.bk{padding:26px clamp(20px,5vw,32px) 28px;position:relative}
+.bk h2{font-size:40px;color:var(--ink);padding-right:44px}
+.bk p{font-size:16px;line-height:1.4;margin:6px 0 16px}
+.bk .x{position:absolute;right:12px;top:12px;width:44px;height:44px;font-size:28px;line-height:1}
+.bk label{display:block;font:400 12px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.bk input,.bk select{display:block;width:100%;margin-top:5px;height:50px;padding:0 12px;background:#f2e3c5;color:var(--ink);border:1.5px solid var(--ink);border-radius:2px;font:400 18px/1 var(--serif);letter-spacing:0;text-transform:none}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bk .say-it{background:#2b1c0f;color:var(--kraft);padding:12px 14px;font-size:16px;line-height:1.35;margin:4px 0 14px}
+.bk .btn{width:100%}
+.bk .btn[aria-disabled=true]{opacity:.45;pointer-events:none}
+
+.mob{display:none}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+.rv.in{opacity:1;transform:none}
+@media (max-width:900px){
+  body{font-size:17px}
+  .top nav a:not(.tel){display:none}
+  .flat .head,.find .wrap{grid-template-columns:1fr}
+  .split{grid-template-columns:1fr}
+  .split>div{min-height:0}
+  .split .ph{aspect-ratio:4/3}
+  .banq .ph{order:-1}
+  .pane{grid-template-columns:minmax(0,1fr)}
+  .pane figure{display:none}
+  .sheet{grid-template-columns:30px minmax(0,1fr)}
+  .rope{background:linear-gradient(90deg,transparent 12px,#2b1c0f 12px,#2b1c0f 15px,transparent 15px)}
+  .rope::before{background:radial-gradient(circle at 13.5px 50%,#d9c39a 0 3px,#2b1c0f 3.5px 7px,transparent 7.5px) 0 0/30px 104px repeat-y}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;margin-right:-18px;padding-right:18px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:0 0 auto}
+  .menu .wrap{width:calc(100% - 20px)}
+  .wolf .wrap{grid-template-columns:1fr}
+  .hero img{object-position:30% 30%}
+  .hero .in{padding-bottom:88px}
+  .hero .row .btn{flex:1 1 auto}
+  .mob{display:grid;grid-template-columns:1fr 1.5fr;position:fixed;inset:auto 0 0 0;z-index:25;background:#14100cf5;padding:8px 10px calc(8px + env(safe-area-inset-bottom));gap:8px;box-shadow:0 -1px 0 #f3e7cf22}
+  .mob .btn{min-height:50px;padding:0 10px;font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .hero img{animation:none}
+  .rv{opacity:1;transform:none;transition:none}
+  .pane.on{animation:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#home">Раневская</a>
+    <nav aria-label="Разделы">
+      <a href="#menu">Меню</a><a href="#lunch">Обеды</a><a href="#banket">Банкеты</a><a href="#find">Как найти</a>
+      <a class="tel" href="tel:+79961753950">+7 996 175-39-50</a>
+    </nav>
+  </div>
+</header>
+
+<main id="home">
+<section class="hero">
+  <img src="img/zal-49.jpg" alt="Зал кафе: зелёная стена, ковёр с оленем, красный абажур, сервант с посудой" fetchpriority="high">
+  <div class="wrap in">
+    <div class="kicker">кафе советского быта</div>
+    <h1>Раневская</h1>
+    <p>Пельмешки и вареники собственной лепки. Вкусно и уютно!</p>
+    <div class="row">
+      <button class="btn" data-book>Забронировать стол</button>
+      <a class="btn ghost" href="#menu">Смотреть меню</a>
+      <span class="now" id="now"><i></i><span>Пн–Сб 12:00–21:00</span></span>
+    </div>
+  </div>
+</section>
+
+<section class="quote">
+  <div class="wrap rv">
+    <blockquote>«Я заметила, что если не кушать хлеб, сахар, жирное мясо и не пить пиво с рыбой — морда становится меньше, но грустнее»
+      <cite>Фаина Раневская</cite>
+    </blockquote>
+    <p>Мы за то, чтобы лица наших гостей сияли счастьем! Поэтому наша домашняя кухня — это честные порции, понятные вкусы и то самое «бабушкино» тепло.</p>
+  </div>
+</section>
+
+<section class="flat" id="flat">
+  <div class="wrap head rv">
+    <div>
+      <div class="label">Советский быт хранит множество историй</div>
+      <h2 style="margin-top:12px">Приходите вспомнить детство</h2>
+    </div>
+    <p>Или молодость родителей. Домашняя обстановка, атмосферная музыка советского времени, цитаты Раневской на стенах и музыка, от которой хочется сказать: «Хорошо сидим!»</p>
+  </div>
+  <div class="strip" tabindex="0" aria-label="Фотографии кафе">
+    <figure class="w"><img loading="lazy" src="img/zal-37.jpg" alt="Зал с трюмо, ковром на стене и красным абажуром"><figcaption>Трюмо, ковёр и абажур</figcaption></figure>
+    <figure><img loading="lazy" src="img/tg-58_0.jpg" alt="Старая радиола на красной стене"><figcaption>Радио всегда звучит мелодиями советских лет</figcaption></figure>
+    <figure><img loading="lazy" src="img/tg-6_3.jpg" alt="Стена с газетами и плакатом Раневской"><figcaption>Даже в туалете афоризмы Раневской, пишут гости</figcaption></figure>
+    <figure class="w"><img loading="lazy" src="img/zal-58.jpg" alt="Уголок зала со столом и абажуром"><figcaption>Столько мелочей, которые хочется рассматривать</figcaption></figure>
+    <figure><img loading="lazy" src="img/tg-6_0.jpg" alt="Старая плита с кухонной утварью"><figcaption>Кухня как у бабушки</figcaption></figure>
+    <figure><img loading="lazy" src="img/tg-6_4.jpg" alt="Табличка «Места для поцелуев»"><figcaption>«Места для поцелуев»</figcaption></figure>
+    <figure><img loading="lazy" src="img/tg-106_2.jpg" alt="Старый телевизор на подоконнике с цветами"><figcaption>Телевизор на подоконнике</figcaption></figure>
+    <figure class="w"><img loading="lazy" src="img/tg-14_2.jpg" alt="Таблички на кирпичной стене"><figcaption>«Муля, не нервируй меня!»</figcaption></figure>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="sheet">
+      <div class="rope" aria-hidden="true"></div>
+      <div class="body">
+        <h2>Меню</h2>
+        <div class="sub"><span class="script">кафе Советского быта</span><span class="label" style="color:var(--ink2)">Цены в рублях</span></div>
+        <div class="tabs" role="tablist" aria-label="Разделы меню" id="tabs"></div>
+        <div id="panes"></div>
+        <p class="stamp">Горчица — профсоюзное масло — бесплатно! И уксус у нас очень сладкий!</p>
+        <p class="draft">Пробковый сбор 450 ₽ за бутылку 0,5 л. Для наброска меню собрано из открытых источников кафе, цены нужно сверить.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="split lunch" id="lunch">
+  <div class="ph"><img loading="lazy" src="img/tg-60_1.jpg" alt="Тарелка супа"></div>
+  <div class="tx rv">
+    <div class="label">По будням, с 12:00 и пока не закончатся</div>
+    <h2>Комплексные обеды</h2>
+    <div class="price"><small>от</small>370 ₽</div>
+    <p>Наши повара готовят первое, второе и третье. Перевести дух, вкусно покушать, посидеть в тихом месте и набраться сил на вторую половину дня.</p>
+  </div>
+</section>
+
+<section class="split banq" id="banket">
+  <div class="tx rv">
+    <div class="label">Залы до 30 человек</div>
+    <h2>Банкеты с программой</h2>
+    <p>От серьёзных переговоров до шумных семейных застолий. Отметить важное событие в атмосфере уюта и гостеприимства.</p>
+    <ul>
+      <li>Ведущий, живой голос и художник</li>
+      <li>Фотограф уже включён в организацию</li>
+      <li>Меню по-домашнему вкусное, сытное и эстетичное</li>
+      <li>Сюрприз для близкого: «тайный» сбор гостей, сервировка, сценарий розыгрыша под вашу ситуацию</li>
+    </ul>
+    <p class="note">Сценарий и столик: <a href="tel:+79655008583">8 965 500-85-83</a>. Цена договорная.</p>
+    <div><a class="btn" href="tel:+79655008583">Обсудить банкет</a></div>
+  </div>
+  <div class="ph"><img loading="lazy" src="img/zal-57.jpg" alt="Просторный зал кафе со столами"></div>
+</section>
+
+<section class="wolf">
+  <div class="wrap rv">
+    <div class="big">7+1</div>
+    <div>
+      <h2>Акция «Волк и семеро козлят»</h2>
+      <p>Покупай 7 порций пельменей или бизнес-ланчей — 8-я в подарок. И точка! Действует, пока козлята не вырастут.</p>
+    </div>
+  </div>
+</section>
+
+<section class="voices" id="voices">
+  <div class="wrap">
+    <div class="label">Отзывы из Яндекс Карт</div>
+    <h2 style="margin-top:12px">Что говорят гости</h2>
+    <div class="score">
+      <div><b>4,7</b>Яндекс Карты · 318 оценок</div>
+      <div><b>4,7</b>2ГИС · 266 оценок</div>
+      <div><b>97%</b>хвалят атмосферу</div>
+      <div><b>95%</b>хвалят интерьер</div>
+    </div>
+    <div class="say">
+      <figure class="rv"><blockquote>Невероятно атмосферное место и машина времени в советский союз.</blockquote><figcaption>Полина</figcaption></figure>
+      <figure class="rv"><blockquote>Отдельно порадовала подача — блюда сервируют на настоящем советском фарфоре.</blockquote><figcaption>Светлана Чернова</figcaption></figure>
+      <figure class="rv"><blockquote>Обязательно попробуйте здесь пельмени! Они невероятно вкусные, домашние, точно как у бабушки в детстве.</blockquote><figcaption>Надежда З.</figcaption></figure>
+      <figure class="rv"><blockquote>Всех гостей, приезжающих познакомиться с городом, ведем сюда!</blockquote><figcaption>Марта С.</figcaption></figure>
+      <figure class="rv"><blockquote>Тихое место для восполнения сил как физических так и душевных. Все очень вкусно, ценник не кусачий.</blockquote><figcaption>Ксения Огнева</figcaption></figure>
+      <figure class="rv"><blockquote>Хотел отдельно выделить борщ. Потому что, это реально был вкусный борщ!!!</blockquote><figcaption>nikfedotov</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="find" id="find">
+  <div class="wrap">
+    <div class="rv">
+      <div class="label" style="color:#f3cfa9">Заходите в гости и улыбайтесь чаще</div>
+      <h2 style="margin-top:12px">Как найти</h2>
+      <dl>
+        <div><dt>Адрес</dt><dd>Екатеринбург, ул. Луначарского, 136, 1 этаж</dd></div>
+        <div><dt>Режим работы</dt><dd>Пн–Сб 12:00–21:00<br>Воскресенье — выходной</dd></div>
+        <div><dt>Брони и вопросы</dt><dd><a href="tel:+79961753950">+7 996 175-39-50</a></dd></div>
+        <div><dt>Рядом</dt><dd>Остановка «Дом кино», 113 м</dd></div>
+      </dl>
+      <div class="links">
+        <a href="https://yandex.ru/maps/org/ranevskaya/15806973779/" target="_blank" rel="noopener">Яндекс Карты</a>
+        <a href="https://2gis.ru/ekaterinburg/firm/70000001042714994" target="_blank" rel="noopener">2ГИС</a>
+        <a href="https://t.me/kaferanevskaya" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://vk.com/cafe_ranevskaya" target="_blank" rel="noopener">ВКонтакте</a>
+      </div>
+      <div style="margin-top:26px"><button class="btn" data-book>Забронировать стол</button></div>
+    </div>
+    <figure class="rv"><img loading="lazy" src="img/zal-54.jpg" alt="Стол у красной стены с тарелками"></figure>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">Кафе советского быта «Раневская». Набросок сайта: тексты, меню, цены и режим работы взяты из открытых источников кафе и требуют проверки.</div></footer>
+
+<div class="mob">
+  <a class="btn ghost" href="tel:+79961753950">Позвонить</a>
+  <button class="btn" data-book>Забронировать</button>
+</div>
+
+<dialog id="book" aria-labelledby="bkT">
+  <form class="bk" method="dialog" onsubmit="return false">
+    <button class="x" type="button" id="bkX" aria-label="Закрыть">×</button>
+    <h2 id="bkT">Стол в «Раневской»</h2>
+    <p>Если ваша компания от 3-х человек, обязательно предупредите нас, чтобы мы ждали именно вас!</p>
+    <div class="two">
+      <label>Дата<input type="date" id="bkD" required></label>
+      <label>Время<select id="bkH"></select></label>
+    </div>
+    <label>Гостей<select id="bkG"></select></label>
+    <div class="say-it" id="bkS" aria-live="polite"></div>
+    <a class="btn" id="bkC" href="tel:+79961753950">Позвонить в кафе</a>
+  </form>
+</dialog>
+
+<script>
+const M=[
+ {t:'Закуски',h:'Закуски и салаты для первача',p:'tg-44_2.jpg',a:'Салат с помидорами',i:[
+  ['«Мурка»','',200],['Сало в нарезку','с чёрным хлебом и чесноком',290],['Драники от тёти Фаи из Таганрога','на выбор: с грибами, икра, сёмга',420],['Блинчики с красной икрой','',390],['«Лепота»','',450],['«Стакан ржавых гвоздей»','',200],['Селёдочка','',300],['Привет с колхозного рынка','',370],['Блинчики с ветчиной и сыром','',290],['Салат «Сельдь в пальто»','',320],['Салат «Дачники и Садоводы»','',250],['Салат «Генеральный секретарь»','он же «Цезарь»',340],['Салат «Смачный»','',350],['Салат «Высотка на Котельнической набережной»','',350],['Салат «Оливье»','с докторской колбасой',320],['Салат «Белая дача»','',380]]},
+ {t:'Супы',h:'Супы',p:'tg-44_4.jpg',a:'Тарелка солянки',i:[
+  ['Суп дня','по будням с 12:00 и пока не закончится!',120],['Солянка сборная','',350],['Суп с куриной ножкой и домашней лапшой','',320],['Крем-суп из грибов на сливках','с гренками',320],['«Верх дном»','',320],['Уха «Финский залив»','',400],['Чучвара в бульоне','',350]]},
+ {t:'Вареники',h:'Вареники',p:'tg-44_3.jpg',a:'Тарелка вареников',i:[
+  ['Вареники «Ты просто… Космос, Стас, Экстаз»','',300],['Посикунчики','',300],['Вареники «Твоя вишнёвая девятка»','',300],['Вареники с печёной тыквой','',370],['Вареники с лесными грибами','',370]]},
+ {t:'Пельмешки',h:'Пельмешки, без спешки!',p:'tg-60_3.jpg',a:'Тарелка пельменей',i:[
+  ['«Весёлые ребята»','на весёлую компанию',1300],['«М.Э.Л.С.»','говядина, свинина, курица, баранина, лук',470],['«Уральский рабочий»','свинина, говядина, соль, перец, репчатый лук',450],['«Цыплёнок пареный, цыплёнок жареный»','из куриного филе и копчёной грудки, рекомендовано детям',420],['«Агафья»','',470],['«Невероятные приключения итальянцев в России»','с сыром и зеленью, подаются с тёртым сыром «Пармезан»',430],['«И только ты, рыба моей мечты»','пельмени с сёмгой',470],['«Посольские»','из щуки',450],['«Каменск-Уральский рабочий»','пельмени из свинины и курицы',420,1],['«Кавказская пленница»','свинина, говядина, мята, аджика, зира',420],['«Свердловские»','жареные пельмени из отварных с чесноком',470],['«До 16 и старше»','с курицей и сыром',470],['«Сибирские»','из свинины и говядины с жареным луком и чесноком, с добавлением копчёного сала',520]]},
+ {t:'Дичь',h:'Пельмени пробные из уральской дичи',p:'tg-33_6.jpg',a:'Пельмени на тарелке',i:[
+  ['«Беловежская пуща»','пельмени из мяса кабана',380],['«Лосевские»','из мяса лося',380],['«Косулинские»','из мяса косули',380],['Соусы и макалки к пельменям','«Грибной», «Чесночный», «Хреновина», «Кавказский томатный», сметана, майонез, кетчуп, масло сливочное',35]]},
+ {t:'Другая еда',h:'…и другая еда',p:'tg-44_8.jpg',a:'Жареха',i:[
+  ['Феттуччине','с куриной грудкой и грибами',390],['Карбонара','',390],['«Жареха»','из картофеля с грибами и мясом на выбор',530],['Глазунья','с картофелем и беконом',350],['«Мне всегда будет 39 лет, и ни на один день больше»','филе сёмги на пару с брокколи и соусом тар-тар',650]]},
+ {t:'Чай? Кофе?',h:'Чай? Кофе? Потанцуем?',p:'tg-60_4.jpg',a:'Чайник и чашка',i:[
+  ['Чай чёрный с чабрецом','400 / 1000 мл','350/500'],['Чай чёрный или зелёный','400 / 1000 мл','300/500'],['Иван-чай','400 / 1000 мл','350/500'],['Чай имбирный с лимоном','400 / 1000 мл','350/500'],['Чай Таёжный с мёдом','400 / 1000 мл','500/700'],['Чай «Облепиховый»','с апельсином и имбирём','500/700'],['Чай «Модный»','400 / 1000 мл','500/700'],['Чай в стакане от проводницы вагона СВ','с лимоном',180],['Советский кофе со сгущённым молоком','',200],['Американский кофе','',200],['Морс ягодный или лимонад','уточните у официанта',120],['«Спят усталые игрушки»','',150],['«Утренняя разминка»','стакан молока',120],['Пиво «Жигулёвское»','0,5 л на разлив',250],['Квас','',120],['Сок в ассортименте','томатный, яблочный, апельсиновый',120]]},
+ {t:'Сладкая жизнь',h:'Сладкая жизнь',p:'tg-60_4.jpg',a:'Чайник и чашка',i:[
+  ['«Фани-колбасани»','шоколадная колбаса',220],['«Наполеон»','со сливочным кремом и ягодной прослойкой',220],['Блинчики или оладьи','на выбор: варенье, мёд, сметана, сгущёнка, солёная карамель',220]]}
+];
+const tabs=document.getElementById('tabs'),panes=document.getElementById('panes');
+const fmt=v=>typeof v==='number'?v.toLocaleString('ru-RU'):v;
+M.forEach((s,n)=>{
+  const b=document.createElement('button');b.type='button';b.role='tab';b.id='t'+n;b.textContent=s.t;b.setAttribute('aria-controls','p'+n);b.setAttribute('aria-selected',n===3);b.onclick=()=>show(n,1);tabs.append(b);
+  const d=document.createElement('div');d.className='pane'+(n===3?' on':'');d.id='p'+n;d.setAttribute('role','tabpanel');d.setAttribute('aria-labelledby','t'+n);
+  d.innerHTML='<div><h3>'+s.h+'</h3><ul>'+s.i.map(r=>'<li><b>'+(r[3]?'<em class="hit" style="font-style:normal">ХИТ!!!</em>':'')+r[0]+'</b><span>'+fmt(r[2])+'</span>'+(r[1]?'<small>'+r[1]+'</small>':'')+'</li>').join('')+'</ul></div><figure><img loading="lazy" src="img/'+s.p+'" alt="'+s.a+'"></figure>';
+  panes.append(d);
+});
+function show(n,scroll){
+  [...tabs.children].forEach((b,i)=>b.setAttribute('aria-selected',i===n));
+  [...panes.children].forEach((p,i)=>p.classList.toggle('on',i===n));
+  tabs.children[n].scrollIntoView({block:'nearest',inline:'center'});
+  if(scroll){const y=tabs.getBoundingClientRect().top;if(y<60)scrollTo({top:scrollY+panes.getBoundingClientRect().top-140})}
+}
+
+/* шапка и появление */
+const top_=document.getElementById('top');
+const onS=()=>top_.classList.toggle('on',scrollY>40);addEventListener('scroll',onS,{passive:true});onS();
+const rv=document.querySelectorAll('.rv');
+if('IntersectionObserver'in window){const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{rootMargin:'0px 0px -8%'});rv.forEach(e=>io.observe(e))}else rv.forEach(e=>e.classList.add('in'));
+
+/* открыто сейчас: время Екатеринбурга */
+const ekb=()=>new Date(Date.now()+(new Date().getTimezoneOffset()+300)*6e4);
+(()=>{const d=ekb(),m=d.getHours()*60+d.getMinutes(),open=d.getDay()!==0&&m>=720&&m<1260,el=document.getElementById('now');
+  el.classList.toggle('off',!open);el.lastElementChild.textContent=open?'Открыто до 21:00':(d.getDay()===0?'Сегодня выходной, ждём с понедельника':'Сейчас закрыто, откроемся в 12:00')})();
+
+/* бронь */
+const dlg=document.getElementById('book'),D=document.getElementById('bkD'),H=document.getElementById('bkH'),G=document.getElementById('bkG'),S=document.getElementById('bkS'),C=document.getElementById('bkC');
+for(let m=720;m<=1230;m+=30)H.add(new Option(String(m/60|0).padStart(2,'0')+':'+String(m%60).padStart(2,'0')));
+H.value='19:00';
+for(let g=1;g<=30;g++)G.add(new Option(g));G.value=3;
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const t0=ekb();D.min=iso(t0);D.value=iso(t0.getDay()===0?new Date(+t0+864e5):t0);
+const plural=n=>{const a=n%10,b=n%100;return a===1&&b!==11?'персону':a>=2&&a<=4&&(b<12||b>14)?'персоны':'персон'};
+function say(){
+  const d=new Date(D.value+'T12:00'),sun=d.getDay()===0;
+  C.setAttribute('aria-disabled',sun);
+  S.textContent=sun?'В воскресенье у нас выходной. Выберите другой день.':'Скажите нам по телефону: стол на '+G.value+' '+plural(+G.value)+', '+d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'})+', '+H.value+'.';
+}
+[D,H,G].forEach(e=>e.addEventListener('input',say));say();
+document.querySelectorAll('[data-book]').forEach(b=>b.onclick=()=>dlg.showModal());
+document.getElementById('bkX').onclick=()=>dlg.close();
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+</script>
+</body>
+</html>
