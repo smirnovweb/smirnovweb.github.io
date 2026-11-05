@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кам Рань — вьетнамская кухня, Екатеринбург</title>
+<meta name="description" content="Вьетнамское кафе на Челюскинцев, 19. Фо бо, бун бо хуэ, том ям, бизнес-ланч от 380 ₽. Пн–Пт 10:00–22:00, Сб–Вс 11:00–23:00.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Nunito:wght@600;800&family=Pangolin&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#d7231e; --red2:#a01410; --yel:#fbc81e; --ochre:#eab23a; --cream:#f8edd3; --teal:#127a74; --teal2:#0b5551; --blue:#1a58b5; --blue2:#123f86; --ink:#1e1712;
+  --sign:'Dela Gothic One','Arial Black',sans-serif; --hand:'Pangolin','Comic Sans MS',cursive; --txt:'Nunito',system-ui,sans-serif;
+  --lime:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .05' numOctaves='4'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .32 0 0 0 0 .05 0 0 0 .55 -.14'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tile:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Crect width='72' height='72' fill='%23f8edd3'/%3E%3Cg fill='%23d7231e'%3E%3Cpath d='M0 0h26A26 26 0 0 1 0 26zM72 0v26A26 26 0 0 1 46 0zM72 72H46a26 26 0 0 1 26-26zM0 72V46a26 26 0 0 1 26 26z'/%3E%3C/g%3E%3Cpath fill='%23127a74' d='M36 12l7 17 17 7-17 7-7 17-7-17-17-7 17-7z'/%3E%3Ccircle cx='36' cy='36' r='5' fill='%23fbc81e'/%3E%3Cpath fill='none' stroke='%231e1712' stroke-opacity='.25' d='M.5.5h71v71H.5z'/%3E%3C/svg%3E");
+  --flags:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='54'%3E%3Cpath d='M0 3q60 12 120 0' fill='none' stroke='%231e1712' stroke-width='2'/%3E%3Cpath fill='%23d7231e' d='M6 4l40 6-22 34z'/%3E%3Cpath fill='%23fbc81e' d='M66 10l40-5-18 35z'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:14px}
+body{background:var(--ochre);color:var(--ink);font:600 18px/1.45 var(--txt);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.wrap{width:min(1180px,100% - 32px);margin-inline:auto}
+.tiles{height:72px;background:var(--tile) center/72px}
+.flags{height:54px;background:var(--flags) 0 0/120px 54px repeat-x}
+
+/* плакат */
+.poster{position:relative;overflow:hidden;background:repeating-conic-gradient(from 0deg at 73% 54%,#d7231e 0 9deg,#e8451f 9deg 18deg);min-height:min(100svh,860px);display:flex;flex-direction:column}
+.poster .flags{position:relative;z-index:3}
+.scene{position:absolute;inset:auto 0 0 0;width:100%;height:100%}
+.signwrap{position:relative;z-index:4;flex:1;display:flex;align-items:center;padding-block:10px clamp(40px,8vh,84px)}
+.board{position:relative;width:min(590px,100%);background:var(--yel);color:var(--red);padding:clamp(20px,3vw,34px) clamp(18px,3vw,38px) clamp(18px,2.6vw,30px);border:7px solid var(--red2);outline:5px solid var(--yel);transform:rotate(-1.4deg);box-shadow:12px 14px 0 #00000055}
+.board::before,.board::after{content:"";position:absolute;top:-58px;width:6px;height:52px;background:var(--ink)}
+.board::before{left:18%}.board::after{right:18%}
+.dishes-top{font:400 clamp(21px,3vw,36px)/1.1 var(--sign);color:var(--blue2);letter-spacing:.02em}
+h1{font:400 clamp(58px,10.4vw,118px)/1 var(--sign);color:var(--red);margin:.08em 0 .06em;text-shadow:3px 3px 0 var(--red2),6px 6px 0 #1e171722}
+.board p{font:400 clamp(23px,2.8vw,31px)/1.15 var(--hand);color:var(--ink)}
+.tel{display:block;margin-top:12px;background:var(--red);color:var(--yel);text-decoration:none;font:400 clamp(19px,5.6vw,39px)/1 var(--sign);padding:12px 6px 13px;text-align:center;white-space:nowrap}
+.tel:hover{background:var(--blue2)}
+.hours{margin-top:10px;font:400 21px/1.15 var(--hand);color:var(--ink)}
+
+/* стена с меню */
+.wall{background:var(--ochre) var(--lime);padding:clamp(40px,6vw,74px) 0 clamp(40px,6vw,70px)}
+.wall h2{font:400 clamp(52px,10vw,118px)/1 var(--sign);color:var(--red2);text-align:center}
+.wall .sub{text-align:center;font:400 clamp(22px,2.6vw,29px)/1.15 var(--hand);margin:4px 0 16px}
+.jump{display:flex;gap:7px;overflow-x:auto;padding:10px 0 12px;scrollbar-width:none;justify-content:safe center}
+.jump::-webkit-scrollbar{display:none}
+.jump a{flex:0 0 auto;background:var(--ink);color:var(--yel);padding:7px 11px 8px;text-decoration:none;font:400 19px/1 var(--hand)}
+.jump a:hover{background:var(--red)}
+.boards{columns:2;column-gap:30px;margin-top:22px}
+.sb{position:relative;break-inside:avoid;margin-bottom:34px;padding:clamp(18px,2.6vw,26px) clamp(16px,2.6vw,28px) clamp(16px,2.4vw,24px);color:#fff;background:var(--c,var(--blue));border:4px solid #fff;outline:6px solid var(--c,var(--blue));box-shadow:8px 10px 0 #00000040;scroll-margin-top:18px}
+.sb:nth-child(odd){transform:rotate(-.5deg)}.sb:nth-child(even){transform:rotate(.45deg)}
+.sb::before,.sb::after{content:"";position:absolute;top:7px;width:11px;height:11px;border-radius:50%;background:#e6e1d4;box-shadow:inset -2px -2px 0 #0004}
+.sb::before{left:7px}.sb::after{right:7px}
+.sb h3{font:400 clamp(35px,5.2vw,55px)/1.08 var(--sign);color:var(--h,var(--yel))}
+.sb .ru{font:400 22px/1.1 var(--hand);margin-bottom:8px}
+.it{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 12px;padding:8px 0;border-top:2px dashed #ffffff55}
+.it b{font:400 22px/1.16 var(--hand)}
+.it .vn{display:block;font:400 17px/1.1 var(--hand);color:var(--h,var(--yel))}
+.it .pr{font:400 19px/1.25 var(--sign);color:var(--h,var(--yel));white-space:nowrap}
+.it p{grid-column:1/-1;font-size:15px;font-weight:600;line-height:1.3;opacity:.92}
+.sb.y{--c:var(--yel);--h:var(--red2);color:var(--ink)}
+.sb.y .it{border-top-color:#1e171755}
+.ph{break-inside:avoid;margin-bottom:34px;background:#fff;padding:10px;box-shadow:8px 10px 0 #00000040;transform:rotate(1deg)}
+.ph img{width:100%;aspect-ratio:1;object-fit:cover}
+.small{font-size:15px;text-align:center;margin-top:6px}
+
+/* улица */
+.street{position:relative;background:var(--ochre) var(--lime);line-height:0}
+.street svg{width:100%;height:auto;display:block;max-height:280px}
+
+/* обед */
+.lunch{background:var(--teal);color:#fff;padding:clamp(46px,7vw,84px) 0}
+.lunch .g{display:grid;grid-template-columns:1.05fr .95fr;gap:30px 54px;align-items:center}
+.lunch h2{font:400 clamp(42px,7vw,84px)/1.04 var(--sign);color:var(--yel)}
+.lunch .from{font:400 clamp(37px,5vw,58px)/1.1 var(--sign);margin:6px 0}
+.lunch ul{list-style:none;padding:0;font:400 25px/1.3 var(--hand)}
+.lunch li::before{content:"★ ";color:var(--yel)}
+.lunch .t{font:400 23px/1.2 var(--hand);margin-top:10px}
+.lunch figure{background:#fff;padding:10px;transform:rotate(1.4deg);box-shadow:10px 12px 0 #00000040}
+.lunch img{width:100%;aspect-ratio:5/4;object-fit:cover}
+
+/* шеф */
+.chef{background:var(--red);color:#fff;padding:clamp(46px,7vw,84px) 0}
+.chef h2{font:400 clamp(40px,7vw,80px)/1.04 var(--sign);color:var(--yel)}
+.chef .ru{font:400 25px/1.1 var(--hand);margin:4px 0 20px}
+.chef .g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 44px}
+.chef .it{border-top-color:#ffffff66}
+.chef .it .pr{color:var(--yel)}
+.chef .add{margin-top:18px;font-size:16px;line-height:1.5}
+.chef .add b{font:400 22px/1.2 var(--hand);color:var(--yel);display:block}
+
+/* зал */
+.room{background:var(--cream);padding:clamp(46px,7vw,84px) 0}
+.room h2{font:400 clamp(34px,5.8vw,68px)/1.12 var(--sign);color:var(--teal2);max-width:15em}
+.room .by{font:400 22px/1.2 var(--hand);margin-top:8px}
+.pics{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:26px}
+.pics figure{background:#fff;padding:8px;box-shadow:6px 7px 0 #1e171722}
+.pics img{width:100%;object-fit:cover}
+.pics figcaption{font:400 21px/1.15 var(--hand);padding:6px 3px 2px}
+.p1{grid-column:span 7;transform:rotate(-.7deg)}.p1 img{aspect-ratio:4/3}
+.p2{grid-column:span 5;transform:rotate(1deg)}.p2 img{aspect-ratio:1}
+.p3{grid-column:span 5;transform:rotate(.7deg)}.p3 img{aspect-ratio:1}
+.p4{grid-column:span 7;transform:rotate(-.8deg)}.p4 img{aspect-ratio:4/3}
+.also{margin-top:22px;font:400 clamp(23px,2.7vw,29px)/1.25 var(--hand)}
+
+/* гости */
+.voices{background:var(--blue);color:#fff;padding:clamp(46px,7vw,84px) 0}
+.voices .g{display:grid;grid-template-columns:auto 1fr;gap:20px 54px;align-items:start}
+.big{font:400 clamp(86px,15vw,178px)/1 var(--sign);color:var(--yel)}
+.big small{display:block;font:400 22px/1.2 var(--hand);color:#fff;max-width:14em}
+.q{font:400 clamp(28px,3.8vw,41px)/1.18 var(--hand);margin-bottom:18px}
+.q span,.qs span{display:block;font:600 15px/1.3 var(--txt);opacity:.85;margin-top:3px}
+.qs{display:grid;grid-template-columns:1fr 1fr;gap:14px 36px}
+.qs p{font:400 22px/1.25 var(--hand)}
+
+/* адрес */
+.find{background:var(--ink);color:var(--cream)}
+.find>img{width:100%;max-height:600px;object-fit:cover;object-position:50% 38%}
+.find .g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 36px;padding:clamp(30px,5vw,50px) 0 clamp(92px,8vw,60px)}
+.find h3{font:400 24px/1.1 var(--sign);color:var(--yel);margin-bottom:6px}
+.find a{text-underline-offset:3px}
+footer{background:#120d0a;color:#b9a892;font-size:14px;padding:16px 0 84px}
+.mob{display:none}
+@media (max-width:860px){
+  body{font-size:17px}
+  .poster{min-height:0}
+  .signwrap{display:block;padding:14px 0 56vw}
+  .boards{columns:1}
+  .lunch .g,.voices .g,.qs,.chef .g,.find .g{grid-template-columns:minmax(0,1fr)}
+  .p1,.p2,.p3,.p4{grid-column:span 12}
+  .tiles{height:48px;background-size:48px}
+  .mob{display:block;position:fixed;inset:auto 0 0 0;z-index:20;background:var(--ink);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+  .mob a{display:flex;align-items:center;justify-content:center;min-height:50px;background:var(--red);color:var(--yel);text-decoration:none;font:400 20px/1 var(--sign)}
+}
+</style>
+</head>
+<body id="home">
+
+<section class="poster">
+  <svg class="scene" viewBox="0 0 1400 860" preserveAspectRatio="xMaxYMax slice" aria-hidden="true">
+    <circle cx="1022" cy="464" r="214" fill="#fbc81e"/>
+    <path fill="#0b5551" d="M520 650c30-120 54-190 92-196 34-6 44 60 74 62 22 2 28-96 62-104 44-10 56 114 92 118 26 2 34-58 64-56 42 4 54 110 98 118 22 4 30-52 58-50 40 4 60 96 100 96 26 0 34-30 60-30 34 0 50 40 80 42v40H520z"/>
+    <rect y="640" width="1400" height="220" fill="#127a74"/>
+    <g fill="none" stroke="#f8edd3" stroke-opacity=".55" stroke-width="5" stroke-linecap="round"><path d="M560 680q30-14 60 0t60 0M780 668q30-14 60 0t60 0M1160 678q30-14 60 0t60 0M640 748q30-14 60 0t60 0M1190 754q30-14 60 0t60 0"/></g>
+    <!-- джонка из их меню -->
+    <g transform="translate(712 512) scale(.7)">
+      <path fill="#1e1712" d="M2 176c40 12 170 12 232-10l26-30-16 4c-60 16-196 18-246 10z"/>
+      <path fill="#1e1712" d="M84 14h6v150h-6zM164 34h6v130h-6z"/>
+      <path fill="#d7231e" d="M92 6c44 22 52 92 44 146H92zM34 40c30 16 44 66 44 114H20c10-34 18-76 14-114zM172 40c30 14 44 52 40 106h-40z"/>
+      <path fill="none" stroke="#1e1712" stroke-width="3" d="M92 44h38M92 80h44M92 116h44M28 86h44M26 120h50M172 76h30M172 110h38"/>
+    </g>
+    <!-- тарелка фо -->
+    <g transform="translate(905 545) scale(.8)">
+      <g fill="none" stroke="#f8edd3" stroke-width="13" stroke-linecap="round" opacity=".92"><path d="M110 104c-34-44 34-62 0-112"/><path d="M196 96c-34-44 34-62 0-112"/><path d="M282 104c-34-44 34-62 0-112"/></g>
+      <path fill="#f8edd3" d="M-26 170h440c-12 104-96 176-220 176S-14 274-26 170z"/>
+      <path fill="#1a58b5" d="M-22 196h432c-2 16-5 25-9 36H-13c-4-11-7-20-9-36z"/>
+      <path fill="#f8edd3" d="M14 210l14-8 14 8-14 8zM76 210l14-8 14 8-14 8zM138 210l14-8 14 8-14 8zM200 210l14-8 14 8-14 8zM262 210l14-8 14 8-14 8zM324 210l14-8 14 8-14 8z"/>
+      <ellipse cx="194" cy="170" rx="221" ry="44" fill="#1a58b5"/>
+      <ellipse cx="194" cy="170" rx="202" ry="34" fill="#f2d27a"/>
+      <g fill="none" stroke="#fff6dd" stroke-width="8" stroke-linecap="round"><path d="M40 170c34-22 60 18 96-2s66 16 104-2 66 14 98 0"/><path d="M62 186c34-14 60 10 96-4s66 12 104-2 50 6 64 2"/></g>
+      <g fill="#3c8c2e"><path d="M118 152c10-16 34-16 40 0-12 10-30 10-40 0zM232 148c10-16 34-16 40 0-12 10-30 10-40 0z"/></g>
+      <path fill="#a34a2a" d="M168 150c10-10 44-10 56 0-14 12-44 12-56 0z"/>
+      <path fill="#d7231e" d="M300 164a11 11 0 1 1 22 0 11 11 0 0 1-22 0z"/>
+      <g stroke="#1e1712" stroke-width="10" stroke-linecap="round"><path d="M336 150L470 26"/><path d="M304 146L434 12"/></g>
+    </g>
+    <rect y="846" width="1400" height="14" fill="#0b5551"/>
+  </svg>
+  <div class="flags"></div>
+  <div class="wrap signwrap">
+    <div class="board">
+      <div class="dishes-top">PHỞ · BÚN · CƠM</div>
+      <h1>КАМ РАНЬ</h1>
+      <p>вьетнамская кухня</p>
+      <a class="tel" href="tel:+79226068888">+7 922 606-88-88</a>
+      <div class="hours" id="now">Челюскинцев, 19</div>
+    </div>
+  </div>
+</section>
+<div class="tiles" aria-hidden="true"></div>
+
+<main>
+<section class="wall" id="menu">
+  <div class="wrap">
+    <h2>МЕНЮ</h2>
+    <p class="sub">Порции большие, цены демократичные. Так пишут гости</p>
+    <nav class="jump" id="jump" aria-label="Разделы меню"></nav>
+    <div class="boards" id="boards"></div>
+    <p class="small">Цены и состав из карточки кафе в 2ГИС, обновлено 27 марта 2026. В наброске их нужно сверить с кафе.</p>
+  </div>
+</section>
+<div class="street" aria-hidden="true">
+  <svg viewBox="0 0 1400 230" preserveAspectRatio="xMidYMax meet">
+    <rect y="190" width="1400" height="40" fill="#8a7f70"/>
+    <g id="st"><path fill="#d7231e" d="M300 96h120l-8 14H308zM312 110h14l-12 80h-14zM394 110h14l12 80h-14zM334 120h52v8h-52z"/></g>
+    <use href="#st" x="-190"/><path fill="#1a58b5" d="M820 96h120l-8 14H828zM832 110h14l-12 80h-14zM914 110h14l12 80h-14zM854 120h52v8h-52z"/>
+    <path fill="#1a58b5" d="M1120 96h120l-8 14h-104zM1132 110h14l-12 80h-14zM1214 110h14l12 80h-14zM1154 120h52v8h-52z"/>
+    <path fill="#f8edd3" d="M500 66h260v14H500z"/><path fill="#d7231e" d="M514 80h14l-8 110h-14zM732 80h14l14 110h-14z"/>
+    <path fill="#f8edd3" d="M560 38h140c-4 18-24 28-70 28s-66-10-70-28z"/><path fill="#1a58b5" d="M560 38h140l-3 9H563z"/>
+    <path stroke="#1e1712" stroke-width="6" d="M676 34l52-30M690 36l48-24"/>
+  </svg>
+</div>
+<div class="tiles" aria-hidden="true"></div>
+
+<section class="lunch" id="lunch">
+  <div class="wrap g">
+    <div>
+      <h2>БИЗНЕС-ЛАНЧ</h2>
+      <div class="from">от 380 ₽</div>
+      <ul><li>рис с рыбой</li><li>рис с мясом</li><li>с тофу</li><li>с омлетом</li></ul>
+      <div class="t">с 11:00 до 18:00</div>
+    </div>
+    <figure><img loading="lazy" src="img/r16.jpg" alt="Рис с мясом, овощами и суп на столе"></figure>
+  </div>
+</section>
+
+<section class="chef" id="chef">
+  <div class="wrap">
+    <h2>БЛЮДА ОТ ШЕФА</h2>
+    <p class="ru">под заказ</p>
+    <div class="g">
+      <div class="it"><b>Вит ныонг</b><span class="pr">2 300 ₽</span><p>Утка, запечённая в духовке по-вьетнамски, рыбный или соевый соус</p></div>
+      <div class="it"><b>Лау тхит с курицей (хот-пот)</b><span class="pr">1 400 ₽</span><p>Курица, пекинская капуста, грибы, соус, бульон. Порция для двоих</p></div>
+      <div class="it"><b>Лау тхит с говядиной (хот-пот)</b><span class="pr">1 700 ₽</span><p>Говядина, пекинская капуста, грибы, соус, бульон. Порция для двоих</p></div>
+      <div class="it"><b>Лау хай шан (хот-пот)</b><span class="pr">1 800 ₽</span><p>Креветки, кальмары, пекинская капуста, грибы, соус, бульон. Порция для двоих</p></div>
+    </div>
+    <p class="add"><b>Добавки к блюдам лау</b>курица 250 ₽, говядина 300 ₽, креветки 800 ₽, кальмары 600 ₽, тофу 200 гр. 80 ₽, рисовая лапша 70 гр. 80 ₽, яичная лапша 70 гр. 80 ₽, овощи 300 гр. 70 ₽, грибы 200 гр. 80 ₽, зелёный лук 200 гр. 50 ₽</p>
+  </div>
+</section>
+
+<section class="room" id="room">
+  <div class="wrap">
+    <h2>АТМОСФЕРА КАК В САМОМ ВЬЕТНАМЕ</h2>
+    <p class="by">Василич, отзыв на Яндекс Картах</p>
+    <div class="pics">
+      <figure class="p1"><img loading="lazy" src="img/r7.jpg" alt="Зал кафе: стена с картой Вьетнама, флагами и веерами"><figcaption>карта Вьетнама в зале</figcaption></figure>
+      <figure class="p2"><img loading="lazy" src="img/r25.jpg" alt="Веера и картина на стене"><figcaption>веера на стене</figcaption></figure>
+      <figure class="p3"><img loading="lazy" src="img/r9.jpg" alt="Полки с вьетнамскими продуктами"><figcaption>продукты из Вьетнама</figcaption></figure>
+      <figure class="p4"><img loading="lazy" src="img/r24.jpg" alt="Полки с напитками и красный веер"><figcaption>полки в зале</figcaption></figure>
+    </div>
+    <p class="also">Детское и постное меню, Wi-Fi, можно с собакой. До 48 мест, проводим банкеты.</p>
+  </div>
+</section>
+
+<section class="voices" id="voices">
+  <div class="wrap g">
+    <div class="big">5,0<small>в 2ГИС, 111 оценок. В Яндекс Картах 4,9, 51 оценка.</small></div>
+    <div>
+      <p class="q">Цены - огонь, а порции и качество кухни еще круче!<span>Ольга Еремеева</span></p>
+      <div class="qs">
+        <p>Во время ожидания блюда - угощают вкусным чаем<span>Анастасия</span></p>
+        <p>Мне больше всего нравятся жареные немы. Ребёнок любит том ям. Муж предпочитает фо бо.<span>Ирина Галныкина</span></p>
+        <p>Встретили очень гостеприимный, как будто пришли в дом к родным людям.<span>Инкогнито 4262</span></p>
+        <p>От души душевно в душу!!!<span>Сибиряк</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="find" id="find">
+  <img loading="lazy" src="img/y1.jpg" alt="Вывеска кафе на улице Челюскинцев">
+  <div class="wrap g">
+    <div><h3>АДРЕС</h3>Екатеринбург, ул. Челюскинцев, 19, 1 этаж<br>Метро «Уральская», 200 м<br>Вокзал, 450 м</div>
+    <div><h3>РАБОТАЕМ</h3>Пн–Пт 10:00–22:00<br>Сб–Вс 11:00–23:00</div>
+    <div><h3>СВЯЗЬ</h3><a href="tel:+79226068888">+7 922 606-88-88</a><br><a href="https://wa.me/79226068888" target="_blank" rel="noopener">WhatsApp</a>, <a href="https://t.me/+79226068888" target="_blank" rel="noopener">Telegram</a>, <a href="https://max.ru/u/f9LHodD0cOKJ5pukm2-4fhPz8YO0IT8QAgxaf3qhlSXm73rwnWGcggGX55E" target="_blank" rel="noopener">Max</a><br><a href="https://yandex.ru/maps/org/kam_ran/108897180550/" target="_blank" rel="noopener">Яндекс Карты</a>, <a href="https://2gis.ru/ekaterinburg/firm/70000001103817415" target="_blank" rel="noopener">2ГИС</a></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">Набросок сайта. Меню, цены и режим работы взяты из открытых источников кафе и требуют проверки.</div></footer>
+<div class="mob"><a href="tel:+79226068888">ПОЗВОНИТЬ</a></div>
+
+<script>
+const M=[
+{t:'Супы',h:'Супы',s:'',i:[
+ ['Фо бо','Говядина, рисовая лапша фо, ростки бобов, костный бульон со звёздчатым анисом, корица, зелёный лук, петрушка. На выбор: говядина полной или средней отварки',450,'Phở bò (chín/tái)'],
+ ['Фо сот ванг','Говядина, рисовая лапша фо, ростки бобов, костный бульон',470,'Phở sốt vang'],
+ ['Фо га','Курица, рисовая лапша фо, ростки бобов, костный бульон',450,'Phở gà'],
+ ['Бун сот ванг','',470,'','m5.jpg'],
+ ['Бун бо хуэ','Говядина, фрикадельки из креветок и говядины, нарезка свиной рульки, рисовая лапша бун, ростки бобов, костный бульон, петрушка, лук, сахар',470,'Bún bò Huế'],
+ ['Бун хай сан','Креветки, рыбные котлетки, кальмар, рисовая лапша бун, ростки бобов, костный бульон, помидор, петрушка, лук, лимонный сок',470,'Bún hải sản'],
+ ['Том ям','Креветки, кальмары, мидии, грибы, шарики из морепродуктов, имбирь, лемонграсс, сливки, кокосовое молоко, гарнир на выбор (рис/лапша)',470],
+ ['Бун бо тай','',450],['Бун бо чин','',450],
+ ['Бун риеу куа бап бо','Нарезка говяжьей рульки, крабовый фарш, рисовая лапша бун, ростки бобов',470],
+ ['Бун ча ка манг кай','Жареные рыбные котлетки, рисовая лапша бун, ростки бобов, бамбук, костный бульон',470],
+ ['Бун га','Курица, рисовая лапша бун, ростки бобов, костный бульон',450],
+ ['Суп том','Суп с креветками по-вьетнамски',450],['Суп зай сан','Суп с морепродуктами по-вьетнамски',500],['Суп га','Суп с курицей по-вьетнамски',420]]},
+{t:'Закуски',h:'Đồ ăn nhẹ',s:'Закуски',i:[
+ ['Нго чиен','Хрустящая кукуруза в панировке, 150 гр.',300,'Ngô chiên'],
+ ['Кхоай тай чиен','Картофель фри в панировке, 150 гр.',300,'Khoai tây chiên','m6.jpg'],
+ ['Нэм ран','2 шт. жареные роллы',200],['Нэм хай сан','2 шт. роллы с морепродуктами',240],['Нэм куон','2 шт. спринг-роллы',240]]},
+{t:'Салаты',h:'Салаты',s:'',i:[
+ ['Салат рау ку','Морковь, капуста, манго, салат листовой, петрушка, майонез',400,'','m7.jpg'],
+ ['Ном том','Креветки, манго, ростки бобов, арахис, огурец, морковь, петрушка, лук, рыбный соус, сахар',470],
+ ['Ном га','Курица, ростки бобов, арахис, огурец, морковь, петрушка, лук, рыбный соус, сахар',420],
+ ['Ном бо','Говядина, ростки бобов, арахис, огурец, морковь, петрушка, лук, рыбный соус, сахар',470],
+ ['Ном хай сан','Креветки, кальмар, ростки бобов, арахис, огурец, морковь, петрушка, лук, рыбный соус, сахар',470]]},
+{t:'С лапшой',h:'Горячие блюда с лапшой',s:'',i:[
+ ['Бун мок','Фрикадельки из свинины, рисовая лапша бун, костный бульон',470],
+ ['Бун бо нам бо','Говядина, рисовая лапша бун, ростки бобов, огурец, морковь, петрушка, арахис, рыбный соус, сахар',470],
+ ['Бун ча ныонг','Котлетки из свиного фарша на гриле, рисовая лапша бун, ростки бобов, огурец, морковь, петрушка, рыбный соус, сахар',470],
+ ['Миен га','Курица, фунчоза, грибы шиитаке, листья лимона, ростки бобов, петрушка',450],
+ ['Миен чон га','Курица, обжаренная фунчоза, жареный лук, петрушка, соевый соус',450],
+ ['Миен чон бо','Говядина, обжаренная фунчоза, жареный лук, ростки бобов, петрушка',470],
+ ['Ми сао бо','Говядина, овощи сезонные, обжаренная лапша ми, соевый соус',450],
+ ['Ми сао рау ку','Овощи сезонные, обжаренная лапша ми, соевый соус',450],
+ ['Ми сао га','Курица, овощи сезонные, обжаренная лапша ми, соевый соус',450]]},
+{t:'С рисом',h:'Горячие блюда с рисом',s:'',i:[
+ ['Ком том рим чуа нгот','Рис с кисло-сладкими креветками по-вьетнамски',450],
+ ['Ком ка сот ка чуа','Рис с жареной рыбой в томатном соусе',450],['Ком ка кхо то','Рис с тушёной рыбой',450],
+ ['Ком сыон сот кам','Рис с жареными рёбрышками в соусе из апельсина',450],['Ком сыон сот зыа','Рис с жареными рёбрышками в соусе из ананаса',450],
+ ['Ком тхит ба чи рим','Рис с тушёной свиной грудинкой по-вьетнамски',450],
+ ['Ком ранг зыа бо','Жареный рис, говядина, солёная китайская капуста, рыбный соус, яйцо',500],
+ ['Ком ранг хай сан','Жареный рис, креветки, кальмар, крабовые палочки, рыбные котлетки, овощи сезонные, рыбный соус, яйцо',500],
+ ['Ком ранг тхап кам','Жареный рис, свинина, свиная колбаса по-вьетнамски, овощи сезонные, рыбный соус, яйцо',500],
+ ['Ком га сот мам той','Рис с жареной курицей в чесночно-рыбном соусе',450],
+ ['Ком га сот чань зай','Рис с жареной курицей в соусе из маракуйи',450],['Ком га сот кам','Рис с жареной курицей в соусе из апельсина',450]]},
+{t:'С мясом',h:'Блюда с мясом',s:'',i:[
+ ['Бо лук лак','Говядина с овощами в солёно-сладком соусе',500,'','m2.jpg'],['Бо сот ванг','Говядина в винном соусе',470,'','m3.jpg'],
+ ['Бо сот тиеу ден','Говядина с соусом из чёрного болгарского перца',500,'','m4.jpg'],
+ ['Бань ми чао','Картошка фри, жареное яйцо, сосиски, нарезка вьетнамской колбасы в кисло-сладком соусе',400,'','m1.jpg'],
+ ['Бань ми сот ванг','Говядина в винном соусе с багетом',450],
+ ['Сыон сот чуа нгот','2 шт. жареные рёбрышки в кисло-сладком соусе',300],['Сыон сот кам','2 шт. жареные рёбрышки в соусе из апельсинов',300],
+ ['Сыон сот чань зай','2 шт. жареные рёбрышки в соусе из маракуйи',300],['Сыон сот зыа','2 шт. жареные рёбрышки в соусе из ананаса',320],
+ ['Тхит ба чи рим','Тушёная свиная грудинка по-вьетнамски',400],['Кхо кует','Тушёная свиная грудинка в сладко-рыбном соусе по-вьетнамски',420],
+ ['Тай хео у муои','Свиные ушки на солёном пару (1 ушко)',300]]},
+{t:'С курицей',h:'Блюда с курицей',s:'',i:[
+ ['Га чиен су','Жареная курица в кляре, 300 гр.',600,'Gà chiên xù'],['Га сот зыа','2 крыла, жареная курица в соусе из ананаса',320],
+ ['Га сот кай','2 шт. крылья, жареная курица в остром соусе',320],['Га сот чуа нгот','2 шт. крылья, жареная курица в кисло-сладком соусе',320],
+ ['Га виен сот чынг муой','3 шт. отбивная курица в соусе из солёных яиц',360],['Га сот мам той','2 шт. крылья, жареная курица в чесночно-рыбном соусе',320],
+ ['Га сот кам','2 шт. крылья, жареная курица в соусе из апельсинов',320],['Га у муои','Курица на солёном пару (пол курицы)',650],
+ ['Га бо сой','Курица (половина) «без выхода»: варёная курица, обжаренная в тесте из клейкого риса',900]]},
+{t:'Морепродукты',h:'Блюда с морепродуктами',s:'',i:[
+ ['Том чиен су','5 шт. креветки в кляре',600,'','m10.jpg'],['Том хап','5 шт. креветки на пару',600,'','m9.jpg'],['Том сот фо май','5 шт. креветки в сырном соусе',600,'','m8.jpg'],
+ ['Том сот чынг муой','5 шт. жареные креветки в соусе из солёных яиц',600],['Ка кхо то','Тушёная рыба',400],['Ка сот ка чуа','Жареная рыба в томатном соусе',400],
+ ['Ча ка чиен','Жареные рыбные котлетки',420],['Ча ка сот','Жареные рыбные котлетки в томатном соусе',450]]},
+{t:'Вегетарианские',h:'Вегетарианские блюда',s:'',i:[
+ ['Тофу чуа нгот','Тофу в кисло-сладком соусе',450],['Сой чим чиен','Жареный пирожок из клейкого риса',200],
+ ['Рао сао тхап кам','Обжаренные овощи: овощи сезонные, грибы шиитаке, соевый соус',450]]}
+];
+/* вьетнамские названия: только те, что прочитаны на страницах их меню */
+const VN={'Ном том':'Nộm tôm','Ном га':'Nộm gà','Ном бо':'Nộm bò','Сыон сот зыа':'Sườn sốt dứa','Га сот кай':'Gà sốt cay','Га сот чуа нгот':'Gà sốt chua ngọt','Ком га сот мам той':'Cơm gà sốt mắm tỏi','Ком га сот чань зай':'Cơm gà sốt chanh dây','Ком га сот кам':'Cơm gà sốt cam'};
+const T=[['PHỞ · BÚN','Супы',''],['ĐỒ ĂN NHẸ','Закуски','y'],['NỘM','Салаты','t'],['С ЛАПШОЙ','Горячие блюда с лапшой','r'],['CƠM','Блюда с рисом','y'],['MÓN CHÍNH','Блюда с мясом',''],['MÓN CHÍNH','Блюда с курицей','r'],['MÓN CHÍNH','Блюда с морепродуктами','t'],['ОВОЩИ','Вегетарианские блюда','y']];
+const C={t:'--c:#127a74',r:'--c:#d7231e'};
+const PH={4:['r29.jpg','Фо бо в тарелке с синим узором'],6:['r23.jpg','Суп в тарелке с синим узором']};
+const boards=document.getElementById('boards'),jump=document.getElementById('jump');
+M.forEach((s,n)=>{
+  const t=T[n],a=document.createElement('a');a.href='#s'+n;a.textContent=s.t;jump.append(a);
+  const e=document.createElement('article');e.className='sb'+(t[2]==='y'?' y':'');e.id='s'+n;if(C[t[2]])e.style.cssText=C[t[2]];
+  e.innerHTML='<h3>'+t[0]+'</h3><div class="ru">'+t[1]+'</div>'+s.i.map(r=>{const v=r[3]||VN[r[0]];return '<div class="it"><b>'+(v?'<span class="vn">'+v+'</span>':'')+r[0]+'</b><span class="pr">'+r[2]+' ₽</span>'+(r[1]?'<p>'+r[1]+'</p>':'')+'</div>'}).join('');
+  boards.append(e);
+  if(PH[n]){const f=document.createElement('figure');f.className='ph';f.innerHTML='<img loading="lazy" src="img/'+PH[n][0]+'" alt="'+PH[n][1]+'">';boards.append(f)}
+});
+/* открыто сейчас: время Екатеринбурга */
+(()=>{const d=new Date(Date.now()+(new Date().getTimezoneOffset()+300)*6e4),w=d.getDay(),we=w===0||w===6,a=we?660:600,b=we?1380:1320,m=d.getHours()*60+d.getMinutes(),el=document.getElementById('now');
+  if(m>=a&&m<b)el.textContent='Челюскинцев, 19 · открыто до '+(we?'23:00':'22:00')})();
+</script>
+</body>
+</html>
