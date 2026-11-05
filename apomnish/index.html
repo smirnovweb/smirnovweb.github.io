@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>А Помнишь? — кофейня с авторскими завтраками, Екатеринбург</title>
+<meta name="description" content="Кофейня с авторскими завтраками на Бажова, 125. Будни 08:00–20:00, выходные 09:00–20:00. Лучшее кафе 2023 по Премии 2ГИС.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Oswald:wght@600&family=Roboto+Slab:wght@900&display=swap" rel="stylesheet">
+<style>
+:root{--acc:#b3480c;--peach:#ffeeb0;--peach2:#fff7d9;--gray:#f6c915;--ink:#141210;--mut:#8f8a84;--rust:#b3500f;--yel:#ffd21f;--txt:'Golos Text',system-ui,sans-serif;--cond:'Oswald','Arial Narrow',sans-serif;--slab:'Roboto Slab',Georgia,serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{background:#fff;color:var(--ink);font:400 16px/1.45 var(--txt);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.wrap{width:min(1160px,100% - 40px);margin-inline:auto}
+
+/* первый экран */
+.hero{position:relative;height:100svh;min-height:560px;overflow:hidden;background:#3a2a22;color:#fff}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.62) saturate(.9);animation:slow 26s ease-in-out infinite alternate}
+@keyframes slow{from{transform:scale(1.03) translateX(-1%)}to{transform:scale(1.13) translateX(1.4%)}}
+.nav{position:absolute;z-index:3;top:26px;right:clamp(20px,4vw,56px);display:flex;gap:26px;font:500 14px/1 var(--txt)}
+.nav a{text-decoration:none}
+.nav a:hover{color:var(--yel)}
+.hc{position:absolute;z-index:2;inset:0;display:flex;flex-direction:column;justify-content:center;padding-inline:clamp(20px,8vw,120px)}
+.word{font:900 100px/1 var(--slab);white-space:nowrap;transform-origin:0 50%;letter-spacing:.01em}
+.under{display:grid;grid-template-columns:auto 1fr auto;gap:18px 44px;align-items:center;margin-top:clamp(18px,4vh,44px)}
+.under b{font:700 clamp(30px,3.9vw,56px)/1 var(--txt);letter-spacing:-.01em;color:var(--yel)}
+.under span{font:600 clamp(12px,1.1vw,15px)/1.35 var(--txt);text-transform:uppercase;letter-spacing:.05em;max-width:24em}
+.badge{width:clamp(76px,9vw,128px);border-radius:50%;background:#fff}
+
+/* адрес и плитки */
+.city{padding:clamp(52px,7vw,84px) 0 0;text-align:center}
+.city h2{font:600 clamp(40px,5.4vw,62px)/1.05 var(--cond);color:var(--acc);text-transform:uppercase}
+.city .go{display:inline-block;margin-top:10px;font:500 14px/1 var(--txt);color:var(--acc);text-decoration:none}
+.city .go:hover{text-decoration:underline}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;margin-top:clamp(28px,4vw,46px)}
+.tile{position:relative;display:grid;place-items:center;aspect-ratio:16/10;border-radius:14px;overflow:hidden;color:#fff;font:700 clamp(16px,1.5vw,19px)/1.3 var(--txt);text-align:center;text-decoration:none;padding:20px;background:var(--rust)}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.68);transition:transform .7s}
+.tile.rust img{filter:none;object-fit:contain;opacity:.55}
+.tile:hover img{transform:scale(1.05)}
+.tile span{position:relative;max-width:14em}
+
+/* персиковая панель */
+.panel{margin-top:clamp(32px,4vw,46px);background:var(--peach);border-radius:4px;padding:clamp(24px,3.4vw,40px) clamp(18px,3.4vw,40px);display:grid;grid-template-columns:.62fr 1.38fr;gap:26px 40px}
+.panel h3{font:700 clamp(19px,1.7vw,23px)/1.2 var(--txt);margin-bottom:14px}
+.left h3{color:var(--acc)}
+.dk{list-style:none;padding:0}
+.dk li{padding:9px 0;border-top:1px solid #b3480c44}
+.dk b{display:block;font-weight:600}
+.dk small{display:block;font-size:13.5px;line-height:1.35;color:#6e5d50}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:#fff;border-radius:14px;padding:12px;box-shadow:0 6px 20px -14px #8a6a12}
+.card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:9px}
+.card b{display:block;margin-top:10px;font-weight:700;line-height:1.2}
+.card p{font-size:13.5px;line-height:1.35;color:#6e5d50;margin-top:4px}
+.tag{display:inline-block;font:600 11px/1 var(--txt);color:var(--acc);margin-top:9px}
+
+/* меню */
+.menu{padding:clamp(56px,7vw,90px) 0 0}
+.mh{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.mh h2{font:600 clamp(42px,5.2vw,60px)/1 var(--cond);text-transform:uppercase}
+.ico{display:flex;gap:18px;color:#3d3833}
+.ico svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ico span{display:block}
+.show{position:relative;margin-top:18px;height:clamp(250px,33vw,400px);border-radius:14px;overflow:hidden;background:var(--rust);display:grid;grid-template-columns:1fr 1fr;align-items:center;color:#fff}
+.show .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .35s}
+.show .pl{position:relative;width:100%;height:100%;object-fit:contain;transition:opacity .2s}
+.show .tx{position:relative;padding:18px clamp(16px,4vw,50px);transition:opacity .2s}
+.show .tx b{display:block;font:600 clamp(26px,3.6vw,46px)/1.08 var(--cond);text-transform:uppercase}
+.show .tx p{margin-top:8px;font-size:15.5px;line-height:1.38;max-width:29em}
+.show .tx i{display:block;font:700 clamp(17px,1.8vw,22px)/1 var(--txt);font-style:normal;margin-top:12px;color:var(--yel)}
+.show.room .pl,.show.room .tx{opacity:0}
+.show:not(.room) .bg{opacity:0}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 26px}
+.pills button{padding:8px 13px;border-radius:7px;font:600 13px/1 var(--txt);background:var(--peach2);color:#6b4a12;transition:background .15s}
+.pills button:hover{background:var(--peach)}
+.pills button[aria-pressed=true]{background:var(--yel);color:var(--ink)}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px 26px}
+.it h4{font:700 15.5px/1.25 var(--txt)}
+.it .m{font-size:13px;color:var(--mut);margin-top:3px}
+.it p{font-size:13.5px;line-height:1.36;color:#5e5851;margin-top:5px}
+.it .b{display:flex;gap:5px;margin-top:10px}
+.it .b span,.it .b button{padding:7px 10px;border-radius:6px;font:600 12px/1 var(--txt)}
+.it .b span{background:var(--yel);color:var(--ink)}
+.it .b button{box-shadow:inset 0 0 0 1px var(--peach);color:var(--acc)}
+.it .b button:hover{background:var(--peach2)}
+.mnote{margin-top:26px;font-size:13px;color:var(--mut)}
+
+/* серая панель */
+.sub{position:relative;overflow:hidden;background:var(--gray);border-radius:4px;margin-top:clamp(52px,7vw,84px);padding:clamp(28px,4vw,50px) clamp(20px,5vw,60px);display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+.sub h3{font:700 clamp(21px,2vw,26px)/1.2 var(--txt)}
+.sub p{margin-top:10px;max-width:29em;font-weight:500}
+.tg{display:flex;align-items:stretch;max-width:320px;margin-top:20px;border-radius:7px;overflow:hidden;text-decoration:none;background:#fff}
+.tg span{flex:1;padding:13px 14px;color:var(--mut);font-size:14.5px}
+.tg i{display:grid;place-items:center;width:46px;background:var(--ink);color:var(--yel);font-style:normal;font-weight:700}
+.sub svg{width:100%;height:auto;max-height:210px}
+
+/* футер-панели */
+.foot{display:grid;grid-template-columns:.62fr 1.38fr;gap:18px;margin-top:18px}
+.fp{background:var(--peach2);border-radius:14px;padding:clamp(20px,2.6vw,30px)}
+.fp h3{font:700 19px/1.2 var(--txt);margin-bottom:12px}
+.fp .big{font:600 44px/1 var(--cond);color:var(--acc)}
+.fp .s{font-size:14px;color:#6e5d50}
+.fq{font-size:15px;margin-top:12px;line-height:1.38}
+.fq small{display:block;color:#8c7b6e;font-size:13px}
+.cg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.cg h4{font:700 13px/1.25 var(--txt);margin-bottom:5px}
+.cg a,.cg div{font-size:14px;color:var(--acc)}
+.cg a{display:block;text-underline-offset:3px}
+.cg .pl{color:var(--ink)}
+.photo{margin-top:18px;border-radius:14px;width:100%;aspect-ratio:21/8;object-fit:cover}
+footer{background:#000;color:var(--yel);font-size:13px;margin-top:clamp(34px,4vw,48px);padding:15px 0}
+.mob{display:none}
+@media (max-width:860px){
+  .nav{top:20px;gap:18px;right:20px;font-size:13px}
+  .hc{padding-inline:20px}
+  .word{white-space:normal}
+  .under{grid-template-columns:1fr auto;gap:14px}
+  .under span{grid-column:1/-1;grid-row:2}
+  .tiles{grid-template-columns:minmax(0,1fr);gap:12px}
+  .panel,.foot,.sub{grid-template-columns:minmax(0,1fr)}
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .card{display:grid;grid-template-columns:96px minmax(0,1fr);gap:0 12px}
+  .card img{grid-row:1/4}.card b{margin-top:0}
+  .mh{display:block}.ico{margin-top:10px}
+  .show{height:48vw;min-height:190px;border-radius:10px}
+  .show .tx{padding:10px 10px 10px 0}.show .tx p{display:none}.show .tx b{font-size:21px}
+  .grid4{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px 16px}
+  .pills{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-20px}
+  .pills::-webkit-scrollbar{display:none}
+  .pills button{flex:0 0 auto}
+  .cg{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .photo{aspect-ratio:4/3}
+  footer{padding-bottom:78px}
+  .mob{display:grid;grid-template-columns:1fr 1fr;gap:6px;position:fixed;inset:auto 0 0 0;z-index:20;background:#fff;padding:7px 10px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -1px 0 #e6e0d9}
+  .mob a{display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:8px;font:600 15px/1 var(--txt);text-decoration:none;background:var(--peach);color:var(--acc)}
+  .mob a+a{background:var(--yel);color:var(--ink)}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero>img{animation:none}}
+</style>
+</head>
+<body id="home">
+<section class="hero">
+  <img src="img/h53.jpg" alt="Зал кофейни: красный пол, круглые столики, жёлтые панели на стене" fetchpriority="high">
+  <nav class="nav" aria-label="Разделы"><a href="#menu">меню</a><a href="#new">новинки</a><a href="#contacts">контакты</a></nav>
+  <div class="hc">
+    <h1 class="word" id="word">А ПОМНИШЬ?</h1>
+    <div class="under">
+      <b>кофейня</b>
+      <span>Здесь истории начинаются с завтрака</span>
+      <img class="badge" src="img/logo.jpg" alt="Логотип кофейни">
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+<section class="city">
+  <h2>Бажова, 125</h2><br>
+  <a class="go" href="https://yandex.ru/maps/org/a_pomnish_/168489538614/" target="_blank" rel="noopener">как добраться →</a>
+  <div class="tiles">
+    <a class="tile rust" href="#menu"><img src="img/e22.jpg" alt=""><span>Завтраки наша страсть!</span></a>
+    <a class="tile" href="https://2gis.ru/ekaterinburg/firm/70000001054829287" target="_blank" rel="noopener"><img src="img/h2.jpg" alt=""><span>Лучшее кафе 2023 по Премии 2ГИС</span></a>
+  </div>
+</section>
+
+<section class="panel" id="new">
+  <div class="left">
+    <h3>Напитки с оттенками осени</h3>
+    <ul class="dk">
+      <li><b>Тыквенно-пряный рафчик</b><small>С пряными оттенками и жареным кунжутом</small></li>
+      <li><b>Яблочный пунш</b><small>На безалкогольном яблочном пиве, с пюре из груши и имбирём</small></li>
+      <li><b>Томат в апельсинах</b><small>Томаты и апельсины, чили и бобы тонка</small></li>
+      <li><b>Облепиха с крапивой</b><small>Горячий чай с грейпфрутом и нотками лесных ягод</small></li>
+      <li><b>Грушево-миндальный фильтр</b><small>Если хочется кофе и десерт одновременно</small></li>
+    </ul>
+  </div>
+  <div>
+    <h3>Новинки</h3>
+    <div class="cards">
+      <article class="card"><img loading="lazy" src="img/t13850.jpg" alt="Хрумдоги"><b>Хрумдоги</b><p>С колбаской-гриль из индейки или с говядиной, луком фри, в нежнейшей булочке бриошь</p><span class="tag">Это мощно</span></article>
+      <article class="card"><img loading="lazy" src="img/t13820.jpg" alt="Мортаделльники"><b>Мортаделльники</b><p>Булочка маффин, голландез, яйца пашот, соус спайси и мортаделла с фисташкой</p></article>
+      <article class="card"><img loading="lazy" src="img/t13870.jpg" alt="Паста Алла Водка"><b>Паста Алла Водка</b><p>Каламарата в сливочно-томатном соусе со шпинатом, Страчателлой и Пармезаном</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="mh">
+    <h2>Меню</h2>
+    <div class="ico" aria-label="Можно с собакой, с ноутбуком, летняя веранда, заказ навынос">
+      <span title="Можно с собакой"><svg viewBox="0 0 24 24"><path d="M5 11c-1.6 0-2.5-1.2-2.5-3L5 6l2-2 2.5 1.5H14l3 3v5l2.5 7h-3L14 16H9l-1 4.5H5.5L6 13"/><circle cx="8" cy="8.2" r=".6"/></svg></span>
+      <span title="Можно с ноутбуком"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="10" rx="1.5"/><path d="M2.5 19h19l-2-4h-15z"/></svg></span>
+      <span title="Летняя веранда"><svg viewBox="0 0 24 24"><path d="M12 3v18M4 11a8 8 0 0 1 16 0zM8 21h8"/></svg></span>
+      <span title="Заказ навынос"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 13H7zM9 8V6a3 3 0 0 1 6 0v2"/></svg></span>
+    </div>
+  </div>
+  <div class="show room" id="show">
+    <img class="bg" loading="lazy" src="img/h54.jpg" alt="Зал кофейни с вывеской на стене">
+    <img class="pl" id="sp" alt="">
+    <div class="tx"><b id="sn"></b><p id="sd"></p><i id="sr"></i></div>
+  </div>
+  <div class="pills" id="pills"></div>
+  <div class="grid4" id="items"></div>
+  <p class="mnote">Цены из карточки 2ГИС (17 сентября 2026) и Яндекс Карт, вес и фото блюд из Яндекс Еды. В доставке цены выше. В наброске всё нужно сверить с кофейней.</p>
+</section>
+
+<section class="sub">
+  <div>
+    <h3>Подпишитесь на наш Telegram</h3>
+    <p>Каждый приезд шефа - новинка в меню. Рассказываем о них первыми.</p>
+    <a class="tg" href="https://t.me/pomnish_coffee" target="_blank" rel="noopener"><span>t.me/pomnish_coffee</span><i>→</i></a>
+  </div>
+  <svg viewBox="0 0 420 200" fill="none" stroke="#141210" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path stroke-dasharray="7 7" d="M92 96C70 60 120 44 110 18M122 96c-22-36 28-52 18-78"/><path d="M60 104h96v34a30 30 0 0 1-30 30H90a30 30 0 0 1-30-30zM156 112h14a14 14 0 0 1 0 30h-16"/></svg>
+</section>
+
+<section class="foot" id="contacts">
+  <div class="fp">
+    <h3>Что пишут гости</h3>
+    <div class="big">4,9</div>
+    <div class="s">2ГИС, 373 оценки. В Яндекс Картах 4,8, 393 оценки</div>
+    <p class="fq">«Абсолютно точно могу назвать "А помнишь?" своим любимым кафе в городе»<small>Анастасия</small></p>
+    <p class="fq">«Все просто, без пафоса. Уютно, доброжелательно.»<small>Elena Beresneva</small></p>
+  </div>
+  <div class="fp">
+    <h3>Контакты</h3>
+    <div class="cg">
+      <div class="pl"><h4>Адрес</h4>Бажова, 125, 1 этаж<br>Метро «Первомайская», 800 м</div>
+      <div class="pl"><h4>Часы работы</h4>Будни 08:00–20:00<br>Выходные 09:00–20:00</div>
+      <div><h4 style="color:var(--ink)">Написать</h4><a href="tel:+79638579226">+7 963 857-92-26</a><a href="https://wa.me/79638579226" target="_blank" rel="noopener">WhatsApp</a><a href="https://t.me/pomnish_coffee" target="_blank" rel="noopener">Telegram</a><a href="https://vk.com/pomnish_coffee" target="_blank" rel="noopener">ВКонтакте</a></div>
+      <div><h4 style="color:var(--ink)">На картах</h4><a href="https://yandex.ru/maps/org/a_pomnish_/168489538614/" target="_blank" rel="noopener">Яндекс Карты</a><a href="https://2gis.ru/ekaterinburg/firm/70000001054829287" target="_blank" rel="noopener">2ГИС</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">А Помнишь? Набросок сайта: меню, цены и режим работы взяты из открытых источников кофейни и требуют проверки.</div></footer>
+<div class="mob"><a href="#menu">меню</a><a href="tel:+79638579226">позвонить</a></div>
+
+<script>
+const C=[
+['Спешл',[
+ ['Казаречче Дорблю с инжиром',670,'','Сливочная паста казаречче, сыр Дорблю, инжир, чипсы из бекона'],
+ ['Брускетта с инжиром и пармской ветчиной',670,'','Инжир, пармская ветчина, руккола, крем из Рикотты с инжирным конфи, ржаной зерновой тост']]],
+['Сырники',[
+ ['Топлёная сметана',570,'210 г','С топлёной сметаной, клубничным конфи́ и сезонными ягодами',1],
+ ['Вишнёвый кокос',570,'200 г','Крем из натурального кокосового молока, кампоте́ из сочной вишни, хрустящий кокосовый крамбл',14],
+ ['Пора на море',580,'200 г','С тартаром из лосося с/с и трюфельным соусом Голландез',15]]],
+['Яйца',[
+ ['Шакшука',590,'310 г','Из двух яиц с соусом из печёных сладких перцев, томлёных томатов Пелатти, аджикой, кинзой и грузинскими специями',6],
+ ['Завтрак с риетом',670,'340 г','Из трёх яиц с риетом из красной рыбы, муссом Пармезан, красной икрой, миксом зелени, томатами, авокадо и ржаными тостами',22],
+ ['Завтрак с колбаской',670,'360 г','Из трёх яиц с гриль колбаской из индейки, хумусом, миксом зелени, томатами, огурчиками Каджун и ржаными тостами',3],
+ ['Омлет Берблан',560,'210 г','Французский омлет в соусе Берблан с красной икрой, лучком сибулет и сыром Пармезан',25]]],
+['Хашбраун',[
+ ['С риетом из красной рыбы',630,'240 г','Швейцарский картофельный драник с риетом, муссом Пармезан, красной икрой и миксом зелени',24],
+ ['Тамбовский окорок',640,'300 г','Драник с яйцом пашот, трюфельным соусом Голландез, миксом зелени и Тамбовским окороком',23]]],
+['Тосты',[
+ ['Бриошь Нежный лосось',640,'260 г','С тартаром из слабосолёного лосося, авокадо, крем-чизом, яйцом пашот и трюфельным соусом Голландез',7],
+ ['Паштет',570,'180 г','Из нежнейшей куриной печени с брусничным соусом и супер сливочной бриошью',18],
+ ['Авокадо тост',590,'260 г','Ржаной зерновой тост с хумусом, авокадо, яйцом пашот, крем-чизом, миксом орешков и семян, попкорном из гречки',16],
+ ['Булка Тамбовский окорок',580,'330 г','Булочка с окороком, соусом спайси, огурчиками Каджун, сыром Чеддер, скрэмблом и муссом Пармезан',19],
+ ['Спайси цыпа',610,'330 г','Тост с цыплёнком, соусом спайси, скрэмблом, сливочным сыром и слайсами кабачка каджун на ржаном хлебе',17]]],
+['Каши и блинчики',[
+ ['Те самые, с лососем',560,'250 г','Со слабосолёным лососем, красной икрой, муссом Пармезан, зелёным маслом и щепоткой любви',21],
+ ['Любимые, с вишней',510,'260 г','С кремом из топлёной сметаны, шоколадом и вишней',4],
+ ['Гречка с цыплёнком',540,'375 г','С бедром из цыплёнка, муссом Пармезан, яйцом пашот, попкорном из гречки и зелёным маслом',8],
+ ['Пшённая карамель',410,'229 г','С солёной карамелью, сезонными ягодами, кунжутом, семенами льна и тыквенными семечками',20],
+ ['Фитнес каша',410,'209 г','Мультизлаковая каша с лимонным курдом, миндалём, малиновой пудрой и семечками',26],
+ ['Панкейки с сезонными ягодами',530,'','']]],
+['Супы и салаты',[
+ ['Томатный крем-суп',540,'340 г','Из итальянских томатов пелати со сливками, с тостом бриошь, крем-чизом и Моцареллой',11],
+ ['Тыквенный',540,'300 г','Из сочной тыквы на кокосовом молоке, со страчателлой, тыквенными семечками и зелёным маслом',12],
+ ['Тот самый Юлий',580,'280 г','Цезарь: микс салата, цыплёнок су-вид, томаты, яйцо, гренки, фирменная заправка и Пармезан',13],
+ ['Тёплый салат с лососем и брокколи',590,'330 г','С цветной капустой, ореховой заправкой, томатами, муссом Пармезан, маслом чили и фисташками',2]]],
+['Котлетки и не только',[
+ ['Котлета из индейки',640,'300 г','Такая большая, сочная, с картофельным пюре, печёным сладким перцем, миксом зелени и зелёным маслом',5],
+ ['Щучка',610,'300 г','Нежнейшие котлетки из щуки с пюре и соусом Берблан с красной икрой',27],
+ ['Паста Мафальдине Окорочано',630,'300 г','С белыми грибами, Тамбовским окороком в сливочном соусе с трюфельным маслом и Пармезаном',28]]],
+['Детское меню',[
+ ['Детские пельмешки',340,'200 г','Мини-пельмешки с начинкой из телятины, говядины, свинины и сливками',10],
+ ['Спагетти с сосиской',340,'210 г','Спагетти со сливочным маслом и сосиской из говядины, свинины и цыплёнка',9]]]
+];
+const pills=document.getElementById('pills'),items=document.getElementById('items'),show=document.getElementById('show'),sp=document.getElementById('sp'),sn=document.getElementById('sn'),sd=document.getElementById('sd'),sr=document.getElementById('sr');
+function pick(d){if(!d[4])return;sp.src='img/e'+d[4]+'.jpg';sp.alt=d[0];sn.textContent=d[0];sd.textContent=d[3];sr.textContent=d[1]+' ₽';show.classList.remove('room')}
+function open_(n){
+  [...pills.children].forEach((b,i)=>b.setAttribute('aria-pressed',i===n));
+  items.innerHTML='';
+  C[n][1].forEach(d=>{const a=document.createElement('article');a.className='it';
+    a.innerHTML='<h4>'+d[0]+'</h4>'+(d[2]?'<div class="m">'+d[2]+'</div>':'')+(d[3]?'<p>'+d[3]+'</p>':'')+'<div class="b"><span>'+d[1]+' ₽</span>'+(d[4]?'<button type="button">фото</button>':'')+'</div>';
+    if(d[4]){a.addEventListener('mouseenter',()=>pick(d));a.querySelector('button').onclick=()=>{pick(d);if(innerWidth<=860)show.scrollIntoView({block:'start'})}}
+    items.append(a)});
+  const f=C[n][1].find(d=>d[4]);if(f)pick(f)
+}
+C.forEach((c,n)=>{const b=document.createElement('button');b.type='button';b.textContent=c[0];b.onclick=()=>open_(n);pills.append(b)});
+open_(1);show.classList.add('room');
+/* название на всю ширину, как широкая засечка */
+const w=document.getElementById('word');
+function fit(){const box=w.parentElement,cs=getComputedStyle(box),W=box.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+  if(innerWidth<=860){w.style.fontSize=(W/6.5)+'px';w.style.transform='scaleX(1)';return}
+  w.style.fontSize='100px';w.style.transform='none';const r=document.createRange();r.selectNodeContents(w);const nat=r.getBoundingClientRect().width,S=1.16;
+  w.style.fontSize=(100*W/(nat*S))+'px';w.style.transform='scaleX('+S+')'}
+fit();addEventListener('resize',fit);document.fonts&&document.fonts.ready.then(fit);
+</script>
+</body>
+</html>
