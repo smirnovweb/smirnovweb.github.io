@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yi Pin Китайский самовар — хого в Екатеринбурге</title>
+<meta name="description" content="Yipin — это хого по-настоящему, как в Китае. Екатеринбург, улица Мамина-Сибиряка, 141.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Noto+Serif+SC:wght@700;900&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --slate:#0d0d0e; --slate2:#171718; --line:#2c2b2a;
+  --red:#e0121c; --red2:#a80d15;
+  --paper:#f1e9db; --mute:#a59c8f; --wood:#c49a5e;
+  --head:'Oswald','Arial Narrow',sans-serif;
+  --body:'Golos Text',Arial,sans-serif;
+  --han:'Noto Serif SC','Songti SC',serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;background:var(--slate)}
+body{background:var(--slate);color:var(--paper);font:400 17px/1.5 var(--body);overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--wood);outline-offset:2px}
+
+.book{display:inline-flex;align-items:center;justify-content:center;background:var(--red);color:#fff;
+  font:500 19px/1 var(--head);letter-spacing:.04em;text-transform:uppercase;text-decoration:none;
+  padding:19px 30px;transition:background .2s}
+.book:hover{background:var(--red2)}
+.ghost{font:500 19px/1 var(--head);letter-spacing:.04em;text-transform:uppercase;text-decoration:none;
+  padding:18px 4px;border-bottom:1px solid var(--wood);color:var(--paper)}
+
+/* ---- Первый экран ---- */
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:100vh;min-height:100svh}
+.hero-text{display:flex;flex-direction:column;justify-content:space-between;padding:28px clamp(20px,5vw,72px) 44px;position:relative;z-index:2;background:var(--slate)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font:500 18px/1.1 var(--head);letter-spacing:.05em;text-transform:uppercase}
+.brand img{width:62px;height:62px;mix-blend-mode:lighten}
+.top a.tel{font:400 18px/1 var(--head);letter-spacing:.03em;text-decoration:none;white-space:nowrap}
+h1{font:500 clamp(50px,7.4vw,118px)/.98 var(--head);text-transform:uppercase;letter-spacing:-.005em;margin:0 0 26px}
+h1 em{font-style:normal;color:var(--red)}
+.lead{max-width:30em;color:#d9d0c2;margin-bottom:32px}
+.cta{display:flex;flex-wrap:wrap;gap:14px 30px;align-items:center}
+.hero-photo{position:relative;overflow:hidden;background:#000}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 45%;position:absolute;inset:0}
+.hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--slate),transparent 26%)}
+.seal{position:absolute;z-index:2;top:0;right:clamp(14px,3vw,44px);writing-mode:vertical-rl;background:var(--red);color:#fff;
+  font:900 clamp(42px,5.6vw,84px)/1.15 var(--han);padding:26px 8px 22px;letter-spacing:.06em}
+
+/* ---- Конструктор ---- */
+.build{padding:clamp(56px,8vw,110px) clamp(20px,4vw,60px) 60px;border-top:1px solid var(--line)}
+.build-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:14px 40px;margin-bottom:34px}
+h2{font:500 clamp(40px,5.4vw,84px)/1 var(--head);text-transform:uppercase}
+.build-head p{max-width:27em;color:var(--mute)}
+.build-grid{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,1fr);gap:clamp(20px,3vw,48px);align-items:start}
+.stage-col{position:sticky;top:14px}
+.stage{position:relative;aspect-ratio:1/1;width:100%;max-height:calc(100vh - 150px);margin:0 auto;max-width:calc(100vh - 150px);
+  background:radial-gradient(circle at 50% 48%,#222223 0,#121213 58%,#0b0b0c 100%);overflow:hidden;
+  border:1px solid var(--line)}
+.stage::before{content:"";position:absolute;inset:0;opacity:.5;background-image:
+  repeating-linear-gradient(112deg,rgba(255,255,255,.012) 0 2px,transparent 2px 7px),
+  repeating-linear-gradient(23deg,rgba(0,0,0,.25) 0 3px,transparent 3px 11px)}
+.pot{position:absolute;left:50%;top:50%;width:47%;aspect-ratio:1/1;transform:translate(-50%,-50%);z-index:2}
+.pot i{position:absolute;inset:0;background-size:132%;background-position:50% 55%;
+  -webkit-mask:radial-gradient(circle at 50% 50%,#000 62%,transparent 71%);mask:radial-gradient(circle at 50% 50%,#000 62%,transparent 71%);
+  opacity:0;transition:opacity .55s}
+.pot i.on{opacity:1}
+.pot i.sq{-webkit-mask:none;mask:none;background-size:136%;background-position:58% 58%;clip-path:inset(4% round 3%)}
+.pot.gulp{animation:gulp .45s ease}
+@keyframes gulp{40%{transform:translate(-50%,-50%) scale(1.035)}}
+.bub{position:absolute;border-radius:50%;background:rgba(255,255,255,.3);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);animation:bub 2.6s infinite ease-in;opacity:0;z-index:3}
+@keyframes bub{0%{transform:scale(.2);opacity:0}45%{opacity:.75}100%{transform:scale(1.25);opacity:0}}
+.steam{position:absolute;left:50%;top:50%;width:30%;aspect-ratio:1/1.6;z-index:4;pointer-events:none;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,255,255,.14),transparent);filter:blur(12px);animation:steam 7s infinite ease-out;opacity:0}
+.steam.b{animation-delay:2.4s;margin-left:-14%}.steam.c{animation-delay:4.8s;margin-left:-26%}
+@keyframes steam{0%{transform:translate(-30%,-10%) scale(.7);opacity:0}30%{opacity:1}100%{transform:translate(-10%,-105%) scale(1.5);opacity:0}}
+.plate{position:absolute;width:19%;aspect-ratio:1/1;transform:translate(-50%,-50%);z-index:3;border-radius:50%;padding:0;animation:land .42s cubic-bezier(.2,1.3,.4,1)}
+.plate span{position:absolute;inset:0;background-size:150%;background-position:50% 52%;background-color:#1c1c1d;
+  -webkit-mask:radial-gradient(circle,#000 58%,transparent 70%);mask:radial-gradient(circle,#000 58%,transparent 70%)}
+.plate.han span{display:flex;align-items:center;justify-content:center;font:900 clamp(22px,3vw,40px)/1 var(--han);color:var(--red);background:#1d1c1c}
+.plate b{position:absolute;right:6%;top:6%;min-width:24px;height:24px;border-radius:12px;padding:0 6px;background:var(--red);color:#fff;font:500 14px/24px var(--head);text-align:center;z-index:2}
+@keyframes land{0%{transform:translate(-50%,-125%) scale(1.3);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+.more{position:absolute;right:3%;bottom:3%;z-index:5;font:400 16px/1 var(--head);color:var(--mute)}
+.sum{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:12px auto 0;max-width:calc(100vh - 150px)}
+.sum small{display:block;color:var(--mute);font-size:13px;line-height:1.3}
+.sum strong{font:500 40px/1.1 var(--head);display:block;white-space:nowrap}
+.sum .book{flex:none;padding:17px 22px}
+
+.tabs{display:flex;flex-wrap:wrap;gap:0 16px;margin-bottom:6px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.tabs button{font:400 18px/1.1 var(--head);letter-spacing:.02em;padding:7px 0;color:var(--mute);white-space:nowrap;border-bottom:2px solid transparent}
+.tabs button:hover{color:var(--paper)}
+.tabs button[aria-selected=true]{color:var(--paper);border-bottom-color:var(--red)}
+.list{height:min(68vh,660px);overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#3a3836 transparent;scrollbar-width:thin;padding-right:10px}
+.row{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:14px;align-items:center;padding:9px 0;border-bottom:1px solid #222120}
+.thumb{width:62px;height:62px;background-size:150%;background-position:50% 52%;background-color:#1c1c1d;border-radius:50%}
+.thumb.han{display:flex;align-items:center;justify-content:center;font:900 24px/1 var(--han);color:var(--red)}
+.nm{font-weight:500;line-height:1.25}
+.nm small{font:700 13px/1 var(--han);color:var(--wood);margin-left:5px;white-space:nowrap}
+.meta{color:var(--mute);font-size:14px;line-height:1.3;margin-top:2px}
+.act{display:flex;align-items:center;gap:12px}
+.pr{font:500 21px/1 var(--head);white-space:nowrap;min-width:64px;text-align:right}
+.step{display:flex;align-items:center}
+.step button{width:36px;height:36px;border:1px solid #4a4744;font:500 21px/1 var(--head);display:flex;align-items:center;justify-content:center}
+.step button:hover{border-color:var(--red);background:var(--red)}
+.step output{min-width:26px;text-align:center;font:500 18px/1 var(--head)}
+.step:not(.has) .minus,.step:not(.has) output{display:none}
+.radio{width:36px;height:36px;border-radius:50%;border:1px solid #4a4744;position:relative}
+.radio[aria-checked=true]{border-color:var(--red)}
+.radio[aria-checked=true]::after{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--red)}
+
+/* ---- Факты ---- */
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.facts div{padding:30px clamp(20px,4vw,60px);border-left:1px solid var(--line)}
+.facts div:first-child{border-left:0}
+.facts b{display:block;font:500 clamp(32px,4vw,56px)/1.05 var(--head)}
+.facts span{color:var(--mute);font-size:15px}
+
+/* ---- Зал ---- */
+.hall{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);background:var(--red)}
+.hall img{width:100%;height:100%;min-height:440px;max-height:820px;object-fit:cover}
+.hall-q{padding:clamp(36px,6vw,92px) clamp(22px,5vw,72px);display:flex;flex-direction:column;justify-content:center;gap:26px;color:#fff}
+.hall-q blockquote{font:500 clamp(34px,4.2vw,66px)/1.08 var(--head);text-transform:uppercase}
+.hall-q cite{font:400 16px/1.3 var(--body);font-style:normal}
+.hall-q .book{background:var(--slate);align-self:flex-start}
+.hall-q .book:hover{background:#000}
+
+/* ---- Отзывы ---- */
+.rev{padding:clamp(56px,8vw,110px) clamp(20px,4vw,60px)}
+.rev h2{margin-bottom:38px}
+.rev-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 clamp(24px,4vw,56px)}
+.rev article{border-top:2px solid var(--red);padding:18px 0 34px}
+.rev p{font-size:17px}
+.rev footer{margin-top:14px;color:var(--mute);font-size:14px}
+
+/* ---- Контакты ---- */
+.contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-top:1px solid var(--line)}
+.contact-t{padding:clamp(40px,6vw,86px) clamp(20px,5vw,72px)}
+.contact h2{margin-bottom:26px}
+.contact dl{display:grid;gap:15px;margin-bottom:30px}
+.contact dt{color:var(--mute);font-size:14px}
+.contact dd{margin:0;font:400 clamp(22px,2.3vw,30px)/1.2 var(--head)}
+.contact dd a{text-decoration:none}
+.links{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center}
+.contact img{width:100%;height:100%;min-height:380px;max-height:700px;object-fit:cover}
+.foot{padding:20px clamp(20px,5vw,72px) 26px;color:var(--mute);font-size:13px;border-top:1px solid var(--line)}
+.bar{display:none}
+
+@media (max-width:900px){
+  body{padding-bottom:78px}
+  .hero{grid-template-columns:minmax(0,1fr);min-height:0}
+  .hero-photo{height:64vw;min-height:300px;order:2}
+  .hero-photo::after{background:linear-gradient(180deg,var(--slate),transparent 24%)}
+  .hero-text{gap:44px;padding-bottom:30px}
+  h1{font-size:clamp(42px,12vw,92px)}
+  .build-grid{grid-template-columns:minmax(0,1fr)}
+  .stage-col{position:static}
+  .stage{max-height:none;max-width:none}
+  .sum{display:none}
+  .tabs{position:sticky;top:0;z-index:6;background:var(--slate);flex-wrap:nowrap;overflow-x:auto;padding-top:8px;scrollbar-width:none;margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px}
+  .list{height:auto;overflow:visible;padding-right:0}
+  .facts{grid-template-columns:minmax(0,1fr)}
+  .facts div{border-left:0;border-top:1px solid var(--line);padding:20px}
+  .facts div:first-child{border-top:0}
+  .hall,.contact{grid-template-columns:minmax(0,1fr)}
+  .hall img{min-height:0;height:96vw;max-height:none}
+  .contact img{min-height:0;height:70vw}
+  .rev-grid{grid-template-columns:minmax(0,1fr)}
+  .bar{position:fixed;z-index:20;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#0b0b0c;border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+  .bar strong{font:500 26px/1 var(--head);white-space:nowrap}
+  .bar small{display:block;color:var(--mute);font-size:12px;line-height:1.2}
+  .bar .book{padding:15px 14px;font-size:15px;white-space:nowrap}
+  .top a.tel{display:none}
+  .bar.pop strong{animation:pop .3s}
+  @keyframes pop{50%{color:var(--red)}}
+}
+@media (max-width:420px){
+  .row{grid-template-columns:50px minmax(0,1fr) auto;gap:10px}
+  .thumb{width:50px;height:50px}
+  .act{flex-direction:column-reverse;align-items:flex-end;gap:7px}
+  .pr{font-size:19px}
+  .step button,.radio{width:34px;height:34px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-text">
+    <div class="top">
+      <a class="brand" href="#top"><img src="img/g/logo.jpg" alt="Логотип Yi Pin">Yi Pin<br>Китайский самовар</a>
+      <a class="tel" href="tel:+79931031227">+7 993 103-12-27</a>
+    </div>
+    <div>
+      <h1>Хого по&#8209;настоящему, <em>как в Китае</em></h1>
+      <p class="lead">Традиция, которой много веков, оживает за общим котлом: в центре стола кипит бульон, смех и разговоры. Собирайтесь семьёй, друзьями, коллегами — здесь каждый найдёт свой любимый вкус.</p>
+      <div class="cta">
+        <a class="book" href="tel:+79931031227">Забронировать стол</a>
+        <a class="ghost" href="#build">Собрать свой хого</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="img/g/table.jpg" alt="Стол с двумя котлами, мясом на доске и овощами">
+    <div class="seal" aria-hidden="true">一品火锅</div>
+  </div>
+</section>
+
+<section class="build" id="build">
+  <div class="build-head">
+    <h2>Собери свой хого</h2>
+    <p>Выберите бульон и добавьте на стол то, что будете варить. Здесь всё меню Yi Pin с ценами.</p>
+  </div>
+  <div class="build-grid">
+    <div class="stage-col">
+      <div class="stage" id="stage" aria-label="Ваш стол">
+        <div class="pot" id="pot"></div>
+        <i class="steam"></i><i class="steam b"></i><i class="steam c"></i>
+      </div>
+      <div class="sum">
+        <div><small id="count">На столе: бульон</small><strong id="total">0 ₽</strong><small>Примерная сумма по меню</small></div>
+        <a class="book" href="tel:+79931031227">Забронировать стол</a>
+      </div>
+    </div>
+    <div>
+      <div class="tabs" id="tabs" role="tablist" aria-label="Разделы меню"></div>
+      <div class="list" id="list"></div>
+    </div>
+  </div>
+</section>
+
+<section class="facts">
+  <div><b>4,9</b><span>Яндекс Карты, 117 оценок</span></div>
+  <div><b>12:00–23:00</b><span>Ежедневно</span></div>
+  <div><b>2000–5000 ₽</b><span>Средний счёт</span></div>
+</section>
+
+<section class="hall">
+  <img src="img/g/hall.jpg" alt="Зал Yi Pin вечером: кожаные кресла, столы с котлами, панорамные окна" loading="lazy">
+  <div class="hall-q">
+    <blockquote>«К вечеру посадка была полной, поэтому точно рекомендую бронировать заранее!!»</blockquote>
+    <cite>Полина Тимофеева, отзыв на Яндекс Картах, 10 октября</cite>
+    <a class="book" href="tel:+79931031227">Забронировать стол</a>
+  </div>
+</section>
+
+<section class="rev">
+  <h2>Что пишут гости</h2>
+  <div class="rev-grid">
+    <article><p>Самый настоящий китайский самовар 🔥 Все очень круто, очень вкусно, вообще атмосфера прям китайская) Нам с мужем все понравилось, как будто снова оказались в Шанхае 💔</p><footer>Елена Игнатенко, 16 октября</footer></article>
+    <article><p>Красота неописуемая. Подача вдохновляет, персонал максимально отзывчивый — все подскажут и расскажут. На 2 вышло ~3 тысячи — и мы наелись до отвала. Брали 1 мясной бульон + свинину, говядину, эноки, пак чой и лапшу доширак. Соусы — это отдельный интерактив, советую попробовать. Еще для гостей есть бесплатные снеки</p><footer>Виктория Л., 7 июня</footer></article>
+    <article><p>Еда вкусная, обслуживание прекрасное, персонал доброжелательный, атмосфера очень уютная, супы очень очень вкусные и питательные, мясо сочное.</p><footer>Никита Хлебуш, 3 ноября</footer></article>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-t">
+    <h2>Приходите</h2>
+    <dl>
+      <div><dt>Адрес</dt><dd>Екатеринбург, улица Мамина-Сибиряка, 141</dd></div>
+      <div><dt>Часы работы</dt><dd>Ежедневно с 12:00 до 23:00</dd></div>
+      <div><dt>Бронирование</dt><dd><a href="tel:+79931031227">+7 993 103-12-27</a></dd></div>
+    </dl>
+    <div class="links">
+      <a class="book" href="tel:+79931031227">Забронировать стол</a>
+      <a class="ghost" href="https://yandex.ru/maps/org/yi_pin_kitayskiy_samovar/202650759736/" target="_blank" rel="noopener">Как доехать</a>
+    </div>
+  </div>
+  <img src="img/g/long.jpg" alt="Накрытый стол Yi Pin с котлом в центре" loading="lazy">
+</section>
+
+<div class="foot">Yi Pin Китайский самовар, Екатеринбург</div>
+
+<div class="bar" id="bar">
+  <div><small id="count2">На столе</small><strong id="total2">0 ₽</strong></div>
+  <a class="book" href="tel:+79931031227">Забронировать стол</a>
+</div>
+
+<script src="menu.js"></script>
+<script>
+// Состояние стола: какой бульон выбран и сколько штук каждого блюда
+const BROTHS = 5;                 // первые 5 позиций раздела «Бульоны» — это сами котлы
+const state = { broth: 0, cat: 0, qty: new Map(), order: [] };
+const money = n => n.toLocaleString('ru-RU').replace(/,/g,' ') + ' ₽';
+const img = f => `img/d/${f}.jpg`;
+const $ = id => document.getElementById(id);
+const stage = $('stage'), pot = $('pot'), tabs = $('tabs'), list = $('list');
+
+// Котёл: фото всех бульонов лежат друг на друге, видимое меняется плавно
+MENU[0].i.slice(0, BROTHS).forEach((b, k) => {
+  const layer = document.createElement('i');
+  layer.style.backgroundImage = `url(${img(b.f)})`;
+  layer.dataset.k = k;
+  if (k === 4) layer.className = 'sq';   // котёл 1+1 квадратный
+  pot.append(layer);
+});
+// Пузырьки в бульоне
+for (let n = 0; n < 9; n++) {
+  const s = document.createElement('span'), size = 5 + Math.random() * 9;
+  const a = Math.random() * 6.28, r = Math.random() * 26;
+  s.className = 'bub';
+  s.style.cssText = `width:${size}px;height:${size}px;left:${50 + Math.cos(a) * r}%;top:${52 + Math.sin(a) * r}%;animation-delay:${(Math.random() * 2.6).toFixed(2)}s`;
+  pot.append(s);
+}
+
+// Места для тарелок: кольцо вокруг котла и четыре угла стола
+const slots = [];
+for (let i = 0; i < 12; i++) {
+  const a = (-90 + i * 30) * Math.PI / 180;
+  slots.push([50 + Math.cos(a) * 37, 50 + Math.sin(a) * 37]);
+}
+slots.push([11, 11], [89, 11], [89, 89], [11, 89]);
+
+function renderTabs() {
+  tabs.innerHTML = '';
+  MENU.forEach((c, k) => {
+    const b = document.createElement('button');
+    b.textContent = c.c;
+    b.setAttribute('role', 'tab');
+    b.setAttribute('aria-selected', k === state.cat);
+    b.onclick = () => { state.cat = k; renderTabs(); renderList(); list.scrollTop = 0; };
+    tabs.append(b);
+  });
+}
+
+function thumb(it) {
+  return it.f
+    ? `<div class="thumb" style="background-image:url(${img(it.f)})"></div>`
+    : `<div class="thumb han">${(it.z || '品')[0]}</div>`;
+}
+
+function renderList() {
+  const cat = MENU[state.cat];
+  list.innerHTML = cat.i.map((it, k) => {
+    const key = state.cat + ':' + k;
+    const isBroth = state.cat === 0 && k < BROTHS;
+    const q = state.qty.get(key) || 0;
+    const ctl = isBroth
+      ? `<button class="radio" role="radio" aria-checked="${state.broth === k}" aria-label="Выбрать ${it.n}" data-b="${k}"></button>`
+      : `<div class="step ${q ? 'has' : ''}"><button class="minus" aria-label="Убрать ${it.n}" data-m="${key}">−</button><output>${q}</output><button aria-label="Добавить ${it.n}" data-p="${key}">+</button></div>`;
+    return `<div class="row">${thumb(it)}<div><div class="nm">${it.n}<small>${it.z || ''}</small></div>${it.d ? `<div class="meta">${it.d}</div>` : ''}</div><div class="act"><div class="pr">${money(it.p)}</div>${ctl}</div></div>`;
+  }).join('');
+}
+
+function item(key) { const [c, k] = key.split(':'); return MENU[c].i[k]; }
+
+function renderTable(added) {
+  [...pot.querySelectorAll('i')].forEach(l => l.classList.toggle('on', +l.dataset.k === state.broth));
+  stage.querySelectorAll('.plate,.more').forEach(p => { if (!added || p.dataset.key !== added) p.style.animation = 'none'; });
+  const keep = new Set(state.order.slice(0, slots.length));
+  stage.querySelectorAll('.plate').forEach(p => { if (!keep.has(p.dataset.key)) p.remove(); });
+  state.order.slice(0, slots.length).forEach((key, n) => {
+    let p = stage.querySelector(`.plate[data-key="${key}"]`);
+    const it = item(key);
+    if (!p) {
+      p = document.createElement('button');
+      p.className = 'plate' + (it.f ? '' : ' han');
+      p.dataset.key = key;
+      p.setAttribute('aria-label', 'Убрать со стола: ' + it.n);
+      p.innerHTML = it.f ? `<span style="background-image:url(${img(it.f)})"></span>` : `<span>${(it.z || '品')[0]}</span>`;
+      p.onclick = () => change(key, -1);
+      stage.append(p);
+    }
+    p.style.left = slots[n][0] + '%';
+    p.style.top = slots[n][1] + '%';
+    let badge = p.querySelector('b');
+    const q = state.qty.get(key);
+    if (q > 1) { if (!badge) { badge = document.createElement('b'); p.append(badge); } badge.textContent = q; }
+    else if (badge) badge.remove();
+  });
+  stage.querySelector('.more')?.remove();
+  const extra = state.order.length - slots.length;
+  if (extra > 0) {
+    const m = document.createElement('div');
+    m.className = 'more';
+    m.textContent = 'и ещё ' + extra;
+    stage.append(m);
+  }
+  const broth = MENU[0].i[state.broth];
+  let sum = broth.p, count = 0;
+  state.qty.forEach((q, key) => { sum += item(key).p * q; count += q; });
+  $('total').textContent = $('total2').textContent = money(sum);
+  const text = count ? `${broth.n} и блюд: ${count}` : broth.n;
+  $('count').textContent = text;
+  $('count2').textContent = count ? `Блюд на столе: ${count}` : broth.n;
+}
+
+function pulse() {
+  pot.classList.remove('gulp'); void pot.offsetWidth; pot.classList.add('gulp');
+  const bar = $('bar'); bar.classList.remove('pop'); void bar.offsetWidth; bar.classList.add('pop');
+}
+
+function change(key, d) {
+  const q = (state.qty.get(key) || 0) + d;
+  if (q <= 0) { state.qty.delete(key); state.order = state.order.filter(x => x !== key); }
+  else { if (!state.qty.has(key)) state.order.push(key); state.qty.set(key, q); }
+  renderList();
+  renderTable(d > 0 ? key : null);
+  if (d > 0) pulse();
+}
+
+list.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.b !== undefined) { state.broth = +b.dataset.b; renderList(); renderTable(); pulse(); }
+  if (b.dataset.p) change(b.dataset.p, 1);
+  if (b.dataset.m) change(b.dataset.m, -1);
+});
+
+renderTabs(); renderList(); renderTable();
+</script>
+</body>
+</html>
