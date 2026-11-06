@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uncle Howard — кафе на Малышева, 2ж</title>
+<meta name="description" content="Uncle Howard, Екатеринбург, улица Малышева, 2ж. Ежедневно с 10:00 до 23:00.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3ede1; --ink:#17120f; --ox:#841717; --rust:#c2431c; --rust2:#a83813; --line:#d8cdb9;
+  --big:'Inter Tight','Arial Narrow',Arial,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;background:var(--paper)}
+body{background:var(--paper);color:var(--ink);font:400 18px/1.45 var(--big);overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.mono{font:400 14px/1.35 var(--mono)}
+
+/* шапка как строчка в бумажном меню */
+.line{display:flex;justify-content:space-between;gap:20px;padding:14px clamp(16px,3vw,36px);background:var(--rust);color:#fff;font:400 14px/1.3 var(--mono)}
+.line a{text-decoration:none}
+.line nav{display:flex;gap:22px}
+
+/* первый экран */
+.hero{background:var(--rust);color:#fff;padding:0 clamp(16px,3vw,36px) 28px;position:relative;overflow:hidden}
+.logo{font:900 14.7vw/.9 var(--big);letter-spacing:-.055em;margin-left:-.04em;padding-top:10px;white-space:nowrap}
+.say{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(20px,4vw,60px);align-items:end;margin-top:clamp(18px,2vw,30px)}
+.quote{min-height:6.2em;align-self:center}
+.quote small{display:block;font:400 14px/1.3 var(--mono);margin-bottom:12px}
+.quote q{quotes:none;display:block;font:800 clamp(30px,4.4vw,68px)/1.02 var(--big);letter-spacing:-.025em}
+.more{margin-top:22px;font:500 15px/1 var(--mono);background:#fff;color:var(--ink);padding:14px 18px;transition:transform .15s}
+.more:hover{transform:rotate(-2deg)}
+.shot{position:relative;justify-self:end;width:min(100%,clamp(250px,25vw,370px),calc((100vh - 21vw) * .62));aspect-ratio:2/3;transform:rotate(3deg);box-shadow:0 18px 40px rgba(40,10,0,.35);border:10px solid #fff;background:#fff}
+.shot img{width:100%;height:100%;object-fit:cover}
+.shot.flip{animation:flip .35s ease}
+@keyframes flip{0%{transform:rotate(-5deg) translateY(16px);opacity:.1}100%{transform:rotate(3deg);opacity:1}}
+
+/* меню */
+.menu{padding:clamp(54px,8vw,110px) clamp(16px,3vw,36px)}
+.menu>h2{font:900 clamp(72px,15vw,240px)/.82 var(--big);letter-spacing:-.05em;color:var(--ox);margin-bottom:12px}
+.hint{color:#6f6252;font:400 14px/1.3 var(--mono);margin-bottom:clamp(30px,5vw,60px)}
+.sec{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:0 28px;border-top:2px solid var(--ox);padding:14px 0 44px}
+.sec h3{font:500 15px/1.3 var(--mono);color:var(--ox);position:sticky;top:14px;align-self:start}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:baseline;padding:9px 0;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+.dn{font:800 clamp(30px,4.2vw,64px)/1.02 var(--big);letter-spacing:-.03em;transition:color .12s,transform .15s}
+summary:hover .dn{color:var(--rust);transform:translateX(8px)}
+details[open] .dn{color:var(--ox)}
+.dp{font:500 clamp(16px,1.5vw,20px)/1 var(--mono);white-space:nowrap}
+.body{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:24px;padding:4px 0 24px;align-items:start}
+.body.nophoto{grid-template-columns:minmax(0,1fr)}
+.body p{max-width:34em}
+.body p+p{margin-top:6px}
+.body .joke{color:var(--ox);font-weight:700}
+.w{display:block;margin-top:10px;color:#6f6252;font:400 13px/1.3 var(--mono)}
+.body img{width:220px;aspect-ratio:2/3;object-fit:cover}
+.float{position:fixed;left:0;top:0;width:260px;aspect-ratio:2/3;object-fit:cover;pointer-events:none;z-index:9;opacity:0;transition:opacity .15s;border:8px solid #fff;box-shadow:0 14px 34px rgba(0,0,0,.28)}
+
+/* что попить */
+.drinks{background:var(--ink);color:var(--paper);padding:clamp(54px,8vw,110px) clamp(16px,3vw,36px)}
+.drinks h2{font:900 clamp(62px,12.6vw,200px)/.84 var(--big);letter-spacing:-.05em;color:var(--rust);margin-bottom:clamp(30px,5vw,60px)}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 clamp(24px,4vw,56px)}
+.cols h3{font:500 15px/1.3 var(--mono);color:var(--rust);border-top:2px solid var(--rust);padding:10px 0 12px}
+.dr{padding:10px 0 12px;border-bottom:1px solid #3a322b}
+.dr b{display:flex;justify-content:space-between;gap:14px;font:700 22px/1.15 var(--big)}
+.dr b span{font:500 15px/1.5 var(--mono);white-space:nowrap}
+.dr p{color:#cbbfae;font-size:16px;line-height:1.3;margin-top:3px}
+.dr small{display:block;color:#938778;font:400 13px/1.3 var(--mono);margin-top:4px}
+
+/* квартира */
+.flat{background:var(--ox);color:#fff;padding:clamp(54px,8vw,110px) clamp(16px,3vw,36px) clamp(70px,9vw,130px);overflow:hidden}
+.flat h2{font:800 clamp(38px,6vw,96px)/1 var(--big);letter-spacing:-.035em;max-width:13em;margin-bottom:clamp(36px,5vw,70px)}
+.wall{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(12px,2vw,28px);align-items:start}
+.wall figure{margin:0;background:#fff;padding:9px;box-shadow:0 12px 26px rgba(0,0,0,.34);transition:transform .25s}
+.wall figure:hover{transform:rotate(0)!important}
+.wall img{width:100%;height:100%;object-fit:cover}
+.f1{grid-column:1/6;aspect-ratio:4/3;transform:rotate(-1.6deg)}
+.f2{grid-column:6/9;aspect-ratio:3/4;transform:rotate(1.8deg);margin-top:44px!important}
+.f3{grid-column:9/13;aspect-ratio:1/1;transform:rotate(-1deg)}
+.f4{grid-column:2/6;aspect-ratio:3/4;transform:rotate(1.2deg)}
+.f5{grid-column:6/12;aspect-ratio:16/10;transform:rotate(-1.4deg);margin-top:24px!important}
+
+/* цифры */
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:2px solid var(--ox)}
+.facts div{padding:24px clamp(16px,3vw,36px);border-left:1px solid var(--line)}
+.facts div:first-child{border-left:0}
+.facts b{display:block;font:800 clamp(36px,4.6vw,70px)/1 var(--big);letter-spacing:-.03em;color:var(--ox)}
+.facts span{font:400 13px/1.3 var(--mono);color:#6f6252}
+.said{padding:clamp(54px,8vw,110px) clamp(16px,3vw,36px);display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:30px clamp(24px,5vw,70px);align-items:center}
+.said blockquote{font:800 clamp(30px,4.4vw,68px)/1.05 var(--big);letter-spacing:-.025em}
+.said cite{display:block;margin-top:18px;font:400 14px/1.3 var(--mono);color:#6f6252}
+.merch{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:center}
+.merch img{width:120px;aspect-ratio:2/3;object-fit:cover;transform:rotate(-3deg)}
+.merch b{display:block;font:800 26px/1.1 var(--big)}
+
+/* звони на бар */
+.call{background:var(--rust);color:#fff;padding:clamp(54px,8vw,110px) clamp(16px,3vw,36px) 34px}
+.call small{display:block;font:400 15px/1.3 var(--mono);margin-bottom:12px}
+.call .big{display:block;font:900 clamp(64px,14.6vw,240px)/.86 var(--big);letter-spacing:-.05em;text-decoration:none}
+.call .num{display:inline-block;margin-top:20px;font:800 clamp(30px,5.2vw,78px)/1 var(--big);letter-spacing:-.02em;text-decoration:none;border-bottom:4px solid #fff}
+.info{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 28px;margin-top:clamp(36px,5vw,70px);font:400 15px/1.4 var(--mono);border-top:1px solid rgba(255,255,255,.45);padding-top:16px}
+.info a{text-underline-offset:3px}
+.bar{display:none}
+
+@media (max-width:820px){
+  body{padding-bottom:70px}
+  .line nav{display:none}
+  .logo{font-size:27.5vw;white-space:normal}
+  .logo span{display:block}
+  .say{grid-template-columns:minmax(0,1fr)}
+  .quote{min-height:0}
+  .shot{margin-top:6px;justify-self:center;width:min(78vw,340px)}
+  .sec{grid-template-columns:minmax(0,1fr)}
+  .sec h3{position:static;margin-bottom:6px}
+  .body{grid-template-columns:minmax(0,1fr);gap:14px}
+  .body img{width:100%;max-width:300px}
+  .float{display:none}
+  .cols{grid-template-columns:minmax(0,1fr)}
+  .cols>div+div{margin-top:30px}
+  .wall{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .f1{grid-column:1/7}.f2{grid-column:1/4;margin-top:0!important}.f3{grid-column:4/7;margin-top:30px}
+  .f4{grid-column:1/4}.f5{grid-column:1/7;margin-top:0!important}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .facts div:nth-child(3){border-left:0}
+  .facts div:nth-child(n+3){border-top:1px solid var(--line)}
+  .said{grid-template-columns:minmax(0,1fr)}
+  .info{grid-template-columns:minmax(0,1fr)}
+  .bar{position:fixed;z-index:20;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--ink);color:#fff;padding:10px 16px calc(10px + env(safe-area-inset-bottom));text-decoration:none}
+  .bar b{font:800 22px/1 var(--big);letter-spacing:-.02em}
+  .bar span{font:500 14px/1 var(--mono);white-space:nowrap}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="line">
+  <span>малышева, 2ж / ежедневно с 10:00 до 23:00</span>
+  <nav><a href="#menu">меню</a><a href="#drinks">что попить?</a><a href="#call">звони на бар</a></nav>
+</div>
+
+<header class="hero">
+  <h1 class="logo"><span>Uncle</span> <span>Howard</span></h1>
+  <div class="say">
+    <div class="quote">
+      <small id="qd"></small>
+      <q id="qt">с утра сырники, вечером бургер и крафт</q>
+      <button class="more" id="more">ещё из меню</button>
+    </div>
+    <div class="shot" id="shot"><img id="qi" src="img/d/d25.jpg" alt="греча"></div>
+  </div>
+</header>
+
+<main>
+<section class="menu" id="menu">
+  <h2>меню</h2>
+  <p class="hint">нажми на блюдо, там состав и фото</p>
+  <div id="list"></div>
+</section>
+
+<section class="drinks" id="drinks">
+  <h2>что попить?</h2>
+  <div class="cols">
+    <div>
+      <h3>кофе</h3>
+      <div class="dr"><b>эспрессо <span>100 ₽</span></b><p>основа основ, с него начинается любой кофейный напиток</p><small>30 ml</small></div>
+      <div class="dr"><b>черный кофе <span>150 / 200 ₽</span></b><p>обычно это фильтр-кофе, но можем и американо сделать</p><small>180 / 360 ml</small></div>
+      <div class="dr"><b>капучино <span>200 / 250 ₽</span></b><p>идеальное сочетание молока и кофе. главное, пожалуйста, не называйте его капучинкой</p><small>180 / 360 ml</small></div>
+      <div class="dr"><b>латте <span>250 ₽</span></b><p>это как капучино, но на один эспрессо поменьше</p><small>360 ml</small></div>
+      <div class="dr"><b>флет уайт <span>200 ₽</span></b><p>а это как маленький капучино, но на пару секунд подольше</p><small>180 ml</small></div>
+      <div class="dr"><b>раф <span>300 ₽</span></b><p>много сливок, много молока и, конечно же, кофе. еще и сироп на выбор добавим</p><small>360 ml</small></div>
+    </div>
+    <div>
+      <h3>не кофе</h3>
+      <div class="dr"><b>какао <span>250 ₽</span></b><p>ну как еще похвалить? вкусный какао</p><small>360 ml</small></div>
+      <div class="dr"><b>матча-латте <span>280 ₽</span></b><p>японский порошковый зеленый чай со взбитым молоком и ванильным сиропом. без сиропа тоже можно!</p><small>360 ml</small></div>
+      <div class="dr"><b>ассам | сенча | улун | чабрец <span>280 ₽</span></b><p>классический листовой чай, черный и зеленый, естественно в чайнике</p><small>500 ml</small></div>
+      <div class="dr"><b>облепиховый пунш <span>250 ₽</span></b><p>как компот из облепихи, только с зумерским названием</p><small>360 ml</small></div>
+      <div class="dr"><b>вишневый пунш <span>250 ₽</span></b><p>и это тоже как компот, только сваренный из вишни с черным перцем и розмарином</p><small>360 ml</small></div>
+    </div>
+    <div>
+      <h3>добавки к напиткам</h3>
+      <div class="dr"><b>сироп <span>30 ₽</span></b><small>10/20 ml</small></div>
+      <div class="dr"><b>альтернативное молоко <span>80 ₽</span></b></div>
+      <div class="dr"><b>мёд <span>30 ₽</span></b><small>20 g</small></div>
+      <div class="dr"><b>лимон <span>20 ₽</span></b><small>20 g</small></div>
+      <div class="dr"><b>мята свежая <span>30 ₽</span></b><small>5 g</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="flat">
+  <h2>Интерьер кафе выполнен в стиле старых квартир</h2>
+  <div class="wall">
+    <figure class="f1"><img src="img/g/bar.jpg" alt="Зал и барная стойка Uncle Howard" loading="lazy"></figure>
+    <figure class="f2"><img src="img/g/tiger.jpg" alt="Угол зала с красной картиной" loading="lazy"></figure>
+    <figure class="f3"><img src="img/g/cans.jpg" alt="Полка с банками крафтового пива" loading="lazy"></figure>
+    <figure class="f4"><img src="img/g/wall.jpg" alt="Вывеска Uncle Howard зимой" loading="lazy"></figure>
+    <figure class="f5"><img src="img/g/sign.jpg" alt="Вывеска Uncle Howard на здании" loading="lazy"></figure>
+  </div>
+</section>
+
+<section class="facts">
+  <div><b>5,0</b><span>Яндекс Карты, 539 оценок</span></div>
+  <div><b>4.8</b><span>2ГИС, 386 оценок</span></div>
+  <div><b>2026</b><span>номинант в 2ГИС</span></div>
+  <div><b>500–1000 ₽</b><span>средний счёт</span></div>
+</section>
+
+<section class="said">
+  <div>
+    <blockquote>Случайно найденое на карте заведение, и сразу в топ 3 любимых мест в городе. Паста просто огонь 🔥🔥🔥 сырники тоже!!!</blockquote>
+    <cite>Anna Belka, отзыв на Яндекс Картах, 21 июня</cite>
+  </div>
+  <div class="merch">
+    <img src="img/d/d34.jpg" alt="Футболка Uncle Howard" loading="lazy">
+    <div><b>наша фирменная футболка</b><span class="mono">мерч, 3500 ₽</span></div>
+  </div>
+</section>
+</main>
+
+<footer class="call" id="call">
+  <small>чтобы забронировать столик или заказать доставку</small>
+  <a class="big" href="tel:+79024430486">звони на бар</a>
+  <a class="num" href="tel:+79024430486">8 902 443 04 86</a>
+  <div class="info">
+    <div>Екатеринбург, улица Малышева, 2ж, 1 этаж<br><a href="https://yandex.ru/maps/org/uncle_howard/244110549132/" target="_blank" rel="noopener">как доехать</a></div>
+    <div>ежедневно с 10:00 до 23:00<br>кухня до 22:30</div>
+    <div>кофе с собой, еда навынос, доставка<br>можно с собакой</div>
+  </div>
+</footer>
+
+<a class="bar" href="tel:+79024430486"><b>звони на бар</b><span>8 902 443 04 86</span></a>
+<img class="float" id="float" alt="" aria-hidden="true">
+
+<script src="menu.js"></script>
+<script>
+// Шутки из их меню: фраза + блюдо + фото. Кнопка листает их по кругу
+const SAY = [
+  ['', 'с утра сырники, вечером бургер и крафт', 'd25'],
+  ['чизбургер', 'добавь еще одну котлету, я же знаю, ты хочешь', 'd26'],
+  ['тако с курицей, про лайм', 'не игнорируй его, выдави на тако, так вкуснее', 'd8'],
+  ['паста с говядиной', 'перед сменой повара поклоняются макаронному монстру, эта паста и тебя заставит!', 'd23'],
+  ['суп куриный с лапшой', 'идеально подходит тем, кто перед этим злоупотреблял алкоголем!', 'd22'],
+  ['гамбургер', 'по вкусу вкусно, и по сути вкусно', 'd27']
+];
+let n = 0;
+const shot = document.getElementById('shot');
+document.getElementById('more').onclick = () => {
+  n = (n + 1) % SAY.length;
+  const [d, t, f] = SAY[n];
+  document.getElementById('qd').textContent = d;
+  document.getElementById('qt').textContent = t;
+  const im = document.getElementById('qi');
+  im.src = `img/d/${f}.jpg`; im.alt = d;
+  shot.classList.remove('flip'); void shot.offsetWidth; shot.classList.add('flip');
+};
+
+// Меню рисуем из menu.js: раздел слева, блюда справа
+const JOKE = /не игнорируй|поклоняются|злоупотреблял|есть вероятность|добавь еще|по вкусу вкусно|идеально, если/;
+const list = document.getElementById('list');
+list.innerHTML = MENU.filter(c => c.c !== 'мерч').map(c => `
+  <div class="sec"><h3>${c.c}</h3><div>${c.i.map(it => `
+    <details data-f="${it.f || ''}">
+      <summary><span class="dn">${it.n}</span><span class="dp">${it.p} ₽</span></summary>
+      <div class="body ${it.f ? '' : 'nophoto'}">
+        <div>${it.b.map(l => `<p class="${JOKE.test(l) ? 'joke' : ''}">${l}</p>`).join('')}${it.w ? `<span class="w">${it.w}</span>` : ''}</div>
+        ${it.f ? `<img src="img/d/${it.f}" alt="${it.n.replace(/"/g, '')}" loading="lazy">` : ''}
+      </div>
+    </details>`).join('')}</div></div>`).join('');
+
+// На компьютере фото блюда плывёт за курсором
+const fl = document.getElementById('float');
+if (matchMedia('(hover:hover) and (pointer:fine)').matches) {
+  list.addEventListener('mousemove', e => {
+    const d = e.target.closest('summary') && e.target.closest('details');
+    if (!d || !d.dataset.f || d.open) { fl.style.opacity = 0; return; }
+    if (!fl.src.endsWith(d.dataset.f)) fl.src = 'img/d/' + d.dataset.f;
+    const x = Math.min(e.clientX + 26, innerWidth - 290), y = Math.min(Math.max(e.clientY - 190, 10), innerHeight - 410);
+    fl.style.transform = `translate(${x}px,${y}px) rotate(3deg)`;
+    fl.style.opacity = 1;
+  });
+  list.addEventListener('mouseleave', () => fl.style.opacity = 0);
+}
+</script>
+</body>
+</html>
