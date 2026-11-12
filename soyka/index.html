@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сойка — паназиатский ресторан в Екатеринбурге</title>
+<meta name="description" content="Ваш любимый паназиатский ресторан в Екатеринбурге. ул. 8 Марта, 6.">
+<style>
+@font-face{font-family:'Noir';src:url('fonts/NoirPro-Regular.woff') format('woff');font-weight:400;font-display:swap}
+@font-face{font-family:'Garamond';src:url('fonts/Garamond-Smb.woff') format('woff');font-weight:600;font-display:swap}
+@font-face{font-family:'Garamond';src:url('fonts/Garamond-ItC.woff') format('woff');font-weight:400;font-style:italic;font-display:swap}
+
+:root{
+  --navy:#1a2e53;
+  --red:#d94e43;
+  --white:#ffffff;
+  --bg:#142542;      /* фон сайта: 12.11 сделали светлее (было #0b1528), ближе к их #1a2e53 */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--white)}
+body{font-family:'Noir',system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+/* ---------- первый экран ---------- */
+.hero{position:relative;height:100vh;height:100svh;min-height:560px;max-height:1100px;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 45%, #1e355c 0%, #192e52 55%, #142542 100%)}
+#gl{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;opacity:0}
+
+/* шапка */
+.top{position:absolute;left:0;right:0;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  padding:22px clamp(16px,4vw,56px);font-size:15px;letter-spacing:.14em;text-transform:uppercase}
+.top nav{display:flex;gap:clamp(14px,2.4vw,34px)}
+.top nav a{position:relative;padding:4px 0}
+.top nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--red);transform:scaleX(0);transform-origin:right;transition:transform .45s cubic-bezier(.7,0,.2,1)}
+.top nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.top .right{display:flex;align-items:center;gap:22px;margin-left:auto}
+.top > *{opacity:0}
+
+/* кнопки: белой заливки нет нигде */
+.btn{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.7);padding:17px 30px;border-radius:999px;
+  font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:#fff;
+  transition:border-color .35s, background .35s, transform .35s cubic-bezier(.2,.8,.2,1)}
+.btn:hover,.btn:focus-visible{border-color:var(--red);background:rgba(217,78,67,.12);transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(.98);background:rgba(217,78,67,.18)}
+.btn.red{border-color:var(--red);background:var(--red)}
+.btn.red:hover,.btn.red:focus-visible{background:#c4443a;border-color:#c4443a}
+.btn.red:active{background:#b33d34}
+
+/* логотип в 3D */
+.brand{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:min(76vw,820px);z-index:6;text-align:center;perspective:1100px}
+.logo{position:relative;width:100%;aspect-ratio:1280/672;transform-style:preserve-3d}
+.logo .l{position:absolute;inset:0;background:url('img/logo.png') center/100% 100% no-repeat;backface-visibility:hidden}
+.logo .breve{clip-path:inset(0 0 86% 0);transform-origin:49.6% 6%}
+.word3d{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 50%}
+.word3d .l{clip-path:inset(14% 0 22% 0)}
+.word3d .l.ex{filter:brightness(.42) saturate(1.2)}
+.sub3d{position:absolute;inset:0;transform-style:preserve-3d}
+.sub3d .l{clip-path:inset(80% 0 0 0)}
+.tagline{margin-top:clamp(18px,3vh,34px);font-family:'Garamond',serif;font-style:italic;font-weight:400;
+  font-size:clamp(26px,3.4vw,46px);line-height:1.22;color:var(--white);perspective:600px}
+.tagline span{display:inline-block;transform-origin:50% 100%;opacity:0}
+.cta{margin-top:clamp(22px,4vh,40px);display:flex;gap:12px;justify-content:center;flex-wrap:wrap;perspective:700px}
+.cta a{opacity:0}
+
+.foot{position:absolute;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:space-between;align-items:flex-end;
+  padding:22px clamp(16px,4vw,56px);font-size:12px;letter-spacing:.12em;text-transform:uppercase;line-height:1.7;opacity:0}
+.foot .hours b{font-weight:400;color:var(--red)}
+.scroll{display:flex;flex-direction:column;align-items:center;gap:10px}
+.scroll i{width:1px;height:46px;background:linear-gradient(#fff,transparent);animation:drip 2.2s ease-in-out infinite;transform-origin:top}
+@keyframes drip{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+.skip{position:absolute;right:clamp(16px,4vw,56px);bottom:24px;z-index:30;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--white);opacity:.5;cursor:pointer;background:none;border:0;font-family:inherit}
+.skip:hover{opacity:1}
+
+.feather{position:absolute;left:0;top:0;width:34px;height:12px;border-radius:60% 40% 60% 40%/70% 50% 50% 30%;pointer-events:none;z-index:7}
+
+.next{height:60vh;display:grid;place-items:center;color:var(--white);font-family:'Garamond',serif;font-style:italic;font-size:22px;opacity:.5}
+
+@media (max-width:720px){
+  .top nav{display:none}
+  .top .right .phone{display:none}
+  .brand{width:84vw;top:42%}
+  .foot{font-size:10px}
+  .scroll{display:none}
+}
+</style>
+<link rel="stylesheet" href="sections.css">
+</head>
+<body>
+
+<!-- Бургер-меню (три полоски слева) — как у них на сайте, со всеми разделами -->
+<button class="burger" id="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="drawer"><i></i><i></i><i></i></button>
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-shade" data-close></div>
+  <aside class="drawer-panel" role="dialog" aria-label="Меню сайта">
+    <button class="drawer-x" type="button" aria-label="Закрыть меню" data-close>✕</button>
+    <nav class="drawer-nav">
+      <a href="#menu">Меню</a>
+      <a href="#bar">Бар и вино</a>
+      <a href="#interior">Интерьер</a>
+      <a href="https://soyka.rest/bronirovanie">Забронировать</a>
+      <a href="https://delivery.soyka.rest/">Доставка</a>
+      <a href="https://soyka.rest/certificate">Сертификат</a>
+      <a href="https://soyka.rest/card">Получить карту</a>
+      <a href="https://soyka.rest/feedback">Обратная связь</a>
+      <a href="https://soyka.rest/#popup:myform">Вакансии</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="drawer-info">
+      <p>г. Екатеринбург, ул. 8 Марта, 6</p>
+      <p>ВС–ЧТ с 12:00 до 00:00<br>ПТ–СБ с 12:00 до 01:00</p>
+      <div class="drawer-icons">
+        <a href="tel:+73433284284" aria-label="Позвонить"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1z"/></svg></a>
+        <a href="https://telegram.me/Soykarestaurant" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21.4 4.3L2.9 11.4c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.5c.3-1.3-.5-1.8-1.4-1.5zM9 14.2l9-5.7c.4-.3.8-.1.5.2l-7.6 6.9-.3 3.2z"/></svg></a>
+        <a href="https://vk.com/soykarest" aria-label="ВКонтакте"><svg viewBox="0 0 24 24"><path d="M12.8 17.5C6.9 17.5 3.5 13.4 3.3 6.5h3c.1 5 2.3 7.2 4.1 7.6V6.5h2.8v4.3c1.7-.2 3.6-2.2 4.2-4.3h2.8a8.3 8.3 0 01-3.8 5.4 8.6 8.6 0 014.4 5.6h-3.1a5.4 5.4 0 00-4.5-3.9v3.9z"/></svg></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="hero" id="hero">
+
+  <header class="top">
+    <nav>
+      <a href="#menu">Меню</a>
+      <a href="#bar">Бар и вино</a>
+      <a href="#interior">Интерьер</a>
+      <a href="https://delivery.soyka.rest/">Доставка</a>
+    </nav>
+    <div class="right">
+      <a class="phone" href="tel:+73433284284">+7 (343) 328-42-84</a>
+      <a class="btn" href="https://soyka.rest/bronirovanie">Забронировать</a>
+    </div>
+  </header>
+
+  <div class="brand" id="brand">
+    <div class="logo" id="logo" title="Сойка">
+      <div class="word3d" id="word"></div>
+      <div class="sub3d" id="sub"><div class="l"></div></div>
+      <div class="l breve" id="breve"></div>
+    </div>
+    <p class="tagline" id="tagline">Ваш любимый паназиатский ресторан в&nbsp;Екатеринбурге</p>
+  </div>
+
+  <div class="foot">
+    <div></div>
+    <div class="scroll"><i></i></div>
+  </div>
+</section>
+
+<section class="awards" id="awards">
+  <span class="label">Награды</span>
+
+  <blockquote class="quote">
+    <span class="mark" aria-hidden="true">«</span>
+    <p>Популярный азиатский ресторан в старинном особняке с белыми кирпичными сводами, лимонно-изумрудным интерьером, золотой барной стойкой и изобилием зелени. В меню — хрустящие баклажаны XO, булочки бао с уткой, желе алоэ с манго, суши, роллы, рамен и том-ям.</p>
+    <cite>— GreatList</cite>
+  </blockquote>
+
+  <div class="awards-grid">
+    <article class="award">
+      <div class="seal" style="background-image:url('img/award-wte.png')" role="img" aria-label="WhereToEat"></div>
+      <div class="big">ТОП-<span data-count="10">10</span></div>
+      <p>Ежегодно в ТОП-10 лучших ресторанов Урала по версии WhereToEat</p>
+    </article>
+    <article class="award">
+      <div class="seal" style="background-image:url('img/award-gl.png')" role="img" aria-label="GreatList"></div>
+      <div class="big">GreatList</div>
+      <p>В списке лучших ресторанов Екатеринбурга по версии международного ресторанного гида GreatList</p>
+    </article>
+    <article class="award">
+      <div class="seal" style="background-image:url('img/award-wte.png')" role="img" aria-label="WhereToEat"></div>
+      <div class="big">2024 · 2026</div>
+      <p>Дважды лучший шеф-кондитер года по версии WhereToEat</p>
+      <div class="who">Вероника Вишнякова</div>
+    </article>
+    <article class="award">
+      <div class="seal" style="background-image:url('img/award-rwa.png')" role="img" aria-label="Russian Wine Awards"></div>
+      <div class="big"><span class="stars"><i>★</i><i>★</i></span></div>
+      <p>2 звезды в номинации «Лучшая оригинальная карта» по версии Russian Wine Awards 2024</p>
+    </article>
+    <article class="award">
+      <div class="seal" style="background-image:url('img/award-rwa.png')" role="img" aria-label="Russian Wine Awards"></div>
+      <div class="big"><span class="stars"><i>★</i><i>★</i></span></div>
+      <p>2 звезды в номинации «Лучший выбор вин по бокалам» по версии Russian Wine Awards 2024</p>
+    </article>
+    <article class="award">
+      <div class="seal" style="background-image:url('img/award-wte.png')" role="img" aria-label="WhereToEat"></div>
+      <div class="big">2023 · 2025</div>
+      <p>Дважды лучший шеф-сомелье Урала по версии WhereToEat</p>
+      <div class="who">Анастасия Прудникова</div>
+    </article>
+  </div>
+</section>
+
+<section class="gallery" id="gallery" aria-label="Фото ресторана">
+  <img class="signage" src="img/signage.png" alt="カケス" width="260" height="185">
+  <div class="gal-wrap">
+    <button class="gal-btn prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+    <div class="gal-track">
+      <img src="img/gal-1.jpg" alt="Зал ресторана «Сойка»" loading="lazy">
+      <img src="img/gal-2.jpg" alt="Зал ресторана «Сойка»" loading="lazy">
+      <img src="img/gal-3.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
+      <img src="img/gal-4.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
+      <img src="img/gal-5.jpg" alt="Ресторан «Сойка»" loading="lazy">
+      <img src="img/gal-6.jpg" alt="Ресторан «Сойка»" loading="lazy">
+    </div>
+    <button class="gal-btn next-btn" type="button" aria-label="Следующее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+</section>
+
+<section class="menu-intro" id="menu">
+  <div class="bird-walk" aria-hidden="true">
+    <div class="bird-shadow"></div>
+    <img class="paw back" src="img/bird-menu.png" alt="">
+    <img class="bird-body" src="img/bird-menu.png" alt="">
+    <img class="paw front" src="img/bird-menu.png" alt="">
+  </div>
+  <h2 class="sec-title">МЕНЮ</h2>
+  <p class="sec-text">Меню Сойки объединяет энергию улиц Юго-Восточной Азии, современный взгляд на гастрономию и легкость формата - все то, ради чего сюда хочется возвращаться.</p>
+  <a class="btn-line" href="https://soyka.rest/menumenu">Посмотреть меню</a>
+</section>
+
+<section class="gallery gallery-menu" aria-label="Фото блюд">
+  <div class="gal-wrap">
+    <button class="gal-btn prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+    <div class="gal-track">
+      <img src="img/menu-1.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
+      <img src="img/menu-2.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
+      <img src="img/menu-3.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
+      <img src="img/menu-4.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
+      <img src="img/menu-5.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
+      <img src="img/menu-6.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
+      <img src="img/menu-7.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
+      <img src="img/menu-8.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
+      <img src="img/menu-9.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
+      <img src="img/menu-10.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
+    </div>
+    <button class="gal-btn next-btn" type="button" aria-label="Следующее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+</section>
+
+<!-- ===== Бар и винная карта ===== -->
+<section class="menu-intro" id="bar">
+  <div class="bird-walk2 geisha" aria-hidden="true">
+    <div class="bird-shadow"></div>
+    <div class="walker">
+      <img class="lg back" src="img/walk-bar-leg.png" alt="">
+      <img class="bd" src="img/walk-bar-body.png" alt="">
+      <img class="lg front" src="img/walk-bar-leg.png" alt="">
+    </div>
+  </div>
+  <h2 class="sec-title">БАР И ВИННАЯ КАРТА</h2>
+  <p class="sec-text">В барной карте баланс между узнаваемыми напитками и редкими находками. А наша винная карта была удостоена двух звезд престижной премии Russian Wine Awards.</p>
+  <a class="btn-line" href="https://soyka.rest/menumenu#!/tab/1266972691-3">Посмотреть карту</a>
+</section>
+
+<section class="gallery gallery-menu" aria-label="Фото бара">
+  <div class="gal-wrap">
+    <button class="gal-btn prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+    <div class="gal-track">
+      <img src="img/bar-1.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
+      <img src="img/bar-2.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
+      <img src="img/bar-3.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
+      <img src="img/bar-4.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
+      <img src="img/bar-5.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
+      <img src="img/bar-6.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
+      <img src="img/bar-7.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
+      <img src="img/bar-8.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
+      <img src="img/bar-9.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
+      <img src="img/bar-10.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
+      <img src="img/bar-11.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
+      <img src="img/bar-12.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
+    </div>
+    <button class="gal-btn next-btn" type="button" aria-label="Следующее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+</section>
+
+<!-- ===== Интерьер ===== -->
+<section class="menu-intro" id="interior">
+  <div class="bird-walk2 traveler" aria-hidden="true">
+    <div class="bird-shadow"></div>
+    <div class="walker">
+      <img class="lg back" src="img/walk-int-legback.png" alt="">
+      <img class="bd" src="img/walk-int-body.png" alt="">
+      <img class="lg front" src="img/walk-int-legfront.png" alt="">
+    </div>
+  </div>
+  <h2 class="sec-title">ИНТЕРЬЕР</h2>
+  <p class="sec-text">«Сойка» расположилась в старинном особняке с белыми кирпичными сводами, который относится к архитектурному ансамблю усадьбы купца Тупикова. Интерьер — лимонно-изумрудный с золотой барной стойкой и изобилием зелени.</p>
+</section>
+
+<section class="gallery gallery-menu" aria-label="Фото интерьера">
+  <div class="gal-wrap">
+    <button class="gal-btn prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+    <div class="gal-track">
+      <img src="img/int-1.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
+      <img src="img/int-2.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
+      <img src="img/int-3.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
+      <img src="img/int-4.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
+      <img src="img/int-5.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
+      <img src="img/int-6.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
+      <img src="img/int-7.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
+      <img src="img/int-8.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
+    </div>
+    <button class="gal-btn next-btn" type="button" aria-label="Следующее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+</section>
+
+<!-- ===== Коллаборация ===== -->
+<section class="collab">
+  <div class="collab-circle" aria-hidden="true"></div>
+  <img class="collab-kana" src="img/collab-kana.png" alt="" aria-hidden="true">
+  <div class="collab-box">
+    <h2>Запланируем коллаборацию?</h2>
+    <p>Ответьте на пару вопросов, чтобы мы узнали друг друга ближе</p>
+    <a class="btn-line thick" href="https://forms.gle/k2pZzCRd7EPgPXMn8">Оставить заявку</a>
+  </div>
+</section>
+
+<!-- ===== Контакты ===== -->
+<section class="contacts" id="contacts">
+  <img class="leaf leaf-1" src="img/contact-2.png" alt="" aria-hidden="true">
+  <img class="leaf leaf-2" src="img/contact-1.png" alt="" aria-hidden="true">
+  <h2 class="contacts-title">КОНТАКТЫ РЕСТОРАНА</h2>
+  <div class="contacts-grid">
+    <div class="contacts-info">
+      <h3>АДРЕС</h3>
+      <p>г. Екатеринбург,<br>8 Марта, д. 6</p>
+      <h3>СВЯЗАТЬСЯ С НАМИ</h3>
+      <p><a href="tel:+73433284284">+7 (343) 328-42-84</a><br><a href="mailto:soykarest@gmail.com">soykarest@gmail.com</a></p>
+      <h3>РЕЖИМ РАБОТЫ</h3>
+      <p>ВС — ЧТ 12:00 — 00:00<br>ПТ — СБ 12:00 — 01:00</p>
+    </div>
+    <iframe class="map" title="Ресторан «Сойка» на карте" loading="lazy"
+      src="https://yandex.ru/map-widget/v1/?lang=ru_RU&scroll=false&source=constructor-api&um=constructor%3A41780e556b1721958c663a19b7990baf3164df83981b3ecbaea43201bec47040"></iframe>
+  </div>
+</section>
+
+<!-- ===== Подвал ===== -->
+<footer class="site-foot">
+  <img class="foot-logo" src="img/footer-logo.png" alt="Сойка" width="200" height="105">
+  <nav class="foot-nav">
+    <a href="https://soyka.rest/menumenu">МЕНЮ</a>
+    <a href="https://delivery.soyka.rest/">ДОСТАВКА</a>
+    <a href="https://soyka.rest/bronirovanie">ЗАБРОНИРОВАТЬ</a>
+    <a href="https://soyka.rest/certificate">СЕРТИФИКАТ</a>
+    <a href="https://soyka.rest/card">ПОЛУЧИТЬ КАРТУ</a>
+    <a href="https://soyka.rest/feedback">ОБРАТНАЯ СВЯЗЬ</a>
+    <a href="https://soyka.rest/#popup:myform">ВАКАНСИИ</a>
+    <a href="#contacts">КОНТАКТЫ</a>
+  </nav>
+  <div class="foot-copy">
+    © 2026 Сойка. Все права защищены<br>
+    <a href="https://soyka.rest/privacypolicy">Политика конфиденциальности</a><br>
+    <a href="https://soyka.rest/soglasie">Согласие на обработку данных</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="sections.js"></script>
+</body>
+</html>
