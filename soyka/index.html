@@ -3,283 +3,468 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Сойка — паназиатский ресторан в Екатеринбурге</title>
+<title>Сойка — суши и гриль, Екатеринбург</title>
 <meta name="description" content="Ваш любимый паназиатский ресторан в Екатеринбурге. ул. 8 Марта, 6.">
+<!-- Шрифт подписи — как у референса Akaneya (Noto Serif JP); Noto Serif — запасной для русских букв -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&family=Noto+Serif:wght@400&display=swap" rel="stylesheet">
 <style>
+/* Шрифты — с их сайта soyka.rest (лежат в старой версии, берём оттуда) */
 @font-face{font-family:'Noir';src:url('fonts/NoirPro-Regular.woff') format('woff');font-weight:400;font-display:swap}
 @font-face{font-family:'Garamond';src:url('fonts/Garamond-Smb.woff') format('woff');font-weight:600;font-display:swap}
 @font-face{font-family:'Garamond';src:url('fonts/Garamond-ItC.woff') format('woff');font-weight:400;font-style:italic;font-display:swap}
 
 :root{
-  --navy:#1a2e53;
-  --red:#d94e43;
-  --white:#ffffff;
-  --bg:#142542;      /* фон сайта: 12.11 сделали светлее (было #0b1528), ближе к их #1a2e53 */
+  --navy:#1a2e53;   /* их синий */
+  --bg:#101d36;     /* фон: синий Сойки, только глубже — как ночь у Akaneya */
+  --red:#d94e43;    /* их красный */
+  --white:#fff;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--bg);color:var(--white)}
 body{font-family:'Noir',system-ui,sans-serif;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 
-/* ---------- первый экран ---------- */
-.hero{position:relative;height:100vh;height:100svh;min-height:560px;max-height:1100px;overflow:hidden;
-  background:radial-gradient(120% 90% at 50% 45%, #1e355c 0%, #192e52 55%, #142542 100%)}
-#gl{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;opacity:0}
+/* ===== Первый экран ===== */
+.hero{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:var(--bg)}
 
-/* шапка */
-.top{position:absolute;left:0;right:0;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
-  padding:22px clamp(16px,4vw,56px);font-size:15px;letter-spacing:.14em;text-transform:uppercase}
-.top nav{display:flex;gap:clamp(14px,2.4vw,34px)}
-.top nav a{position:relative;padding:4px 0}
-.top nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--red);transform:scaleX(0);transform-origin:right;transition:transform .45s cubic-bezier(.7,0,.2,1)}
-.top nav a:hover::after{transform:scaleX(1);transform-origin:left}
-.top .right{display:flex;align-items:center;gap:22px;margin-left:auto}
-.top > *{opacity:0}
+/* фото: медленный наезд камеры (как будто видео) */
+.hero-photo{position:absolute;inset:-4%;overflow:hidden}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 45%;
+  transform:scale(1.04);filter:brightness(.55)}
 
-/* кнопки: белой заливки нет нигде */
-.btn{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.7);padding:17px 30px;border-radius:999px;
-  font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:#fff;
-  transition:border-color .35s, background .35s, transform .35s cubic-bezier(.2,.8,.2,1)}
-.btn:hover,.btn:focus-visible{border-color:var(--red);background:rgba(217,78,67,.12);transform:translateY(-2px)}
-.btn:active{transform:translateY(0) scale(.98);background:rgba(217,78,67,.18)}
-.btn.red{border-color:var(--red);background:var(--red)}
-.btn.red:hover,.btn.red:focus-visible{background:#c4443a;border-color:#c4443a}
-.btn.red:active{background:#b33d34}
+/* синяя дымка Сойки поверх фото: сверху и снизу темнее, чтобы читался текст */
+.hero-shade{position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(16,29,54,.85) 0%, rgba(16,29,54,0) 22%, rgba(var(--flow-rgb),0) 50%, rgba(var(--flow-rgb),.7) 80%, rgb(var(--flow-rgb)) 100%),   /* низ фото полностью растворяется в фоне */
+    radial-gradient(90% 70% at 50% 50%, rgba(26,46,83,0) 40%, rgba(16,29,54,.55) 100%)}
 
-/* логотип в 3D */
-.brand{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:min(76vw,820px);z-index:6;text-align:center;perspective:1100px}
-.logo{position:relative;width:100%;aspect-ratio:1280/672;transform-style:preserve-3d}
-.logo .l{position:absolute;inset:0;background:url('img/logo.png') center/100% 100% no-repeat;backface-visibility:hidden}
-.logo .breve{clip-path:inset(0 0 86% 0);transform-origin:49.6% 6%}
-.word3d{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 50%}
-.word3d .l{clip-path:inset(14% 0 22% 0)}
-.word3d .l.ex{filter:brightness(.42) saturate(1.2)}
-.sub3d{position:absolute;inset:0;transform-style:preserve-3d}
-.sub3d .l{clip-path:inset(80% 0 0 0)}
-.tagline{margin-top:clamp(18px,3vh,34px);font-family:'Garamond',serif;font-style:italic;font-weight:400;
-  font-size:clamp(26px,3.4vw,46px);line-height:1.22;color:var(--white);perspective:600px}
-.tagline span{display:inline-block;transform-origin:50% 100%;opacity:0}
-.cta{margin-top:clamp(22px,4vh,40px);display:flex;gap:12px;justify-content:center;flex-wrap:wrap;perspective:700px}
-.cta a{opacity:0}
+/* шапка: как у Akaneya — слева меню, по центру логотип, справа действия */
+.top{position:absolute;left:0;right:0;top:0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:24px clamp(16px,4vw,56px);font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+.top-left{justify-self:start;display:flex;align-items:center;gap:clamp(14px,2.4vw,34px)}
+/* 15.11: три тонкие полоски, как было до бургер-меню; стоят слева от языков */
+.burger{display:flex;flex-direction:column;gap:6px;width:30px;padding:6px 0;background:none;border:0;cursor:pointer}
 
-.foot{position:absolute;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:space-between;align-items:flex-end;
-  padding:22px clamp(16px,4vw,56px);font-size:12px;letter-spacing:.12em;text-transform:uppercase;line-height:1.7;opacity:0}
-.foot .hours b{font-weight:400;color:var(--red)}
-.scroll{display:flex;flex-direction:column;align-items:center;gap:10px}
-.scroll i{width:1px;height:46px;background:linear-gradient(#fff,transparent);animation:drip 2.2s ease-in-out infinite;transform-origin:top}
-@keyframes drip{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+/* языки — шрифт и вид как у Akaneya: Noto Serif JP 14px, неактивные на 50% */
+.langs{display:flex;align-items:center;gap:8px;font-family:'Noto Serif JP','Noto Serif',serif;font-size:14px;letter-spacing:-.01em;text-transform:none}
+.langs button{background:none;border:0;color:#fff;font:inherit;cursor:pointer;opacity:.5;padding:4px 0;transition:opacity .3s}
+.langs button:hover,.langs button.on{opacity:1}
+.langs i{font-style:normal;opacity:.35}
 
-.skip{position:absolute;right:clamp(16px,4vw,56px);bottom:24px;z-index:30;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--white);opacity:.5;cursor:pointer;background:none;border:0;font-family:inherit}
-.skip:hover{opacity:1}
+/* окно «Доставка» справа — тонкая рамка, без белой заливки (Макар не любит заливку) */
+.top-right .deliv{border:1px solid rgba(255,255,255,.6);padding:10px 18px;border-radius:999px;transition:border-color .35s,background .35s}
+.top-right .deliv::after{display:none}
+.top-right .deliv:hover{border-color:#fff;background:rgba(255,255,255,.12)}   /* 14.11: белая подсветка, не красная */
+.burger i{display:block;height:1px;background:#fff;transition:width .4s}
+.burger i:nth-child(2){width:70%}
+.burger:hover i:nth-child(2){width:100%}
 
-.feather{position:absolute;left:0;top:0;width:34px;height:12px;border-radius:60% 40% 60% 40%/70% 50% 50% 30%;pointer-events:none;z-index:7}
+/* шапка закреплена: едет вместе с прокруткой. Наверху прозрачная, при прокрутке — синяя полупрозрачная и чуть ниже ростом */
+.top{position:fixed !important;z-index:50;transition:background .4s,padding .4s,backdrop-filter .4s}
+section[id]{scroll-margin-top:70px}   /* при переходе из меню заголовок раздела не прячется под шапку */
+.top.scrolled{background:rgba(16,29,54,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  padding-top:12px;padding-bottom:12px;box-shadow:0 1px 0 rgba(255,255,255,.08)}
 
-.next{height:60vh;display:grid;place-items:center;color:var(--white);font-family:'Garamond',serif;font-style:italic;font-size:22px;opacity:.5}
+/* ===== Выезжающая панель меню — как у них (из прошлой версии), подсветки белые ===== */
+.drawer{position:fixed;inset:0;z-index:70;visibility:hidden;pointer-events:none}
+.drawer.open{visibility:visible;pointer-events:auto}
+.drawer-shade{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;transition:opacity .4s}
+.drawer.open .drawer-shade{opacity:1}
+.drawer-panel{position:absolute;top:0;left:0;bottom:0;width:min(320px,86vw);background:var(--navy);
+  display:flex;flex-direction:column;justify-content:space-between;padding:70px 30px 28px;
+  transform:translateX(-100%);transition:transform .45s cubic-bezier(.7,0,.2,1);overflow-y:auto}
+.drawer.open .drawer-panel{transform:translateX(0)}
+.drawer-x{position:absolute;top:20px;right:22px;background:none;border:0;color:#fff;font-size:22px;cursor:pointer;line-height:1;opacity:.8}
+.drawer-x:hover{opacity:1}
+.drawer-nav{display:flex;flex-direction:column;gap:14px}
+.drawer-nav a{font-size:18px;color:rgba(255,255,255,.82);transition:color .25s}
+.drawer-nav a:hover{color:#fff}
+.drawer-info{margin-top:40px;font-size:12px;line-height:1.7;color:rgba(255,255,255,.85)}
+.drawer-info p+p{margin-top:12px}
+.drawer-icons{display:flex;gap:10px;margin-top:16px}
+.drawer-icons a{width:34px;height:34px;border-radius:50%;background:#fff;display:grid;place-items:center;transition:opacity .25s}
+.drawer-icons a:hover{opacity:.8}
+.drawer-icons svg{width:17px;height:17px;fill:var(--navy)}
+html{scrollbar-gutter:stable;scroll-behavior:smooth}   /* страница не прыгает, когда меню блокирует прокрутку; к разделам едем плавно */
+body.menu-open{overflow:hidden}
+.top-logo{width:clamp(90px,9vw,120px);display:block}
+.top-logo img{width:100%;display:block;filter:brightness(0) invert(1)}  /* их лого, перекрашено в белый */
+.top-right{justify-self:end;display:flex;gap:clamp(14px,2.4vw,34px);align-items:center}
+.top-right a{position:relative;padding:4px 0}
+.top-right a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:#fff;   /* 14.11: белая, не красная */transform:scaleX(0);transform-origin:right;transition:transform .45s cubic-bezier(.7,0,.2,1)}
+.top-right a:hover::after{transform:scaleX(1);transform-origin:left}
+
+/* центр экрана: カケス и под ними слоган — одной колонкой, как у Akaneya */
+.center{position:absolute;left:50%;top:64%;transform:translate(-50%,-50%);z-index:10;
+  display:flex;flex-direction:column;align-items:center;gap:clamp(32px,5vh,48px)}
+
+/* カケス — как иероглифы у Akaneya. 14.11: вдвое меньше (было до 320px) */
+.kana{height:min(25vh,200px);aspect-ratio:198/536;display:flex;flex-direction:column}
+.kana span{flex:1;background:url('img/collab-kana.png') no-repeat;background-size:100% 300%;
+  filter:brightness(0) invert(1);opacity:.55}   /* 14.11: Макар попросил прозрачнее */
+.kana span:nth-child(1){background-position:0 0}
+.kana span:nth-child(2){background-position:0 50%}
+.kana span:nth-child(3){background-position:0 100%}
+
+/* их слоган под знаками. 14.11: шрифт как у Akaneya — Noto Serif JP 400, 16px, межстрочный 1.7 */
+.caption{width:min(88vw,480px);text-align:center;opacity:.55;   /* та же прозрачность, что у カケス */
+  font-family:'Noto Serif JP','Noto Serif',serif;font-weight:400;font-size:21px;line-height:1.65;letter-spacing:-.01em}
+.caption .line{display:block;overflow:hidden}
+.caption .line > span{display:block}
+
+.scroll-hint{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:10;width:1px;height:40px;background:rgba(255,255,255,.25);overflow:hidden}
+.scroll-hint::after{content:"";position:absolute;left:0;top:0;width:1px;height:100%;background:#fff;animation:drip 2.2s cubic-bezier(.7,0,.2,1) infinite}
+@keyframes drip{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+
+/* занавес при загрузке */
+.curtain{position:fixed;inset:0;background:var(--bg);z-index:100;pointer-events:none;opacity:0}
+
+/* стартовые состояния — только если анимации загрузились (класс js-anim ставит скрипт).
+   Если библиотеки не загрузятся, всё просто видно сразу */
+.js-anim .curtain{opacity:1}
+.js-anim .top > *,.js-anim .kana span,.js-anim .scroll-hint{opacity:0}
+.js-anim .caption .line > span{transform:translateY(110%)}
+.js-anim .hero-photo img{transform:scale(1.18)}
+
+/* ===== Общие заголовки разделов — как у Akaneya: маленькая японская подпись цветом + заголовок капсом ===== */
+.sec-head{text-align:center;font-family:'Noto Serif JP','Noto Serif',serif;font-weight:400}
+.sec-head .jp{display:block;font-size:16px;line-height:1.7;color:#fff;letter-spacing:.08em}   /* 14.11: белые */
+.sec-head h2{font-weight:400;font-size:clamp(20px,1.8vw,24px);line-height:1.5;letter-spacing:.06em;text-transform:uppercase;margin-top:6px}
+
+/* ===== Блок «Интерьер» ===== */
+.story{padding:clamp(90px,14vh,160px) clamp(16px,4vw,56px) clamp(40px,6vh,70px);display:flex;flex-direction:column;align-items:center}
+.story-photos{display:flex;align-items:flex-start;gap:clamp(10px,1.4vw,20px);justify-content:center;margin-top:clamp(40px,6vh,64px);width:100%}
+.ph{margin:0;width:min(30vw,380px);aspect-ratio:2/3;overflow:hidden;position:relative}
+.ph img{width:100%;height:115%;object-fit:cover;display:block;transform:translateY(-6%)}
+.ph-b{margin-top:clamp(40px,8vh,90px)}   /* второе фото чуть ниже — живая лесенка */
+.story-text{max-width:680px;margin-top:clamp(40px,6vh,64px);text-align:center;
+  font-family:'Noto Serif JP','Noto Serif',serif;font-size:clamp(19px,1.6vw,22px);line-height:1.7;opacity:.85}   /* 14.11: крупнее */
+
+/* лента с остальными фото интерьера */
+.story{overflow:hidden}
+.int-strip{width:100vw;margin-top:clamp(60px,9vh,100px);position:relative}
+/* стрелки по бокам ленты: тонкий круг, белая подсветка при наведении */
+.strip-btn{position:absolute;top:50%;z-index:5;width:52px;height:52px;margin-top:-26px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.6);background:rgba(16,29,54,.45);backdrop-filter:blur(4px);cursor:pointer;
+  display:grid;place-items:center;transition:border-color .3s,background .3s,transform .3s}
+.strip-btn svg{width:22px;height:22px}
+.strip-btn:hover{border-color:#fff;background:rgba(255,255,255,.12)}
+.strip-btn:active{transform:scale(.94)}
+.strip-btn.s-prev{left:clamp(12px,3vw,40px)}
+.strip-btn.s-next{right:clamp(12px,3vw,40px)}
+.strip-btn[disabled]{opacity:.3;cursor:default}
+@media (max-width:720px){.strip-btn{width:42px;height:42px;margin-top:-21px}}
+.int-track{display:flex;gap:clamp(10px,1.4vw,20px);width:max-content;padding-left:8vw;will-change:transform}
+.int-track img{width:clamp(200px,22vw,320px);aspect-ratio:2/3;object-fit:cover;display:block}
+.int-track img:nth-child(even){margin-top:clamp(30px,6vh,70px)}
+
+/* шагающая птица — из прошлой версии (sections.css), только размер чуть меньше */
+.bird-walk2{position:relative;width:170px;height:170px;margin:0 auto 10px}
+.bird-walk2 .walker{position:absolute;inset:0;animation:walkBob .8s ease-in-out infinite}
+.bird-walk2 img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.bird-walk2 .bd{z-index:2}
+.bird-walk2 .lg{animation:legWalk 1.6s linear infinite}
+.bird-walk2 .lg.back{z-index:1;animation-delay:-.8s}
+.bird-walk2 .lg.front{z-index:3}
+.traveler .lg{transform-origin:50% 71.73%}   /* бедро птицы */
+@keyframes legWalk{
+  0%  {transform:skewX(14deg) scaleY(1)}
+  55% {transform:skewX(-14deg) scaleY(1)}
+  78% {transform:skewX(0deg) scaleY(.86)}
+  100%{transform:skewX(14deg) scaleY(1)}
+}
+@keyframes walkBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.5px)}}
+.bird-shadow{position:absolute;left:50%;top:85%;width:70px;height:8px;margin-left:-33px;border-radius:50%;background:rgba(0,0,0,.5);filter:blur(4px)}
+@media (prefers-reduced-motion:reduce){.bird-walk2 .walker,.bird-walk2 .lg{animation:none}}
+
+/* ===== Блок «Награды» — стиль и анимация как в прошлой версии (v1, sections.css) ===== */
+.awards{padding:clamp(40px,6vh,70px) clamp(16px,5vw,72px) clamp(80px,14vh,160px)}
+.awards .sec-head{margin-bottom:0}
+
+/* цитата GreatList: большая красная кавычка, Garamond курсивом, белый текст (без анимации слов — как решили 11.11) */
+.aw-quote{position:relative;max-width:1080px;margin:clamp(40px,6vh,64px) auto 0;perspective:900px}
+/* 14.11: шрифт как в первых блоках (Noto Serif JP), тоньше, не такой ярко-белый, цитата меньше */
+.aw-quote .mark{position:absolute;left:-.08em;top:-.38em;font-family:'Noto Serif JP','Noto Serif',serif;font-weight:400;font-size:clamp(90px,11vw,170px);
+  line-height:1;color:#fff;opacity:.9;transform-origin:50% 60%;pointer-events:none}   /* 14.11: белая */
+.aw-quote p{position:relative;font-family:'Noto Serif JP','Noto Serif',serif;font-weight:400;font-size:clamp(20px,2.1vw,30px);
+  line-height:1.6;letter-spacing:-.01em;color:rgba(255,255,255,.82);padding-left:clamp(56px,7vw,110px)}
+.aw-quote cite{display:block;margin-top:26px;padding-left:clamp(56px,7vw,110px);font-style:normal;font-family:'Noto Serif JP','Noto Serif',serif;
+  font-size:14px;letter-spacing:.12em;color:rgba(255,255,255,.55)}
+
+/* карточки наград в 3D */
+.aw-grid{max-width:1180px;margin:clamp(70px,12vh,130px) auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+  perspective:1400px;transform-style:preserve-3d}
+.aw{position:relative;padding:32px 30px 34px;border-radius:22px;border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.012) 60%);transition:border-color .45s, background .45s, box-shadow .45s;
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.aw:hover{border-color:rgba(255,255,255,.55);background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.02) 60%)}   /* 14.11: белая подсветка */
+.seal{display:block;width:84px;height:84px;border-radius:50%;
+  box-shadow:0 0 0 1px rgba(255,255,255,.18), 0 14px 30px -10px rgba(0,0,0,.7)}
+.aw .big{margin-top:26px;font-family:'Noto Serif JP','Noto Serif',serif;font-weight:400;font-size:clamp(30px,2.8vw,40px);line-height:1.1;color:rgba(255,255,255,.85)}
+.aw .stars{color:var(--red);letter-spacing:.06em}
+.aw .stars i{display:inline-block;font-style:normal}
+.aw p{margin-top:24px;font-family:'Noto Serif JP','Noto Serif',serif;font-size:15px;line-height:1.65;color:rgba(255,255,255,.68)}
+.aw .who{margin-top:14px;font-family:'Noto Serif JP','Noto Serif',serif;font-size:17px;color:rgba(255,255,255,.8)}
+
+/* стартовые состояния для анимаций (только если библиотеки загрузились) */
+.js-anim .aw{opacity:0}
+.js-anim .aw-quote .mark{opacity:0}
+
+/* ===== Блок «Меню» ===== */
+.menu-sec{padding-top:clamp(70px,11vh,130px)}
+/* ссылка «Посмотреть меню» — как «See menu» у Akaneya: текст с тонкой линией снизу */
+.see-link{margin-top:clamp(28px,4vh,40px);font-family:'Noto Serif JP','Noto Serif',serif;font-size:17px;letter-spacing:.02em;
+  color:rgba(255,255,255,.85);padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.4);transition:border-color .3s,color .3s}
+.see-link:hover{color:#fff;border-color:#fff}
+
+/* карточки «Меню» и «Бар» — как меню у Akaneya: фото, название капсом, текст, ссылка */
+.mb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,440px));gap:clamp(20px,3vw,48px);justify-content:center;
+  margin-top:clamp(40px,6vh,64px);width:100%}
+.mb-card{display:flex;flex-direction:column;align-items:flex-start;text-align:left}
+.mb-grid{align-items:start}
+.mb-card:nth-child(2){margin-top:clamp(60px,10vh,120px)}   /* 15.11: «лесенка» — бар ниже меню, как фото в «Интерьере» */
+@media (max-width:720px){ .mb-card:nth-child(2){margin-top:56px} }
+.mb-photo{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:rgba(0,0,0,.2)}
+.mb-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);
+  transition:opacity 1.4s ease, transform 6s ease-out}
+.mb-photo img.on{opacity:1;transform:scale(1)}   /* фото плавно сменяют друг друга и чуть «отъезжают» */
+.mb-card h3{margin-top:24px;font-family:'Noto Serif JP','Noto Serif',serif;font-weight:400;font-size:20px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.9)}
+.mb-card p{margin-top:12px;font-family:'Noto Serif JP','Noto Serif',serif;font-size:16px;line-height:1.7;color:rgba(255,255,255,.72)}
+.mb-card .see-link{margin-top:20px}
+@media (max-width:720px){ .mb-grid{grid-template-columns:minmax(0,440px)} }
+.js-anim .mb-photo{clip-path:inset(100% 0 0 0)}
+/* птицы над карточками: по центру карточки */
+.card-bird{align-self:center;margin:0 auto 8px}
+/* гейша из прошлой версии: свои точки сгиба и шаг пошире (картинка маленькая) */
+.geisha .lg{transform-origin:50% 75.3%;animation-name:legWalkSmall}
+.geisha .lg.back{z-index:1;filter:brightness(.65);left:-5px}
+@keyframes legWalkSmall{
+  0%  {transform:skewX(22deg) scaleY(1)}
+  55% {transform:skewX(-22deg) scaleY(1)}
+  78% {transform:skewX(0deg) scaleY(.75)}
+  100%{transform:skewX(22deg) scaleY(1)}
+}
+
+/* птица-джентльмен из прошлой версии: тело и лапки — одна картинка, разрезанная clip-path */
+.bird-walk{position:relative;width:170px;height:170px;margin:0 auto 10px;
+  --body:polygon(0 0,100% 0,100% 100%,65.5% 100%,65.5% 83.9%,47% 83.9%,47% 100%,0 100%);
+  --paw:inset(83.9% 34.5% 12% 47%);--paw-origin:50% 86%}
+.bird-walk img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.bird-body{z-index:2;clip-path:var(--body);transform-origin:50% 84%;animation:bob .9s ease-in-out infinite}
+.paw{clip-path:var(--paw);transform-origin:var(--paw-origin);animation:step 1.8s linear infinite}
+.paw.back{z-index:1;filter:brightness(.6);left:-8px;animation-delay:-.9s}
+.paw.front{z-index:1;left:0}
+@keyframes step{
+  0%  {transform:translate(0,0) rotate(0)}
+  55% {transform:translate(-10px,0) rotate(0)}
+  68% {transform:translate(-8px,-5px) rotate(-12deg)}
+  85% {transform:translate(-2px,-4px) rotate(-6deg)}
+  100%{transform:translate(0,0) rotate(0)}
+}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-.8deg)}50%{transform:translateY(-2.5px) rotate(.8deg)}}
+@media (prefers-reduced-motion:reduce){.bird-body,.paw{animation:none}}
+
+/* ===== Блок «Коллаборация» ===== */
+.collab2{position:relative;padding:clamp(100px,16vh,180px) clamp(16px,4vw,56px);display:flex;justify-content:center;overflow:hidden}
+.collab-frame{position:relative;z-index:1;width:min(100%,760px);min-height:clamp(320px,46vh,450px);   /* 15.11: рамку убрали */
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px;
+  font-family:'Noto Serif JP','Noto Serif',serif}
+.collab-frame .jp{font-size:16px;line-height:1.7;letter-spacing:.08em;color:#fff}
+.collab-frame h2{margin-top:6px;font-weight:400;font-size:clamp(24px,2.6vw,36px);line-height:1.3;color:rgba(255,255,255,.9)}
+.collab-frame p{margin-top:20px;max-width:520px;font-size:clamp(16px,1.3vw,19px);line-height:1.7;color:rgba(255,255,255,.72)}
+.collab-frame .see-link{margin-top:32px}
+/* 15.11: カケス вплотную к правому краю и чуть уходят за него — как у них на сайте */
+.collab-kana2{position:absolute;right:-36px;top:33%;   /* 15.11: выше полукруга (Макар: «ещё повыше») */transform:translateY(-50%);height:min(56vh,520px)}
+.collab-kana2 span,.js-anim .collab-kana2 span{opacity:.55}
+/* полукруг слева — как красный круг у них: круг стоит за левым краем, видна правая половина */
+.collab-half{position:absolute;left:0;top:50%;width:clamp(150px,17vw,230px);aspect-ratio:1/2;transform:translateY(-50%);
+  border-radius:0 999px 999px 0;background:#fff;opacity:.55}   /* 15.11: белый, как カケス (было их красное #dd3935) */
+@media (max-width:900px){
+  .collab-kana2{height:min(26vh,190px);right:-20px;top:22%}
+  .collab-half{width:64px;top:auto;bottom:36px;transform:none}   /* на телефоне ниже текста, чтобы не налезал */
+  .collab2{padding-bottom:170px}
+}
+.js-anim .collab-frame{clip-path:inset(50% 50% 50% 50%)}
+
+/* ===== Блок «Вопросы и ответы» — как よくある質問 у Akaneya ===== */
+.faq{padding:clamp(80px,12vh,140px) clamp(16px,4vw,56px);display:flex;flex-direction:column;align-items:center}
+.faq-list{width:min(100%,820px);margin-top:clamp(40px,6vh,64px);border-top:1px solid rgba(255,255,255,.2)}
+.faq-item{border-bottom:1px solid rgba(255,255,255,.2)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 4px;background:none;border:0;cursor:pointer;
+  color:rgba(255,255,255,.85);text-align:left;font-family:'Noto Serif JP','Noto Serif',serif;font-size:clamp(17px,1.4vw,20px);line-height:1.5;transition:color .3s}
+.faq-q:hover{color:#fff}
+/* плюсик, который поворачивается в крестик */
+.faq-q i{position:relative;flex:0 0 16px;height:16px;transition:transform .45s cubic-bezier(.7,0,.2,1)}
+.faq-q i::before,.faq-q i::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor}
+.faq-q i::after{transform:rotate(90deg)}
+.faq-q[aria-expanded="true"] i{transform:rotate(45deg)}
+/* ответ раскрывается плавно: строка сетки растёт от 0 до высоты текста */
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.7,0,.2,1)}
+.faq-a > div{overflow:hidden}
+.faq-item.open .faq-a{grid-template-rows:1fr}
+.faq-a p{padding:0 40px 24px 4px;font-family:'Noto Serif JP','Noto Serif',serif;font-size:16px;line-height:1.75;color:rgba(255,255,255,.7);
+  opacity:0;transform:translateY(-8px);transition:opacity .4s,transform .5s}
+.faq-item.open .faq-a p{opacity:1;transform:none;transition-delay:.12s}
+.faq-a a{color:#fff;border-bottom:1px solid rgba(255,255,255,.45);transition:border-color .3s}
+.faq-a a:hover{border-color:#fff}
+.js-anim .faq-item{opacity:0;transform:translateY(24px)}
+
+/* ===== Блок «Контакты» — как CONTACT у Akaneya: подписи мелко, данные крупнее ===== */
+.contacts2{padding:clamp(80px,12vh,140px) clamp(16px,4vw,56px) clamp(60px,9vh,100px);display:flex;flex-direction:column;align-items:center}
+.ct-grid{width:min(100%,1320px);margin-top:clamp(40px,6vh,64px);display:grid;grid-template-columns:minmax(260px,.75fr) minmax(0,2.2fr);   /* 15.11: карта шире */gap:clamp(28px,4vw,64px);align-items:stretch}
+.ct-info{display:flex;flex-direction:column;gap:22px;font-family:'Noto Serif JP','Noto Serif',serif}
+.ct-info dt{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.ct-info dd{margin-top:6px;font-size:clamp(17px,1.4vw,20px);line-height:1.6;color:rgba(255,255,255,.88)}
+.ct-info dd a{border-bottom:1px solid rgba(255,255,255,.3);transition:border-color .3s}
+.ct-info dd a:hover{border-color:#fff}
+.ct-info .see-link{align-self:flex-start;margin-top:6px}
+.ct-map{position:relative;min-height:440px;overflow:hidden}
+.ct-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;
+  filter:invert(.92) hue-rotate(180deg) saturate(.55) brightness(.92) contrast(.95)}   /* светлая карта → тёмно-синяя, под сайт */
+.map-link{position:absolute;left:14px;bottom:14px;z-index:2;padding:9px 16px;border-radius:999px;font-family:'Noto Serif JP','Noto Serif',serif;font-size:14px;
+  background:rgba(13,23,44,.8);border:1px solid rgba(255,255,255,.45);backdrop-filter:blur(4px);transition:border-color .3s,background .3s}
+.map-link:hover{border-color:#fff;background:rgba(255,255,255,.12)}
+
+/* ===== Подвал ===== */
+.foot2{padding:clamp(50px,8vh,80px) clamp(16px,4vw,56px) 36px;border-top:1px solid rgba(255,255,255,.14);
+  display:flex;flex-direction:column;align-items:center;gap:28px;text-align:center;font-family:'Noto Serif JP','Noto Serif',serif}
+.foot-logo2 img{width:130px;display:block;filter:brightness(0) invert(1);opacity:.9}
+.foot-nav2{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 28px;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.foot-nav2 a{color:rgba(255,255,255,.75);transition:color .3s}
+.foot-nav2 a:hover{color:#fff}
+.foot-legal{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;font-size:12px;color:rgba(255,255,255,.45)}
+.foot-legal a:hover{color:#fff}
+
+@media (max-width:820px){
+  .ct-grid{grid-template-columns:1fr}
+  .ct-map{min-height:320px}
+}
+
+/* カケス-разделитель между блоками */
+.kana-divider{display:flex;justify-content:center;padding:clamp(20px,4vh,50px) 0}
+.kana-divider .kana{height:min(16.7vh,133px)}   /* 14.11: в 1,5 раза меньше, чем на первом экране (было до 200px) */
+@media (max-width:720px){ .kana-divider .kana{height:min(14vh,110px)} }
+
+@media (max-width:900px){ .aw-grid{grid-template-columns:1fr 1fr} }
+@media (max-width:600px){ .aw-grid{grid-template-columns:1fr} }
+
+/* ===== Плавное переливание цвета фона между блоками =====
+   Фон — один слой на весь экран, его цвет плавно меняется при прокрутке (скрипт внизу).
+   Блоки прозрачные, поэтому переходов-«швов» между ними нет */
+:root{--flow-rgb:16,29,54}
+.bg-flow{position:fixed;inset:0;z-index:-1;background:rgb(var(--flow-rgb))}
+html,body{background:transparent}
+html{background:var(--bg)}
+
+/* стартовые состояния для анимаций нового блока (только если анимации загрузились) */
+.js-anim [data-reveal]{opacity:0;transform:translateY(30px)}
+.js-anim .ph{clip-path:inset(100% 0 0 0)}
 
 @media (max-width:720px){
-  .top nav{display:none}
-  .top .right .phone{display:none}
-  .brand{width:84vw;top:42%}
-  .foot{font-size:10px}
-  .scroll{display:none}
+  .ph{width:44vw}
+  .story-text{font-size:16px}
+}
+
+/* временный блок под первым экраном — дальше будем делать следующие разделы */
+.next{min-height:70vh;display:grid;place-items:center;font-family:'Garamond',serif;font-style:italic;font-size:22px;opacity:.45}
+
+@media (max-width:720px){
+  .top-right .hide-m{display:none}
+  .top{font-size:10px;letter-spacing:.1em;padding-left:14px;padding-right:14px}
+  .top-logo{width:72px}
+  .top-left{gap:10px;flex-direction:column;align-items:flex-start}   /* языки под тремя полосками — логотип не зажат */
+  section[id]{scroll-margin-top:96px}   /* шапка на телефоне выше (две строки слева) */
+  .top{align-items:start}
+  .top-logo{margin-top:-4px}
+  .langs{font-size:12px;gap:5px}
+  .top-right .deliv{padding:8px 12px}
+  .kana{height:min(21vh,165px)}
+  .caption{font-size:17px;width:94vw}
+}
+@media (prefers-reduced-motion:reduce){
+  .scroll-hint::after{animation:none}
 }
 </style>
-<link rel="stylesheet" href="sections.css">
 </head>
 <body>
 
-<!-- Бургер-меню (три полоски слева) — как у них на сайте, со всеми разделами -->
-<button class="burger" id="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="drawer"><i></i><i></i><i></i></button>
+<div class="curtain" id="curtain"></div>
+<div class="bg-flow" id="bgFlow" aria-hidden="true"></div>
+
+<!-- Бургер-меню — как у них на сайте: панель выезжает слева, все разделы и их страницы, внизу адрес, часы и иконки -->
 <div class="drawer" id="drawer" aria-hidden="true">
   <div class="drawer-shade" data-close></div>
   <aside class="drawer-panel" role="dialog" aria-label="Меню сайта">
     <button class="drawer-x" type="button" aria-label="Закрыть меню" data-close>✕</button>
     <nav class="drawer-nav">
-      <a href="#menu">Меню</a>
-      <a href="#bar">Бар и вино</a>
-      <a href="#interior">Интерьер</a>
-      <a href="https://soyka.rest/bronirovanie">Забронировать</a>
-      <a href="https://delivery.soyka.rest/">Доставка</a>
-      <a href="https://soyka.rest/certificate">Сертификат</a>
-      <a href="https://soyka.rest/card">Получить карту</a>
-      <a href="https://soyka.rest/feedback">Обратная связь</a>
-      <a href="https://soyka.rest/#popup:myform">Вакансии</a>
-      <a href="#contacts">Контакты</a>
+      <a href="#menu" data-i18n="menu">Меню</a>
+      <a href="#menu" data-i18n="dBar">Бар и вино</a>
+      <a href="#interior" data-i18n="intTitle">Интерьер</a>
+      <a href="https://soyka.rest/bronirovanie" target="_blank" rel="noopener" data-i18n="book">Забронировать</a>
+      <a href="https://delivery.soyka.rest/" target="_blank" rel="noopener" data-i18n="delivery">Доставка</a>
+      <a href="https://soyka.rest/certificate" target="_blank" rel="noopener" data-i18n="fCert">Сертификат</a>
+      <a href="https://soyka.rest/card" target="_blank" rel="noopener" data-i18n="fCard">Получить карту</a>
+      <a href="https://soyka.rest/feedback" target="_blank" rel="noopener" data-i18n="fFeed">Обратная связь</a>
+      <a href="https://soyka.rest/#popup:myform" target="_blank" rel="noopener" data-i18n="fJobs">Вакансии</a>
+      <a href="#contacts" data-i18n="ctTitle">Контакты</a>
     </nav>
     <div class="drawer-info">
-      <p>г. Екатеринбург, ул. 8 Марта, 6</p>
-      <p>ВС–ЧТ с 12:00 до 00:00<br>ПТ–СБ с 12:00 до 01:00</p>
+      <p data-i18n="ctAddr">г. Екатеринбург, ул. 8 Марта, 6</p>
+      <p><span data-i18n="ctH1">ВС–ЧТ с 12:00 до 00:00</span><br><span data-i18n="ctH2">ПТ–СБ с 12:00 до 01:00</span></p>
       <div class="drawer-icons">
         <a href="tel:+73433284284" aria-label="Позвонить"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1z"/></svg></a>
-        <a href="https://telegram.me/Soykarestaurant" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21.4 4.3L2.9 11.4c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.5c.3-1.3-.5-1.8-1.4-1.5zM9 14.2l9-5.7c.4-.3.8-.1.5.2l-7.6 6.9-.3 3.2z"/></svg></a>
-        <a href="https://vk.com/soykarest" aria-label="ВКонтакте"><svg viewBox="0 0 24 24"><path d="M12.8 17.5C6.9 17.5 3.5 13.4 3.3 6.5h3c.1 5 2.3 7.2 4.1 7.6V6.5h2.8v4.3c1.7-.2 3.6-2.2 4.2-4.3h2.8a8.3 8.3 0 01-3.8 5.4 8.6 8.6 0 014.4 5.6h-3.1a5.4 5.4 0 00-4.5-3.9v3.9z"/></svg></a>
+        <a href="https://telegram.me/Soykarestaurant" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21.4 4.3L2.9 11.4c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.5c.3-1.3-.5-1.8-1.4-1.5zM9 14.2l9-5.7c.4-.3.8-.1.5.2l-7.6 6.9-.3 3.2z"/></svg></a>
+        <a href="https://vk.com/soykarest" target="_blank" rel="noopener" aria-label="ВКонтакте"><svg viewBox="0 0 24 24"><path d="M12.8 17.5C6.9 17.5 3.5 13.4 3.3 6.5h3c.1 5 2.3 7.2 4.1 7.6V6.5h2.8v4.3c1.7-.2 3.6-2.2 4.2-4.3h2.8a8.3 8.3 0 01-3.8 5.4 8.6 8.6 0 014.4 5.6h-3.1a5.4 5.4 0 00-4.5-3.9v3.9z"/></svg></a>
       </div>
     </div>
   </aside>
 </div>
 
 <section class="hero" id="hero">
+  <div class="hero-photo" id="heroPhoto">
+    <img src="img/hero-site.jpg" alt="Блюда ресторана «Сойка»: шашлычки с гриля, суши, роллы" id="heroImg">
+  </div>
+  <div class="hero-shade"></div>
 
   <header class="top">
-    <nav>
-      <a href="#menu">Меню</a>
-      <a href="#bar">Бар и вино</a>
-      <a href="#interior">Интерьер</a>
-      <a href="https://delivery.soyka.rest/">Доставка</a>
-    </nav>
-    <div class="right">
-      <a class="phone" href="tel:+73433284284">+7 (343) 328-42-84</a>
-      <a class="btn" href="https://soyka.rest/bronirovanie">Забронировать</a>
+    <div class="top-left">
+      <button class="burger" id="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="drawer"><i></i><i></i><i></i></button>
+      <!-- выбор языка — как у Akaneya: активный яркий, остальные полупрозрачные -->
+      <nav class="langs" aria-label="Язык сайта">
+        <button type="button" data-lang="ru" class="on">RU</button><i>|</i>
+        <button type="button" data-lang="en">EN</button><i>|</i>
+        <button type="button" data-lang="ja">日本</button>
+      </nav>
+    </div>
+    <a class="top-logo" href="#hero" aria-label="Сойка — на главную"><img src="img/logo.png" alt="Сойка"></a>
+    <div class="top-right">
+      <a class="hide-m" href="https://soyka.rest/menumenu" data-i18n="menu">Меню</a>
+      <a class="hide-m" href="https://soyka.rest/bronirovanie" data-i18n="book">Забронировать</a>
+      <!-- окно «Доставка» → их сайт доставки -->
+      <a class="deliv" href="https://delivery.soyka.rest/" target="_blank" rel="noopener" data-i18n="delivery">Доставка</a>
     </div>
   </header>
 
-  <div class="brand" id="brand">
-    <div class="logo" id="logo" title="Сойка">
-      <div class="word3d" id="word"></div>
-      <div class="sub3d" id="sub"><div class="l"></div></div>
-      <div class="l breve" id="breve"></div>
+  <div class="center">
+    <div class="kana" id="kana" role="img" aria-label="カケス — «сойка» по-японски">
+      <span></span><span></span><span></span>
     </div>
-    <p class="tagline" id="tagline">Ваш любимый паназиатский ресторан в&nbsp;Екатеринбурге</p>
+
+    <p class="caption" id="caption">
+      <span class="line"><span data-i18n="tag1">Ваш любимый паназиатский ресторан</span></span>
+      <span class="line"><span data-i18n="tag2">в&nbsp;Екатеринбурге</span></span>
+    </p>
   </div>
 
-  <div class="foot">
-    <div></div>
-    <div class="scroll"><i></i></div>
-  </div>
+  <div class="scroll-hint" id="scrollHint"></div>
 </section>
 
-<section class="awards" id="awards">
-  <span class="label">Награды</span>
-
-  <blockquote class="quote">
-    <span class="mark" aria-hidden="true">«</span>
-    <p>Популярный азиатский ресторан в старинном особняке с белыми кирпичными сводами, лимонно-изумрудным интерьером, золотой барной стойкой и изобилием зелени. В меню — хрустящие баклажаны XO, булочки бао с уткой, желе алоэ с манго, суши, роллы, рамен и том-ям.</p>
-    <cite>— GreatList</cite>
-  </blockquote>
-
-  <div class="awards-grid">
-    <article class="award">
-      <div class="seal" style="background-image:url('img/award-wte.png')" role="img" aria-label="WhereToEat"></div>
-      <div class="big">ТОП-<span data-count="10">10</span></div>
-      <p>Ежегодно в ТОП-10 лучших ресторанов Урала по версии WhereToEat</p>
-    </article>
-    <article class="award">
-      <div class="seal" style="background-image:url('img/award-gl.png')" role="img" aria-label="GreatList"></div>
-      <div class="big">GreatList</div>
-      <p>В списке лучших ресторанов Екатеринбурга по версии международного ресторанного гида GreatList</p>
-    </article>
-    <article class="award">
-      <div class="seal" style="background-image:url('img/award-wte.png')" role="img" aria-label="WhereToEat"></div>
-      <div class="big">2024 · 2026</div>
-      <p>Дважды лучший шеф-кондитер года по версии WhereToEat</p>
-      <div class="who">Вероника Вишнякова</div>
-    </article>
-    <article class="award">
-      <div class="seal" style="background-image:url('img/award-rwa.png')" role="img" aria-label="Russian Wine Awards"></div>
-      <div class="big"><span class="stars"><i>★</i><i>★</i></span></div>
-      <p>2 звезды в номинации «Лучшая оригинальная карта» по версии Russian Wine Awards 2024</p>
-    </article>
-    <article class="award">
-      <div class="seal" style="background-image:url('img/award-rwa.png')" role="img" aria-label="Russian Wine Awards"></div>
-      <div class="big"><span class="stars"><i>★</i><i>★</i></span></div>
-      <p>2 звезды в номинации «Лучший выбор вин по бокалам» по версии Russian Wine Awards 2024</p>
-    </article>
-    <article class="award">
-      <div class="seal" style="background-image:url('img/award-wte.png')" role="img" aria-label="WhereToEat"></div>
-      <div class="big">2023 · 2025</div>
-      <p>Дважды лучший шеф-сомелье Урала по версии WhereToEat</p>
-      <div class="who">Анастасия Прудникова</div>
-    </article>
-  </div>
-</section>
-
-<section class="gallery" id="gallery" aria-label="Фото ресторана">
-  <img class="signage" src="img/signage.png" alt="カケス" width="260" height="185">
-  <div class="gal-wrap">
-    <button class="gal-btn prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
-    <div class="gal-track">
-      <img src="img/gal-1.jpg" alt="Зал ресторана «Сойка»" loading="lazy">
-      <img src="img/gal-2.jpg" alt="Зал ресторана «Сойка»" loading="lazy">
-      <img src="img/gal-3.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
-      <img src="img/gal-4.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
-      <img src="img/gal-5.jpg" alt="Ресторан «Сойка»" loading="lazy">
-      <img src="img/gal-6.jpg" alt="Ресторан «Сойка»" loading="lazy">
-    </div>
-    <button class="gal-btn next-btn" type="button" aria-label="Следующее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
-  </div>
-</section>
-
-<section class="menu-intro" id="menu">
-  <div class="bird-walk" aria-hidden="true">
-    <div class="bird-shadow"></div>
-    <img class="paw back" src="img/bird-menu.png" alt="">
-    <img class="bird-body" src="img/bird-menu.png" alt="">
-    <img class="paw front" src="img/bird-menu.png" alt="">
-  </div>
-  <h2 class="sec-title">МЕНЮ</h2>
-  <p class="sec-text">Меню Сойки объединяет энергию улиц Юго-Восточной Азии, современный взгляд на гастрономию и легкость формата - все то, ради чего сюда хочется возвращаться.</p>
-  <a class="btn-line" href="https://soyka.rest/menumenu">Посмотреть меню</a>
-</section>
-
-<section class="gallery gallery-menu" aria-label="Фото блюд">
-  <div class="gal-wrap">
-    <button class="gal-btn prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
-    <div class="gal-track">
-      <img src="img/menu-1.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
-      <img src="img/menu-2.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
-      <img src="img/menu-3.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
-      <img src="img/menu-4.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
-      <img src="img/menu-5.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
-      <img src="img/menu-6.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
-      <img src="img/menu-7.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
-      <img src="img/menu-8.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
-      <img src="img/menu-9.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
-      <img src="img/menu-10.jpg" alt="Блюдо ресторана «Сойка»" loading="lazy">
-    </div>
-    <button class="gal-btn next-btn" type="button" aria-label="Следующее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
-  </div>
-</section>
-
-<!-- ===== Бар и винная карта ===== -->
-<section class="menu-intro" id="bar">
-  <div class="bird-walk2 geisha" aria-hidden="true">
-    <div class="bird-shadow"></div>
-    <div class="walker">
-      <img class="lg back" src="img/walk-bar-leg.png" alt="">
-      <img class="bd" src="img/walk-bar-body.png" alt="">
-      <img class="lg front" src="img/walk-bar-leg.png" alt="">
-    </div>
-  </div>
-  <h2 class="sec-title">БАР И ВИННАЯ КАРТА</h2>
-  <p class="sec-text">В барной карте баланс между узнаваемыми напитками и редкими находками. А наша винная карта была удостоена двух звезд престижной премии Russian Wine Awards.</p>
-  <a class="btn-line" href="https://soyka.rest/menumenu#!/tab/1266972691-3">Посмотреть карту</a>
-</section>
-
-<section class="gallery gallery-menu" aria-label="Фото бара">
-  <div class="gal-wrap">
-    <button class="gal-btn prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
-    <div class="gal-track">
-      <img src="img/bar-1.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
-      <img src="img/bar-2.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
-      <img src="img/bar-3.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
-      <img src="img/bar-4.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
-      <img src="img/bar-5.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
-      <img src="img/bar-6.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
-      <img src="img/bar-7.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
-      <img src="img/bar-8.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
-      <img src="img/bar-9.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
-      <img src="img/bar-10.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
-      <img src="img/bar-11.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
-      <img src="img/bar-12.jpg" alt="Бар ресторана «Сойка»" loading="lazy">
-    </div>
-    <button class="gal-btn next-btn" type="button" aria-label="Следующее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
-  </div>
-</section>
-
-<!-- ===== Интерьер ===== -->
-<section class="menu-intro" id="interior">
-  <div class="bird-walk2 traveler" aria-hidden="true">
+<!-- ===== Блок 1. Интерьер / о ресторане — как HISTORY у Akaneya: японская подпись, заголовок, два фото рядом, текст ===== -->
+<section class="story" id="interior">
+  <!-- шагающая птица-путешественница из прошлой версии (их рисунок, ноги вырезаны отдельно) -->
+  <div class="bird-walk2 traveler" aria-hidden="true" data-reveal>
     <div class="bird-shadow"></div>
     <div class="walker">
       <img class="lg back" src="img/walk-int-legback.png" alt="">
@@ -287,79 +472,587 @@ a{color:inherit;text-decoration:none}
       <img class="lg front" src="img/walk-int-legfront.png" alt="">
     </div>
   </div>
-  <h2 class="sec-title">ИНТЕРЬЕР</h2>
-  <p class="sec-text">«Сойка» расположилась в старинном особняке с белыми кирпичными сводами, который относится к архитектурному ансамблю усадьбы купца Тупикова. Интерьер — лимонно-изумрудный с золотой барной стойкой и изобилием зелени.</p>
-</section>
+  <div class="sec-head" data-reveal>
+    <span class="jp">内装</span>
+    <h2 data-i18n="intTitle">Интерьер</h2>
+  </div>
+  <div class="story-photos">
+    <figure class="ph ph-a"><img src="img/int-1.jpg" alt="Зал ресторана «Сойка»: цветы и столы" loading="lazy"></figure>
+    <figure class="ph ph-b"><img src="img/int-4.jpg" alt="Золотая барная стойка «Сойки»" loading="lazy"></figure>
+  </div>
+  <p class="story-text" data-reveal data-i18n="intText">«Сойка» расположилась в старинном особняке с белыми кирпичными сводами, который относится к архитектурному ансамблю усадьбы купца Тупикова. Интерьер — лимонно-изумрудный с золотой барной стойкой и изобилием зелени.</p>
 
-<section class="gallery gallery-menu" aria-label="Фото интерьера">
-  <div class="gal-wrap">
-    <button class="gal-btn prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
-    <div class="gal-track">
-      <img src="img/int-1.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
+  <!-- ещё 6 их фото интерьера: лента едет вбок, пока листаешь страницу -->
+  <div class="int-strip" aria-label="Фото интерьера">
+    <!-- стрелки: листать ленту самому -->
+    <button class="strip-btn s-prev" type="button" aria-label="Предыдущие фото"><svg viewBox="0 0 24 24" fill="none"><path d="M14.5 6l-6 6 6 6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="strip-btn s-next" type="button" aria-label="Следующие фото"><svg viewBox="0 0 24 24" fill="none"><path d="M9.5 6l6 6-6 6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="int-track" id="intTrack">
       <img src="img/int-2.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
-      <img src="img/int-3.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
-      <img src="img/int-4.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
+      <img src="img/int-3.jpg" alt="Барная стойка ресторана «Сойка»" loading="lazy">
       <img src="img/int-5.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
-      <img src="img/int-6.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
+      <img src="img/int-6.jpg" alt="Зал ресторана «Сойка»" loading="lazy">
       <img src="img/int-7.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
-      <img src="img/int-8.jpg" alt="Интерьер ресторана «Сойка»" loading="lazy">
+      <img src="img/int-8.jpg" alt="Зал ресторана «Сойка»" loading="lazy">
     </div>
-    <button class="gal-btn next-btn" type="button" aria-label="Следующее фото"><svg viewBox="0 0 39 39" fill="none"><path d="M18 13.5l-5.9 6 5.9 6M12.1 19.5h14.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
   </div>
 </section>
 
-<!-- ===== Коллаборация ===== -->
-<section class="collab">
-  <div class="collab-circle" aria-hidden="true"></div>
-  <img class="collab-kana" src="img/collab-kana.png" alt="" aria-hidden="true">
-  <div class="collab-box">
-    <h2>Запланируем коллаборацию?</h2>
-    <p>Ответьте на пару вопросов, чтобы мы узнали друг друга ближе</p>
-    <a class="btn-line thick" href="https://forms.gle/k2pZzCRd7EPgPXMn8">Оставить заявку</a>
+<!-- カケス вертикально между «Интерьером» и «Наградами» — как на первом экране: белые, 55% -->
+<div class="kana-divider" aria-hidden="true">
+  <div class="kana" id="kanaDiv"><span></span><span></span><span></span></div>
+</div>
+
+<!-- ===== Блок 2. Награды — все тексты с их сайта soyka.rest ===== -->
+<section class="awards" id="awards">
+  <div class="sec-head" data-reveal>
+    <span class="jp">受賞</span>
+    <h2 data-i18n="awTitle">Награды</h2>
+  </div>
+
+  <blockquote class="aw-quote">
+    <span class="mark" aria-hidden="true">«</span>
+    <p id="awQuote" data-i18n="awQuote">Популярный азиатский ресторан в старинном особняке с белыми кирпичными сводами, лимонно-изумрудным интерьером, золотой барной стойкой и изобилием зелени. В меню — хрустящие баклажаны XO, булочки бао с уткой, желе алоэ с манго, суши, роллы, рамен и том-ям.</p>
+    <cite>— GreatList</cite>
+  </blockquote>
+
+  <div class="aw-grid">
+    <article class="aw">
+      <img class="seal" src="img/award-wte.png" alt="WhereToEat">
+      <p data-i18n="aw1">Ежегодно в ТОП-10 лучших ресторанов Урала по версии WhereToEat</p>
+    </article>
+    <article class="aw">
+      <img class="seal" src="img/award-gl.png" alt="GreatList">
+      <p data-i18n="aw2">В списке лучших ресторанов Екатеринбурга по версии международного ресторанного гида GreatList</p>
+    </article>
+    <article class="aw">
+      <img class="seal" src="img/award-wte.png" alt="WhereToEat">
+      <p data-i18n="aw3">Дважды лучший шеф-кондитер года по версии WhereToEat 2024, 2026</p>
+      <div class="who" data-i18n="aw3who">Вероника Вишнякова</div>
+    </article>
+    <article class="aw">
+      <img class="seal" src="img/award-rwa.png" alt="Russian Wine Awards">
+      <p data-i18n="aw4">2 звезды в номинации «Лучшая оригинальная карта» по версии Russian Wine Awards 2024</p>
+    </article>
+    <article class="aw">
+      <img class="seal" src="img/award-rwa.png" alt="Russian Wine Awards">
+      <p data-i18n="aw5">2 звезды в номинации «Лучший выбор вин по бокалам» по версии Russian Wine Awards 2024</p>
+    </article>
+    <article class="aw">
+      <img class="seal" src="img/award-wte.png" alt="WhereToEat">
+      <p data-i18n="aw6">Дважды лучший шеф-сомелье Урала по версии WhereToEat 2023, 2025</p>
+      <div class="who" data-i18n="aw6who">Анастасия Прудникова</div>
+    </article>
   </div>
 </section>
 
-<!-- ===== Контакты ===== -->
-<section class="contacts" id="contacts">
-  <img class="leaf leaf-1" src="img/contact-2.png" alt="" aria-hidden="true">
-  <img class="leaf leaf-2" src="img/contact-1.png" alt="" aria-hidden="true">
-  <h2 class="contacts-title">КОНТАКТЫ РЕСТОРАНА</h2>
-  <div class="contacts-grid">
-    <div class="contacts-info">
-      <h3>АДРЕС</h3>
-      <p>г. Екатеринбург,<br>8 Марта, д. 6</p>
-      <h3>СВЯЗАТЬСЯ С НАМИ</h3>
-      <p><a href="tel:+73433284284">+7 (343) 328-42-84</a><br><a href="mailto:soykarest@gmail.com">soykarest@gmail.com</a></p>
-      <h3>РЕЖИМ РАБОТЫ</h3>
-      <p>ВС — ЧТ 12:00 — 00:00<br>ПТ — СБ 12:00 — 01:00</p>
+<!-- ===== Блок 3. Меню — как у них на сайте: птица-джентльмен, «Меню», их текст, «Посмотреть меню», фото блюд ===== -->
+<section class="story menu-sec" id="menu">
+  <div class="sec-head" data-reveal>
+    <span class="jp">メニュー</span>
+    <h2 data-i18n="mbTitle">Меню и бар</h2>
+  </div>
+  <!-- Как у Akaneya: карточки в ряд — фото, название, их текст, ссылка. Фото в карточке сменяют друг друга -->
+  <div class="mb-grid">
+    <article class="mb-card">
+      <!-- над меню — шагающая птица-джентльмен -->
+      <div class="bird-walk card-bird" aria-hidden="true">
+        <div class="bird-shadow"></div>
+        <img class="paw back" src="img/bird-menu.png" alt="">
+        <img class="bird-body" src="img/bird-menu.png" alt="">
+        <img class="paw front" src="img/bird-menu.png" alt="">
+      </div>
+      <div class="mb-photo">
+        <img src="img/menu-3.jpg" alt="Шашлычки с гриля и роллы «Сойки»" class="on">
+        <img src="img/menu-6.jpg" alt="Нигири в палочках" loading="lazy">
+        <img src="img/menu-4.jpg" alt="Роллы ресторана «Сойка»" loading="lazy">
+        <img src="img/menu-10.jpg" alt="Нигири с креветкой" loading="lazy">
+        <img src="img/menu-8.jpg" alt="Блюда ресторана «Сойка»" loading="lazy">
+      </div>
+      <h3 data-i18n="menuTitle">Меню</h3>
+      <p data-i18n="menuText">Меню Сойки объединяет энергию улиц Юго-Восточной Азии, современный взгляд на гастрономию и легкость формата - все то, ради чего сюда хочется возвращаться.</p>
+      <a class="see-link" href="https://soyka.rest/menumenu" target="_blank" rel="noopener" data-i18n="menuBtn">Посмотреть меню</a>
+    </article>
+    <article class="mb-card">
+      <!-- над баром — шагающая гейша (ноги вырезаны отдельно, из прошлой версии) -->
+      <div class="bird-walk2 geisha card-bird" aria-hidden="true">
+        <div class="bird-shadow"></div>
+        <div class="walker">
+          <img class="lg back" src="img/walk-bar-leg.png" alt="">
+          <img class="bd" src="img/walk-bar-body.png" alt="">
+          <img class="lg front" src="img/walk-bar-leg.png" alt="">
+        </div>
+      </div>
+      <div class="mb-photo">
+        <img src="img/bar-7.jpg" alt="Коктейль бара «Сойки»" class="on">
+        <img src="img/bar-4.jpg" alt="Коктейль бара «Сойки»" loading="lazy">
+        <img src="img/bar-12.jpg" alt="Вино и カケス" loading="lazy">
+        <img src="img/bar-1.jpg" alt="Коктейль бара «Сойки»" loading="lazy">
+        <img src="img/bar-8.jpg" alt="Вино из карты «Сойки»" loading="lazy">
+      </div>
+      <h3 data-i18n="barTitle">Бар и винная карта</h3>
+      <p data-i18n="barText">В барной карте баланс между узнаваемыми напитками и редкими находками. А наша винная карта была удостоена двух звезд престижной премии Russian Wine Awards.</p>
+      <a class="see-link" href="https://soyka.rest/menumenu#!/tab/1266972691-3" target="_blank" rel="noopener" data-i18n="barBtn">Посмотреть карту</a>
+    </article>
+  </div>
+</section>
+
+<!-- ===== Блок 5. Вопросы и ответы — как よくある質問 у Akaneya. Вопросы сформулировали мы, ответы — только с сайта Сойки ===== -->
+<section class="faq" id="faq">
+  <div class="sec-head" data-reveal>
+    <span class="jp">よくある質問</span>
+    <h2 data-i18n="faqTitle">Вопросы и ответы</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span data-i18n="q1">Как забронировать стол?</span><i aria-hidden="true"></i></button>
+      <div class="faq-a"><div><p data-i18n-html="a1">Выберите дату и время в <a href="https://soyka.rest/bronirovanie" target="_blank" rel="noopener">форме бронирования</a> — вы увидите все актуальные варианты. После заполнения на почту придёт письмо о том, что бронь ожидает подтверждения, а как только мы её подтвердим — письмо о подтверждении. Если бронь по каким-то причинам окажется невозможной, мы обязательно свяжемся с вами.</p></div></div>
     </div>
-    <iframe class="map" title="Ресторан «Сойка» на карте" loading="lazy"
-      src="https://yandex.ru/map-widget/v1/?lang=ru_RU&scroll=false&source=constructor-api&um=constructor%3A41780e556b1721958c663a19b7990baf3164df83981b3ecbaea43201bec47040"></iframe>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span data-i18n="q2">Есть ли доставка?</span><i aria-hidden="true"></i></button>
+      <div class="faq-a"><div><p data-i18n-html="a2">Да — заказать можно на сайте доставки <a href="https://delivery.soyka.rest/" target="_blank" rel="noopener">delivery.soyka.rest</a>.</p></div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span data-i18n="q3">Можно ли подарить ужин в «Сойке»?</span><i aria-hidden="true"></i></button>
+      <div class="faq-a"><div><p data-i18n-html="a3">Да, с <a href="https://soyka.rest/certificate" target="_blank" rel="noopener">подарочной картой</a>. Она действует бессрочно и может быть использована многократно, до исчерпания номинала — в ресторане и для оплаты заказов с собой. Если суммы карты недостаточно, можно доплатить. Для оплаты покажите официанту QR-код и номер карты.</p></div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span data-i18n="q4">Есть ли бонусная карта?</span><i aria-hidden="true"></i></button>
+      <div class="faq-a"><div><p data-i18n-html="a4">Да. С каждого заказа начисляются бонусы — от 5% до 15% в зависимости от статуса (Друг, Лучший друг, Амбассадор, Патрон), в день рождения и неделю до и после — 15%. Один бонус равен одному рублю, бонусами можно оплатить до 50% заказа в ресторане, и они не сгорают. Бонусы нельзя тратить на винную карту, заказы с собой и доставку — на них можно только копить. <a href="https://soyka.rest/card" target="_blank" rel="noopener">Получить карту</a>.</p></div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span data-i18n="q5">Во сколько вы работаете?</span><i aria-hidden="true"></i></button>
+      <div class="faq-a"><div><p data-i18n-html="a5">ВС–ЧТ с 12:00 до 00:00, ПТ–СБ с 12:00 до 01:00.</p></div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span data-i18n="q6">Где вы находитесь?</span><i aria-hidden="true"></i></button>
+      <div class="faq-a"><div><p data-i18n-html="a6">Екатеринбург, ул. 8 Марта, 6 — в старинном особняке с белыми кирпичными сводами, который относится к архитектурному ансамблю усадьбы купца Тупикова.</p></div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span data-i18n="q7">Хотим сделать с вами коллаборацию</span><i aria-hidden="true"></i></button>
+      <div class="faq-a"><div><p data-i18n-html="a7">Ответьте на пару вопросов в <a href="https://forms.gle/k2pZzCRd7EPgPXMn8" target="_blank" rel="noopener">форме заявки</a>, чтобы мы узнали друг друга ближе.</p></div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span data-i18n="q8">Есть ли у вас вакансии?</span><i aria-hidden="true"></i></button>
+      <div class="faq-a"><div><p data-i18n-html="a8">Посмотрите <a href="https://soyka.rest/#popup:myform" target="_blank" rel="noopener">вакансии на нашем сайте</a>.</p></div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span data-i18n="q9">Как оставить отзыв?</span><i aria-hidden="true"></i></button>
+      <div class="faq-a"><div><p data-i18n-html="a9">Через <a href="https://soyka.rest/feedback" target="_blank" rel="noopener">форму обратной связи</a>.</p></div></div>
+    </div>
   </div>
 </section>
 
-<!-- ===== Подвал ===== -->
-<footer class="site-foot">
-  <img class="foot-logo" src="img/footer-logo.png" alt="Сойка" width="200" height="105">
-  <nav class="foot-nav">
-    <a href="https://soyka.rest/menumenu">МЕНЮ</a>
-    <a href="https://delivery.soyka.rest/">ДОСТАВКА</a>
-    <a href="https://soyka.rest/bronirovanie">ЗАБРОНИРОВАТЬ</a>
-    <a href="https://soyka.rest/certificate">СЕРТИФИКАТ</a>
-    <a href="https://soyka.rest/card">ПОЛУЧИТЬ КАРТУ</a>
-    <a href="https://soyka.rest/feedback">ОБРАТНАЯ СВЯЗЬ</a>
-    <a href="https://soyka.rest/#popup:myform">ВАКАНСИИ</a>
-    <a href="#contacts">КОНТАКТЫ</a>
+<!-- ===== Блок 4. Коллаборация — их тексты и их Google-форма. Тонкая рамка — как у них на сайте ===== -->
+<section class="collab2" id="collab">
+  <div class="collab-frame" data-reveal>
+    <span class="jp">協業</span>
+    <h2 data-i18n="colTitle">Запланируем коллаборацию?</h2>
+    <p data-i18n="colText">Ответьте на пару вопросов, чтобы мы узнали друг друга ближе</p>
+    <a class="see-link" href="https://forms.gle/k2pZzCRd7EPgPXMn8" target="_blank" rel="noopener" data-i18n="colBtn">Оставить заявку</a>
+  </div>
+  <!-- полукруг слева, как у них -->
+  <div class="collab-half" aria-hidden="true"></div>
+  <!-- их カケス у правого края, вертикально — как у них, только белые -->
+  <div class="kana collab-kana2" aria-hidden="true"><span></span><span></span><span></span></div>
+</section>
+
+<!-- ===== Блок 6. Контакты — как お問い合わせ / CONTACT у Akaneya. Всё с их сайта ===== -->
+<section class="contacts2" id="contacts">
+  <div class="sec-head" data-reveal>
+    <span class="jp">お問い合わせ</span>
+    <h2 data-i18n="ctTitle">Контакты</h2>
+  </div>
+  <div class="ct-grid">
+    <dl class="ct-info" data-reveal>
+      <div><dt data-i18n="ctAddrL">Адрес</dt><dd data-i18n="ctAddr">г. Екатеринбург, ул. 8 Марта, 6</dd></div>
+      <div><dt data-i18n="ctHoursL">Режим работы</dt><dd><span data-i18n="ctH1">ВС–ЧТ с 12:00 до 00:00</span><br><span data-i18n="ctH2">ПТ–СБ с 12:00 до 01:00</span></dd></div>
+      <div><dt data-i18n="ctPhoneL">Телефон</dt><dd><a href="tel:+73433284284">+7 (343) 328-42-84</a></dd></div>
+      <div><dt data-i18n="ctMailL">Почта</dt><dd><a href="mailto:soykarest@gmail.com">soykarest@gmail.com</a></dd></div>
+      <div><dt data-i18n="ctSocL">Соцсети</dt><dd><a href="https://telegram.me/Soykarestaurant" target="_blank" rel="noopener">Telegram</a> · <a href="https://vk.com/soykarest" target="_blank" rel="noopener" data-i18n="ctVk">ВКонтакте</a></dd></div>
+      <a class="see-link" href="https://soyka.rest/bronirovanie" target="_blank" rel="noopener" data-i18n="book">Забронировать</a>
+    </dl>
+    <div class="ct-map" data-reveal>
+      <!-- 15.11 Макар: Яндекс Карты. Простой виджет по координатам (не их конструктор — в нём была реклама).
+           Точка: ул. 8 Марта, 6. Ссылка «Открыть в Яндекс Картах» уже есть внутри виджета -->
+      <iframe title="Ресторан «Сойка» на карте" loading="lazy"
+        src="https://yandex.ru/map-widget/v1/?ll=60.59788%2C56.83906&amp;z=17&amp;pt=60.59788%2C56.83906%2Cpm2rdm&amp;scroll=false"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Подвал — их ссылки, как у них на сайте ===== -->
+<footer class="foot2">
+  <a class="foot-logo2" href="#hero" aria-label="Сойка — наверх"><img src="img/logo.png" alt="Сойка"></a>
+  <nav class="foot-nav2" aria-label="Страницы ресторана">
+    <a href="https://soyka.rest/menumenu" target="_blank" rel="noopener" data-i18n="menu">Меню</a>
+    <a href="https://delivery.soyka.rest/" target="_blank" rel="noopener" data-i18n="delivery">Доставка</a>
+    <a href="https://soyka.rest/bronirovanie" target="_blank" rel="noopener" data-i18n="book">Забронировать</a>
+    <a href="https://soyka.rest/certificate" target="_blank" rel="noopener" data-i18n="fCert">Сертификат</a>
+    <a href="https://soyka.rest/card" target="_blank" rel="noopener" data-i18n="fCard">Получить карту</a>
+    <a href="https://soyka.rest/feedback" target="_blank" rel="noopener" data-i18n="fFeed">Обратная связь</a>
+    <a href="https://soyka.rest/#popup:myform" target="_blank" rel="noopener" data-i18n="fJobs">Вакансии</a>
   </nav>
-  <div class="foot-copy">
-    © 2026 Сойка. Все права защищены<br>
-    <a href="https://soyka.rest/privacypolicy">Политика конфиденциальности</a><br>
-    <a href="https://soyka.rest/soglasie">Согласие на обработку данных</a>
+  <div class="foot-legal">
+    <span data-i18n="fCopy">© 2026 Сойка. Все права защищены</span>
+    <a href="https://soyka.rest/privacypolicy" target="_blank" rel="noopener" data-i18n="fPriv">Политика конфиденциальности</a>
+    <a href="https://soyka.rest/soglasie" target="_blank" rel="noopener" data-i18n="fAgree">Согласие на обработку данных</a>
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="sections.js"></script>
+<script>
+/* Выбор языка. Основной — русский. Переводим только тексты, которые уже есть на сайте Сойки (ничего своего не добавляем) */
+const I18N = {
+  ru: { menu: 'Меню', book: 'Забронировать', delivery: 'Доставка',
+        tag1: 'Ваш любимый паназиатский ресторан', tag2: 'в Екатеринбурге',
+        intTitle: 'Интерьер',
+        intText: '«Сойка» расположилась в старинном особняке с белыми кирпичными сводами, который относится к архитектурному ансамблю усадьбы купца Тупикова. Интерьер — лимонно-изумрудный с золотой барной стойкой и изобилием зелени.',
+        ctVk: 'ВКонтакте', dBar: 'Бар и вино', ctMap: 'Открыть в Яндекс Картах', ctTitle: 'Контакты', ctAddrL: 'Адрес', ctAddr: 'г. Екатеринбург, ул. 8 Марта, 6', ctHoursL: 'Режим работы',
+        ctH1: 'ВС–ЧТ с 12:00 до 00:00', ctH2: 'ПТ–СБ с 12:00 до 01:00', ctPhoneL: 'Телефон', ctMailL: 'Почта', ctSocL: 'Соцсети',
+        fCert: 'Сертификат', fCard: 'Получить карту', fFeed: 'Обратная связь', fJobs: 'Вакансии',
+        fCopy: '© 2026 Сойка. Все права защищены', fPriv: 'Политика конфиденциальности', fAgree: 'Согласие на обработку данных',
+        faqTitle: 'Вопросы и ответы',
+        q1: 'Как забронировать стол?', q2: 'Есть ли доставка?', q3: 'Можно ли подарить ужин в «Сойке»?',
+        q4: 'Есть ли бонусная карта?', q5: 'Во сколько вы работаете?', q6: 'Где вы находитесь?',
+        q7: 'Хотим сделать с вами коллаборацию', q8: 'Есть ли у вас вакансии?', q9: 'Как оставить отзыв?',
+        colTitle: 'Запланируем коллаборацию?', colBtn: 'Оставить заявку',
+        colText: 'Ответьте на пару вопросов, чтобы мы узнали друг друга ближе',
+        mbTitle: 'Меню и бар', barTitle: 'Бар и винная карта', barBtn: 'Посмотреть карту',
+        barText: 'В барной карте баланс между узнаваемыми напитками и редкими находками. А наша винная карта была удостоена двух звезд престижной премии Russian Wine Awards.',
+        menuTitle: 'Меню', menuBtn: 'Посмотреть меню',
+        menuText: 'Меню Сойки объединяет энергию улиц Юго-Восточной Азии, современный взгляд на гастрономию и легкость формата - все то, ради чего сюда хочется возвращаться.',
+        awTitle: 'Награды', awTop: 'ТОП-',
+        awQuote: 'Популярный азиатский ресторан в старинном особняке с белыми кирпичными сводами, лимонно-изумрудным интерьером, золотой барной стойкой и изобилием зелени. В меню — хрустящие баклажаны XO, булочки бао с уткой, желе алоэ с манго, суши, роллы, рамен и том-ям.',
+        aw1: 'Ежегодно в ТОП-10 лучших ресторанов Урала по версии WhereToEat',
+        aw2: 'В списке лучших ресторанов Екатеринбурга по версии международного ресторанного гида GreatList',
+        aw3: 'Дважды лучший шеф-кондитер года по версии WhereToEat 2024, 2026', aw3who: 'Вероника Вишнякова',
+        aw4: '2 звезды в номинации «Лучшая оригинальная карта» по версии Russian Wine Awards 2024',
+        aw5: '2 звезды в номинации «Лучший выбор вин по бокалам» по версии Russian Wine Awards 2024',
+        aw6: 'Дважды лучший шеф-сомелье Урала по версии WhereToEat 2023, 2025', aw6who: 'Анастасия Прудникова' },
+  en: { menu: 'Menu', book: 'Book a table', delivery: 'Delivery',
+        tag1: 'Your favourite pan-Asian restaurant', tag2: 'in Yekaterinburg',
+        intTitle: 'Interior',
+        intText: 'Soyka is set in an old mansion with white brick vaults, part of the architectural ensemble of the merchant Tupikov’s estate. The interior is lemon and emerald, with a golden bar counter and an abundance of greenery.',
+        ctVk: 'VK', dBar: 'Bar & wine', ctMap: 'Open in Yandex Maps', ctTitle: 'Contact', ctAddrL: 'Address', ctAddr: '6 8 Marta St., Yekaterinburg', ctHoursL: 'Opening hours',
+        ctH1: 'Sun–Thu 12:00–00:00', ctH2: 'Fri–Sat 12:00–01:00', ctPhoneL: 'Phone', ctMailL: 'Email', ctSocL: 'Social',
+        fCert: 'Gift card', fCard: 'Bonus card', fFeed: 'Feedback', fJobs: 'Vacancies',
+        fCopy: '© 2026 Soyka. All rights reserved', fPriv: 'Privacy policy', fAgree: 'Consent to data processing',
+        faqTitle: 'Questions & answers',
+        q1: 'How do I book a table?', q2: 'Do you deliver?', q3: 'Can I gift a dinner at Soyka?',
+        q4: 'Is there a bonus card?', q5: 'What are your opening hours?', q6: 'Where are you located?',
+        q7: 'We’d like to collaborate with you', q8: 'Are you hiring?', q9: 'How can I leave feedback?',
+        a1: 'Choose a date and time in the <a href="https://soyka.rest/bronirovanie" target="_blank" rel="noopener">booking form</a> to see all available options. You’ll receive an email saying your booking is awaiting confirmation, and another one once we confirm it. If the booking turns out to be impossible for some reason, we will definitely contact you.',
+        a2: 'Yes — you can order on our delivery site <a href="https://delivery.soyka.rest/" target="_blank" rel="noopener">delivery.soyka.rest</a>.',
+        a3: 'Yes, with a <a href="https://soyka.rest/certificate" target="_blank" rel="noopener">gift card</a>. It never expires and can be used many times until the balance runs out — in the restaurant and for takeaway orders. If the balance isn’t enough, you can pay the difference. To pay, show the waiter the QR code and the card number.',
+        a4: 'Yes. Every order earns bonuses — from 5% to 15% depending on your status (Friend, Best Friend, Ambassador, Patron), and 15% on your birthday and a week before and after. One bonus equals one rouble, bonuses can cover up to 50% of a restaurant bill, and they never expire. Bonuses can’t be spent on the wine list, takeaway or delivery — those only earn bonuses. <a href="https://soyka.rest/card" target="_blank" rel="noopener">Get the card</a>.',
+        a5: 'Sun–Thu 12:00–00:00, Fri–Sat 12:00–01:00.',
+        a6: 'Yekaterinburg, 6 8 Marta St. — in an old mansion with white brick vaults, part of the architectural ensemble of the merchant Tupikov’s estate.',
+        a7: 'Answer a couple of questions in the <a href="https://forms.gle/k2pZzCRd7EPgPXMn8" target="_blank" rel="noopener">request form</a> so we can get to know each other better.',
+        a8: 'See the <a href="https://soyka.rest/#popup:myform" target="_blank" rel="noopener">vacancies on our website</a>.',
+        a9: 'Through the <a href="https://soyka.rest/feedback" target="_blank" rel="noopener">feedback form</a>.',
+        colTitle: 'Shall we plan a collaboration?', colBtn: 'Leave a request',
+        colText: 'Answer a couple of questions so we can get to know each other better',
+        mbTitle: 'Menu & bar', barTitle: 'Bar & wine list', barBtn: 'View the list',
+        barText: 'Our bar list balances familiar drinks with rare finds. And our wine list has been awarded two stars by the prestigious Russian Wine Awards.',
+        menuTitle: 'Menu', menuBtn: 'View the menu',
+        menuText: 'Soyka’s menu brings together the energy of Southeast Asian streets, a modern take on gastronomy and an easy-going format — everything that makes you want to come back.',
+        awTitle: 'Awards', awTop: 'TOP-',
+        awQuote: 'A popular Asian restaurant in an old mansion with white brick vaults, a lemon-and-emerald interior, a golden bar counter and an abundance of greenery. On the menu: crispy XO aubergines, duck bao buns, aloe jelly with mango, sushi, rolls, ramen and tom yum.',
+        aw1: 'Every year in the TOP-10 best restaurants of the Urals by WhereToEat',
+        aw2: 'Listed among the best restaurants of Yekaterinburg by the international restaurant guide GreatList',
+        aw3: 'Twice Pastry Chef of the Year by WhereToEat, 2024 and 2026', aw3who: 'Veronika Vishnyakova',
+        aw4: '2 stars in “Best Original Wine List”, Russian Wine Awards 2024',
+        aw5: '2 stars in “Best Selection of Wines by the Glass”, Russian Wine Awards 2024',
+        aw6: 'Twice Best Head Sommelier of the Urals by WhereToEat, 2023 and 2025', aw6who: 'Anastasia Prudnikova' },
+  ja: { menu: 'メニュー', book: 'ご予約', delivery: 'デリバリー',
+        tag1: 'エカテリンブルクで愛される', tag2: 'パンアジアン・レストラン',
+        intTitle: 'インテリア',
+        intText: '「ソイカ」は、商人トゥピコフの屋敷の建築群に属する、白いレンガのヴォールト天井が残る古い邸宅にあります。インテリアはレモンとエメラルドの色合いに、金色のバーカウンターと豊かな緑。',
+        ctVk: 'VK', dBar: 'バー＆ワイン', ctMap: 'Yandexマップで開く', ctTitle: 'お問い合わせ', ctAddrL: '住所', ctAddr: 'エカテリンブルク、8マルタ通り6番地', ctHoursL: '営業時間',
+        ctH1: '日〜木 12:00〜24:00', ctH2: '金・土 12:00〜翌1:00', ctPhoneL: '電話', ctMailL: 'メール', ctSocL: 'SNS',
+        fCert: 'ギフトカード', fCard: 'ポイントカード', fFeed: 'お問い合わせ', fJobs: '求人',
+        fCopy: '© 2026 ソイカ. All rights reserved', fPriv: 'プライバシーポリシー', fAgree: '個人情報の取り扱いへの同意',
+        faqTitle: 'よくある質問',
+        q1: '席の予約方法は？', q2: 'デリバリーはありますか？', q3: '「ソイカ」での食事をプレゼントできますか？',
+        q4: 'ポイントカードはありますか？', q5: '営業時間は？', q6: '場所はどこですか？',
+        q7: 'コラボレーションをしたい', q8: '求人はありますか？', q9: '感想を送るには？',
+        a1: '<a href="https://soyka.rest/bronirovanie" target="_blank" rel="noopener">予約フォーム</a>で日付と時間を選ぶと、空いている候補がすべて表示されます。入力後、予約確認待ちのメールが届き、確定すると確認メールが届きます。何らかの理由で予約できない場合は、必ずご連絡します。',
+        a2: 'はい。デリバリーサイト <a href="https://delivery.soyka.rest/" target="_blank" rel="noopener">delivery.soyka.rest</a> でご注文いただけます。',
+        a3: 'はい、<a href="https://soyka.rest/certificate" target="_blank" rel="noopener">ギフトカード</a>で。有効期限はなく、残高がなくなるまで何度でも、店内でもテイクアウトでもご利用いただけます。残高が足りない場合は差額をお支払いいただけます。お支払いの際はQRコードとカード番号をスタッフにお見せください。',
+        a4: 'はい。ご注文ごとにステータス（フレンド、ベストフレンド、アンバサダー、パトロン）に応じて5%〜15%のボーナスが貯まり、誕生日とその前後1週間は15%です。1ボーナス＝1ルーブル、店内のお会計の50%までお支払いに使え、失効しません。ワインリスト、テイクアウト、デリバリーには使えず、貯めるのみです。<a href="https://soyka.rest/card" target="_blank" rel="noopener">カードを作る</a>。',
+        a5: '日〜木 12:00〜24:00、金・土 12:00〜翌1:00。',
+        a6: 'エカテリンブルク、8マルタ通り6番地。商人トゥピコフの屋敷の建築群に属する、白いレンガのヴォールト天井が残る古い邸宅にあります。',
+        a7: 'お互いをよく知るために、<a href="https://forms.gle/k2pZzCRd7EPgPXMn8" target="_blank" rel="noopener">申し込みフォーム</a>でいくつかの質問にお答えください。',
+        a8: '<a href="https://soyka.rest/#popup:myform" target="_blank" rel="noopener">サイトの求人情報</a>をご覧ください。',
+        a9: '<a href="https://soyka.rest/feedback" target="_blank" rel="noopener">お問い合わせフォーム</a>からどうぞ。',
+        colTitle: 'コラボレーションしませんか？', colBtn: 'お問い合わせ',
+        colText: 'お互いをよく知るために、いくつかの質問にお答えください',
+        mbTitle: 'メニューとバー', barTitle: 'バー＆ワインリスト', barBtn: 'リストを見る',
+        barText: 'バーリストは、定番のドリンクと珍しい一杯のバランス。ワインリストは権威あるRussian Wine Awardsで2つ星を獲得しました。',
+        menuTitle: 'メニュー', menuBtn: 'メニューを見る',
+        menuText: 'ソイカのメニューは、東南アジアの屋台のエネルギー、現代的なガストロノミーの視点、そして気軽さをひとつに。また来たくなる、そのすべてがここに。',
+        awTitle: '受賞歴', awTop: 'TOP',
+        awQuote: '白いレンガのヴォールト天井、レモンとエメラルドのインテリア、金色のバーカウンター、豊かな緑に囲まれた古い邸宅の人気アジアンレストラン。メニューには、XOソースのクリスピー茄子、鴨のバオ、マンゴー入りアロエゼリー、寿司、ロール、ラーメン、トムヤムなど。',
+        aw1: 'WhereToEatによるウラル地方のベストレストランTOP10に毎年選出',
+        aw2: '国際レストランガイドGreatListによるエカテリンブルクのベストレストランに選出',
+        aw3: 'WhereToEatの年間最優秀パティシエに2度選出（2024年・2026年）', aw3who: 'ヴェロニカ・ヴィシニャコワ',
+        aw4: 'Russian Wine Awards 2024「ベスト・オリジナル・ワインリスト」部門で2つ星',
+        aw5: 'Russian Wine Awards 2024「グラスワインのベストセレクション」部門で2つ星',
+        aw6: 'WhereToEatによるウラル地方の最優秀ヘッドソムリエに2度選出（2023年・2025年）', aw6who: 'アナスタシア・プルドニコワ' }
+};
+function setLang(lang) {
+  if (!I18N[lang]) lang = 'ru';
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = I18N[lang][el.dataset.i18n];
+  });
+  // тексты со ссылками внутри (ответы на вопросы) — переводим вместе со ссылками
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    if (!el.dataset.ru) el.dataset.ru = el.innerHTML;     // русский берём прямо из страницы
+    el.innerHTML = lang === 'ru' ? el.dataset.ru : (I18N[lang][el.dataset.i18nHtml] || el.dataset.ru);
+  });
+  document.querySelectorAll('.langs button').forEach(b => {
+    b.classList.toggle('on', b.dataset.lang === lang);
+    b.setAttribute('aria-pressed', b.dataset.lang === lang);
+  });
+  try { localStorage.setItem('soyka-lang', lang); } catch (e) {}
+}
+document.querySelectorAll('.langs button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+let savedLang = 'ru';
+try { savedLang = localStorage.getItem('soyka-lang') || 'ru'; } catch (e) {}
+setLang(savedLang);
+</script>
+
+<!-- Библиотеки анимаций (те же версии, что на портфолио): anime.js — открытие экрана, Motion — прокрутка и «дыхание» фото -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@4.2.2/dist/bundles/anime.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+<script>
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!calm && window.anime && window.Motion) {
+  document.documentElement.classList.add('js-anim');
+  const { animate: aAnimate, stagger } = anime;
+  const { animate, scroll } = Motion;
+
+  /* anime.js — открытие первого экрана, по шагам: */
+  // 1) синий занавес растворяется
+  aAnimate('#curtain', { opacity: [1, 0], duration: 1400, ease: 'inOutQuad' });
+  // 2) фото медленно «отъезжает» — камера будто отходит назад
+  aAnimate('#heroImg', { scale: [1.18, 1.04], duration: 3600, ease: 'outQuart' });
+  // 3) знаки カケス проявляются по одному сверху вниз, из лёгкого размытия
+  aAnimate('#kana span', {
+    opacity: [0, .55], translateY: [14, 0],
+    filter: ['brightness(0) invert(1) blur(6px)', 'brightness(0) invert(1) blur(0px)'],
+    delay: stagger(280, { start: 700 }), duration: 1100, ease: 'outQuad'
+  });
+  // 4) слоган выезжает снизу строчками, как из-под шторки
+  aAnimate('#caption .line > span', { translateY: ['110%', '0%'], delay: stagger(120, { start: 1700 }), duration: 1100, ease: 'outExpo' });
+  // 5) шапка и полоска «листай вниз» появляются последними
+  aAnimate('.top > *', { opacity: [0, 1], delay: stagger(80, { start: 1900 }), duration: 1000, ease: 'outQuad' });
+  aAnimate('#scrollHint', { opacity: [0, 1], delay: 2300, duration: 800 });
+
+  /* Motion — после открытия фото еле заметно «дышит», как кадр из видео */
+  setTimeout(() => {
+    animate('#heroImg', { scale: [1.04, 1.1], x: ['0%', '-1.5%'] },
+      { duration: 18, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' });
+  }, 3600);
+
+  /* Motion — при прокрутке фото уезжает медленнее страницы (параллакс), знаки и слоган растворяются */
+  const photo = document.getElementById('heroPhoto');
+  // растворяем всю колонку целиком — так у знаков и слогана сохраняется их собственная прозрачность
+  const center = document.querySelector('.center');
+  scroll(p => {
+    photo.style.transform = `translateY(${p * 18}%)`;
+    const f = Math.min(p / .6, 1);
+    center.style.opacity = 1 - f;
+    center.style.marginTop = (-60 * f) + 'px';
+  }, { target: document.getElementById('hero'), offset: ['start start', 'end start'] });
+
+  /* ===== Блок «Интерьер» ===== */
+  const { inView } = Motion;
+  // Motion: заголовок и текст мягко всплывают, когда доходят до экрана
+  inView('[data-reveal]', entry => {
+    const el = entry.target || entry;
+    animate(el, { opacity: 1, transform: 'translateY(0px)' }, { duration: .9, ease: [.22, 1, .36, 1] });
+  }, { margin: '0px 0px -10% 0px' });
+
+  // anime.js: фото открываются шторкой снизу вверх, второе чуть позже
+  inView('.story-photos', entry => {
+    aAnimate('.story .ph', {
+      clipPath: ['inset(100% 0% 0% 0%)', 'inset(0% 0% 0% 0%)'],
+      delay: stagger(220), duration: 1400, ease: 'inOutQuart'
+    });
+  }, { margin: '0px 0px -15% 0px' });
+
+  // Ленты с фото (интерьер, блюда): сами едут влево при прокрутке (Motion) + стрелками можно листать самому
+  document.querySelectorAll('.int-strip').forEach(strip => {
+  const track = strip.querySelector('.int-track');
+  const btnPrev = strip.querySelector('.strip-btn.s-prev'), btnNext = strip.querySelector('.strip-btn.s-next');
+  let scrollPart = 0;   // сдвиг от прокрутки страницы
+  let manual = 0;       // сдвиг от стрелок
+  const maxShift = () => Math.max(track.scrollWidth - innerWidth + innerWidth * .08, 0);
+  const stepSize = () => track.querySelector('img').offsetWidth + parseFloat(getComputedStyle(track).columnGap || 16);
+  function place() {
+    const max = maxShift();
+    manual = Math.min(Math.max(manual, -scrollPart), max - scrollPart);   // не уезжаем за края
+    const x = scrollPart + manual;
+    track.style.transform = `translateX(${-x}px)`;
+    btnPrev.disabled = x <= 1;
+    btnNext.disabled = x >= max - 1;
+  }
+  scroll(p => { scrollPart = p * maxShift() * .6; place(); }, { target: strip, offset: ['start end', 'end start'] });
+  // Motion: по нажатию стрелки лента плавно доезжает на одно фото
+  function go(dir) {
+    const from = manual, to = manual + dir * stepSize();
+    animate(from, to, { duration: .7, ease: [.22, 1, .36, 1], onUpdate: v => { manual = v; place(); } });
+  }
+  btnPrev.addEventListener('click', () => go(-1));
+  btnNext.addEventListener('click', () => go(1));
+  addEventListener('resize', place);
+  });
+
+  // Motion: при прокрутке фото внутри рамок едут с разной скоростью — получается глубина
+  document.querySelectorAll('.story .ph').forEach((ph, i) => {
+    const img = ph.querySelector('img');
+    const k = i === 0 ? 10 : 16;
+    scroll(p => { img.style.transform = `translateY(${-6 - k / 2 + p * k}%)`; }, { target: ph, offset: ['start end', 'end start'] });
+  });
+
+  /* ===== Блок «Награды» ===== */
+  // anime.js: фото в карточках «Меню» и «Бар» открываются шторкой снизу, второе чуть позже
+  inView('.mb-grid', () => {
+    aAnimate('.mb-photo', { clipPath: ['inset(100% 0% 0% 0%)', 'inset(0% 0% 0% 0%)'], delay: stagger(220), duration: 1400, ease: 'inOutQuart' });
+  }, { margin: '0px 0px -15% 0px' });
+
+  // Motion: при прокрутке карточки «Меню» и «Бар» плавно едут в разные стороны, как у Akaneya:
+  // листаешь вниз — меню уходит вверх, бар опускается; листаешь вверх — наоборот
+  const mbCards = document.querySelectorAll('.mb-card');
+  scroll(p => {
+    const d = (p - .5) * 2;                                 // -1 … 0 … 1, пока блок проходит через экран
+    const amp = innerWidth < 720 ? 28 : 90;                 // 15.11: сильнее (было 55 / 18); на телефоне мягче
+    mbCards[0].style.transform = `translateY(${-d * amp}px)`;
+    mbCards[1].style.transform = `translateY(${d * amp}px)`;
+  }, { target: document.querySelector('.mb-grid'), offset: ['start end', 'end start'] });
+
+  // Вопросы: anime.js — строки выезжают снизу по очереди, когда блок доходит до экрана
+  inView('.faq-list', () => {
+    aAnimate('.faq-item', { opacity: [0, 1], translateY: [24, 0], delay: stagger(70), duration: 900, ease: 'outExpo' });
+  }, { margin: '0px 0px -10% 0px' });
+
+  // Коллаборация. anime.js: рамка «рисуется» — открывается от центра к краям; Motion: カケス сбоку плывут при прокрутке
+  inView('.collab-frame', () => {
+    aAnimate('.collab-frame', { clipPath: ['inset(50% 50% 50% 50%)', 'inset(0% 0% 0% 0%)'], duration: 1400, ease: 'inOutQuart' });
+  }, { margin: '0px 0px -20% 0px' });
+  const ck = document.querySelector('.collab-kana2');
+  scroll(p => { ck.style.transform = `translateY(calc(-50% + ${(p - .5) * -120}px))`; },
+    { target: document.getElementById('collab'), offset: ['start end', 'end start'] });
+
+  // anime.js: カケス-разделитель проявляется по одному знаку из размытия — как на первом экране
+  inView('#kanaDiv', () => {
+    aAnimate('#kanaDiv span', {
+      opacity: [0, .55], translateY: [14, 0],
+      filter: ['brightness(0) invert(1) blur(6px)', 'brightness(0) invert(1) blur(0px)'],
+      delay: stagger(280), duration: 1100, ease: 'outQuad'
+    });
+  }, { margin: '0px 0px -20% 0px' });
+
+  // Анимация — как в прошлой версии (там была на GSAP, здесь то же самое на anime.js + Motion).
+  // Цитата — просто белый текст; большая красная кавычка разворачивается из 3D
+  inView('.aw-quote', () => {
+    aAnimate('.aw-quote .mark', { rotateY: [-90, 0], rotateX: [30, 0], opacity: [0, .9], scale: [.6, 1], duration: 1600, ease: 'outExpo' });
+  }, { margin: '0px 0px -20% 0px' });
+
+  // Карточки вылетают из глубины по очереди (наклон по X, из-под низа и издалека)
+  const cards = [...document.querySelectorAll('.aw')];
+  cards.forEach(c => { c.style.transformOrigin = '50% 100%'; c.style.transform = 'translateY(120px) translateZ(-260px) rotateX(-55deg)'; });
+  inView('.aw', entry => {
+    const el = entry.target || entry;
+    const i = cards.indexOf(el) % 3;                       // в одном ряду — по очереди
+    aAnimate(el, { opacity: [0, 1], translateY: [120, 0], translateZ: [-260, 0], rotateX: [-55, 0], duration: 1300, delay: i * 120, ease: 'outExpo' });
+    // печать награды переворачивается, как монета
+    aAnimate(el.querySelector('.seal'), { rotateY: [-180, 0], duration: 1400, delay: 150 + i * 120, ease: 'outBack(1.4)' });
+    // счётчик «ТОП-10»
+    const n = el.querySelector('.count');
+    if (n) { const o = { v: 0 }; aAnimate(o, { v: +n.dataset.to, duration: 1400, delay: 200 + i * 120, ease: 'outQuad', onUpdate: () => { n.textContent = Math.round(o.v); } }); }
+    // звёзды выпрыгивают
+    const st = el.querySelectorAll('.stars i');
+    if (st.length) aAnimate(st, { scale: [0, 1], rotate: [-120, 0], duration: 800, delay: stagger(120, { start: 450 + i * 120 }), ease: 'outBack(2.5)' });
+  }, { margin: '0px 0px -12% 0px' });
+}
+
+/* Бургер-меню: открыть кнопкой, закрыть крестиком, по тёмному фону, по Esc и при выборе раздела.
+   Пока меню открыто, страница под ним не прокручивается */
+(function () {
+  const drawer = document.getElementById('drawer'), burger = document.getElementById('burger');
+  function setOpen(open) {
+    drawer.classList.toggle('open', open);
+    drawer.setAttribute('aria-hidden', !open);
+    burger.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('menu-open', open);
+    if (open) drawer.querySelector('.drawer-x').focus(); else burger.focus();
+  }
+  burger.addEventListener('click', () => setOpen(true));
+  // шапка: после небольшой прокрутки получает синий фон, чтобы её было видно поверх фото и текста
+  const top = document.querySelector('.top');
+  const onScroll = () => top.classList.toggle('scrolled', scrollY > 40);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  drawer.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', () => setOpen(false)));
+  drawer.querySelectorAll('.drawer-nav a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && drawer.classList.contains('open')) setOpen(false); });
+})();
+
+/* Вопросы и ответы: нажал на вопрос — ответ плавно раскрывается, нажал ещё раз — закрывается.
+   Работает и без библиотек (плавность даёт CSS) */
+document.querySelectorAll('.faq-q').forEach(q => q.addEventListener('click', () => {
+  const item = q.closest('.faq-item');
+  const open = !item.classList.contains('open');
+  item.classList.toggle('open', open);
+  q.setAttribute('aria-expanded', open);
+}));
+
+/* Фото в карточках «Меню» и «Бар» сменяют друг друга каждые ~4 секунды (вторая карточка — со сдвигом).
+   Работает и без библиотек: смену делает CSS-переход, скрипт только переключает класс .on */
+document.querySelectorAll('.mb-photo').forEach((box, k) => {
+  const imgs = [...box.querySelectorAll('img')];
+  let i = 0;
+  setTimeout(() => setInterval(() => {
+    imgs[i].classList.remove('on');
+    i = (i + 1) % imgs.length;
+    imgs[i].classList.add('on');
+  }, 4000), k * 2000);
+});
+
+/* Плавное переливание фона: у каждого блока свой оттенок синего Сойки, и при прокрутке
+   цвет плавно перетекает от одного к другому — без швов. Работает и без библиотек анимаций */
+(function () {
+  const stops = [
+    ['hero',     [16, 29, 54]],    // #101d36 — глубокий синий
+    ['interior', [26, 46, 83]],    // #1a2e53 — их фирменный синий
+    ['awards',   [14, 25, 47]],    // #0e192f — снова глубже, «ночь»
+    ['menu',     [24, 42, 77]],    // #182a4d — снова светлее, к их синему
+    ['faq',      [22, 38, 70]],    // #162646 — чуть светлее
+    ['collab',   [17, 31, 58]],    // #111f3a — глубже
+    ['contacts', [13, 23, 44]]     // #0d172c — самый глубокий, финал страницы
+  ].map(([id, c]) => ({ el: document.getElementById(id), c }));
+  const root = document.documentElement;
+  const smooth = t => t * t * (3 - 2 * t);
+  function paint() {
+    const mid = innerHeight / 2;
+    const centers = stops.map(s => { const r = s.el.getBoundingClientRect(); return r.top + r.height / 2; });
+    let c = stops[0].c;
+    if (mid >= centers[centers.length - 1]) c = stops[stops.length - 1].c;
+    else for (let i = 0; i < stops.length - 1; i++) {
+      if (mid >= centers[i] && mid < centers[i + 1]) {
+        const t = smooth((mid - centers[i]) / (centers[i + 1] - centers[i]));
+        c = stops[i].c.map((v, k) => Math.round(v + (stops[i + 1].c[k] - v) * t));
+        break;
+      }
+    }
+    root.style.setProperty('--flow-rgb', c.join(','));
+  }
+  addEventListener('scroll', paint, { passive: true });
+  addEventListener('resize', paint);
+  paint();
+})();
+</script>
 </body>
 </html>
